@@ -12,8 +12,8 @@ var CIL;
 
             var Constrained = (function (_super) {
                 __extends(Constrained, _super);
-                function Constrained() {
-                    _super.apply(this, arguments);
+                function Constrained(memory, stack) {
+                    _super.call(this, memory, stack);
                 }
                 Constrained.prototype.number = function () {
                     return 65046;
@@ -41,6 +41,8 @@ var CIL;
                 return Constrained;
             })(Runtime.OpCode);
             OpCodes.Constrained = Constrained;
+
+            Runtime.OpCode.opCodes[Constrained.prototype.number()] = Constrained;
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

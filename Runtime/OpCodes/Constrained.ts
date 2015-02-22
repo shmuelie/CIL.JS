@@ -26,5 +26,12 @@
              */
             return;
         }
+
+        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
+        {
+            super(memory, stack);
+        }
     }
+
+    OpCode.opCodes[Constrained.prototype.number()] = <any>Constrained;
 } 
