@@ -28,6 +28,18 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="MemorySystem\Memory.ts" />
+    <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
+    <TypeScriptCompile Include="TypeSystem\Access.ts" />
+    <TypeScriptCompile Include="TypeSystem\Type.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeMember.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeMethod.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeMethodArgument.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeMethodBody.ts" />
+    <TypeScriptCompile Include="TypeSystem\TypeProperty.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
