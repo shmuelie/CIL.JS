@@ -6,6 +6,7 @@
         var Stack = (function () {
             function Stack() {
                 this.argPointers = [];
+                this.values = [];
             }
             return Stack;
         })();

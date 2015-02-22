@@ -5,12 +5,13 @@
     export class Stack
     {
         argPointers: number[];
-        values: number;
+        values: number[];
         this: number;
 
         constructor()
         {
             this.argPointers = [];
+            this.values = [];
         }
     }
 } 
