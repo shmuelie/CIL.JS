@@ -6,6 +6,7 @@
     {
         argPointers: number[];
         values: number;
+        this: number;
 
         constructor()
         {
