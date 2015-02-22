@@ -1,0 +1,1 @@
+{"version":3,"file":"Stack.js","sourceRoot":"","sources":["Stack.ts"],"names":["CIL","CIL.Runtime","CIL.Runtime.Stack","CIL.Runtime.Stack.constructor"],"mappings":"AAAA,IAAO,GAAG;AAcT,CAdD,UAAO,GAAG;KAAVA,UAAWA,OAAOA;QAEdC,YAAYA;;QAEZA;YAKIC;gBAEIC,IAAIA,CAACA,WAAWA,GAAGA,EAAEA;YACzBA,CAACA;YACLD,aAACA;QAADA,CAACA,IAAAD;QATDA,sBASCA;IACLA,CAACA,qCAAAD;8BAAAA;AAADA,CAACA,qBAAA"}

@@ -31,6 +31,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="MemorySystem\Memory.ts" />
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
+    <TypeScriptCompile Include="Runtime\OpCode.ts" />
+    <TypeScriptCompile Include="Runtime\Stack.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
