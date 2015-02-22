@@ -23,6 +23,7 @@
                 }
                 return;
             };
+            OpCode.opCodes = {};
             return OpCode;
         })();
         Runtime.OpCode = OpCode;

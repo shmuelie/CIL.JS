@@ -2,10 +2,17 @@
 {
     "use strict";
 
+    export interface OpCodeDictionary
+    {
+        [code: number]: OpCode;
+    }
+
     export class OpCode
     {
         private memory: MemorySystem.Memory;
         private stack: Stack;
+
+        static opCodes: OpCodeDictionary = {};
 
         number(): number
         {
