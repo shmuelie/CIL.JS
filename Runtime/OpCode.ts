@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    export interface OpCodeDictionary
+    export interface IOpCodeDictionary
     {
         [code: number]: OpCode;
     }
@@ -12,7 +12,7 @@
         private memory: MemorySystem.Memory;
         private stack: StackFrame[];
 
-        static opCodes: OpCodeDictionary = {};
+        static opCodes: IOpCodeDictionary = {};
 
         number(): number
         {
