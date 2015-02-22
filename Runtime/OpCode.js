@@ -17,10 +17,6 @@
             };
 
             OpCode.prototype.execute = function () {
-                var args = [];
-                for (var _i = 0; _i < (arguments.length - 0); _i++) {
-                    args[_i] = arguments[_i + 0];
-                }
                 return;
             };
             OpCode.opCodes = {};

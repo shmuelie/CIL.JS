@@ -12,8 +12,9 @@ var CIL;
 
             var No = (function (_super) {
                 __extends(No, _super);
-                function No(memory, stack) {
+                function No(memory, stack, code) {
                     _super.call(this, memory, stack);
+                    this.code = code;
                 }
                 No.prototype.number = function () {
                     return 65049;
@@ -24,12 +25,8 @@ var CIL;
                 };
 
                 No.prototype.execute = function () {
-                    var args = [];
-                    for (var _i = 0; _i < (arguments.length - 0); _i++) {
-                        args[_i] = arguments[_i + 0];
-                    }
-                    if (args[0] % 2 !== 0) {
-                        args[0] -= 1;
+                    if (this.code % 2 !== 0) {
+                        this.code -= 1;
                         // 0x01
                         /*
                         The CLI can optionally skip
@@ -37,8 +34,8 @@ var CIL;
                         InvalidCastException can optionally still be thrown if the check would fail.
                         */
                     }
-                    if (args[0] >= 4) {
-                        args[0] -= 4;
+                    if (this.code >= 4) {
+                        this.code -= 4;
                         // 0x04
                         /*
                         The CLI can
@@ -47,7 +44,7 @@ var CIL;
                         would fail.
                         */
                     }
-                    if (args[0] === 2) {
+                    if (this.code === 2) {
                         // 0x02
                         /*
                         The CLI can optionally skip any array range

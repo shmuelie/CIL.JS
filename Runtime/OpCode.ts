@@ -24,7 +24,7 @@
             return [];
         }
 
-        execute(...args: number[]): void
+        execute(): void
         {
             return;
         }

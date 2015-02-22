@@ -14,7 +14,7 @@
             return [4];
         }
 
-        execute(...args: number[])
+        execute()
         {
             /*
                 If thisType is a reference type (as opposed to a value type) then
@@ -27,7 +27,7 @@
             return;
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
+        constructor(memory: MemorySystem.Memory, stack: StackFrame[], thisType: TypeSystem.Type)
         {
             super(memory, stack);
         }

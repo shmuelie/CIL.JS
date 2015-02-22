@@ -12,7 +12,7 @@ var CIL;
 
             var Constrained = (function (_super) {
                 __extends(Constrained, _super);
-                function Constrained(memory, stack) {
+                function Constrained(memory, stack, thisType) {
                     _super.call(this, memory, stack);
                 }
                 Constrained.prototype.number = function () {
@@ -24,10 +24,6 @@ var CIL;
                 };
 
                 Constrained.prototype.execute = function () {
-                    var args = [];
-                    for (var _i = 0; _i < (arguments.length - 0); _i++) {
-                        args[_i] = arguments[_i + 0];
-                    }
                     /*
                     If thisType is a reference type (as opposed to a value type) then
                     ptr is dereferenced and passed as the ‘this’ pointer to the callvirt of method
