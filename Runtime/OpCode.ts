@@ -10,7 +10,7 @@
     export class OpCode
     {
         private memory: MemorySystem.Memory;
-        private stack: Stack;
+        private stack: StackFrame[];
 
         static opCodes: OpCodeDictionary = {};
 
@@ -29,7 +29,7 @@
             return;
         }
 
-        constructor(memory: MemorySystem.Memory, stack: Stack)
+        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
         {
             this.memory = memory;
             this.stack = stack;

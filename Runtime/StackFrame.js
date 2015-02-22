@@ -3,15 +3,15 @@
     (function (Runtime) {
         "use strict";
 
-        var Stack = (function () {
-            function Stack() {
+        var StackFrame = (function () {
+            function StackFrame() {
                 this.argPointers = [];
                 this.values = [];
             }
-            return Stack;
+            return StackFrame;
         })();
-        Runtime.Stack = Stack;
+        Runtime.StackFrame = StackFrame;
     })(CIL.Runtime || (CIL.Runtime = {}));
     var Runtime = CIL.Runtime;
 })(CIL || (CIL = {}));
-//# sourceMappingURL=Stack.js.map
+//# sourceMappingURL=StackFrame.js.map

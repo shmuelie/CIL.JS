@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    export class Stack
+    export class StackFrame
     {
         argPointers: number[];
         values: number[];
