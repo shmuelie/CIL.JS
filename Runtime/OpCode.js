@@ -13,7 +13,7 @@
             };
 
             OpCode.prototype.argumentCount = function () {
-                return 0;
+                return [];
             };
 
             OpCode.prototype.execute = function () {

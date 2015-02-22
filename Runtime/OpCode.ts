@@ -19,9 +19,9 @@
             return 0;
         }
 
-        argumentCount(): number
+        argumentCount(): number[]
         {
-            return 0;
+            return [];
         }
 
         execute(...args: number[]): void

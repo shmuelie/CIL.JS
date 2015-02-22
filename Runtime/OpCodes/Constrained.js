@@ -20,7 +20,7 @@ var CIL;
                 };
 
                 Constrained.prototype.argumentCount = function () {
-                    return 1;
+                    return [4];
                 };
 
                 Constrained.prototype.execute = function () {

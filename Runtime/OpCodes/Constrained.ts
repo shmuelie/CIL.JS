@@ -9,9 +9,9 @@
             return 65046;
         }
 
-        argumentCount(): number
+        argumentCount(): number[]
         {
-            return 1;
+            return [4];
         }
 
         execute(...args: number[])
