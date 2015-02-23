@@ -24,6 +24,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
