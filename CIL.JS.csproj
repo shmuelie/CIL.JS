@@ -18,21 +18,13 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="MemorySystem\Memory.ts" />
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />
-    <TypeScriptCompile Include="Runtime\Stack.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
+    <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
