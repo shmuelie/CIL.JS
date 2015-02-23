@@ -11,6 +11,7 @@
     {
         private memory: MemorySystem.Memory;
         private stack: StackFrame[];
+        lastOp: OpCode;
 
         static opCodes: IOpCodeDictionary = {};
 
