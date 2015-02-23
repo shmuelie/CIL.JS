@@ -9,8 +9,8 @@
 
     export class OpCode
     {
-        private memory: MemorySystem.Memory;
-        private stack: StackFrame[];
+        memory: MemorySystem.Memory;
+        stack: StackFrame[];
         lastOp: OpCode;
 
         static opCodes: IOpCodeDictionary = {};
