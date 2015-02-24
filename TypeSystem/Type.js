@@ -11,6 +11,7 @@
                 this.methods = [];
                 this.properties = [];
             }
+            Type.types = {};
             return Type;
         })();
         TypeSystem.Type = Type;
