@@ -26,6 +26,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Unaligned.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Volitile.ts" />
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
