@@ -7,11 +7,6 @@
             return 65044;
         }
 
-        argumentCount(): number[]
-        {
-            return [];
-        }
-
         constructor(memory: MemorySystem.Memory, stack: StackFrame[])
         {
             super(memory, stack);

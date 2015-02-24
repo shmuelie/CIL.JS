@@ -16,10 +16,6 @@ var CIL;
                 Tail.prototype.number = function () {
                     return 65044;
                 };
-
-                Tail.prototype.argumentCount = function () {
-                    return [];
-                };
                 return Tail;
             })(Runtime.OpCode);
             OpCodes.Tail = Tail;
