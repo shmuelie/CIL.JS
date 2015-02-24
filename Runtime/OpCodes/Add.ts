@@ -35,4 +35,6 @@
             super(memory, stack);
         }
     }
+
+    OpCode.opCodes[Add.prototype.number()] = <any>Add;
 } 

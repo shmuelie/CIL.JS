@@ -36,6 +36,8 @@ var CIL;
                 return Add;
             })(Runtime.OpCode);
             OpCodes.Add = Add;
+
+            Runtime.OpCode.opCodes[Add.prototype.number()] = Add;
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));
