@@ -2,8 +2,15 @@
 {
     "use strict";
 
+    export interface ITypesDictionary
+    {
+        [fullName: string]: Type;
+    }
+
     export class Type
     {
+        static types: ITypesDictionary = {};
+
         className: string;
         fullName: string;
         access: Access;
