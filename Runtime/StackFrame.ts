@@ -5,7 +5,7 @@
     export class StackFrame
     {
         argPointers: number[];
-        values: number[];
+        values: StackFrameValue[];
         this: number;
         method: TypeSystem.TypeMethod;
 
