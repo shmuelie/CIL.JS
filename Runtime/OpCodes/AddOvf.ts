@@ -31,10 +31,6 @@
                     }
                 }
             }
-            else if (value1.type === StackFrameValueType.Float && value2.type === StackFrameValueType.Float)
-            {
-                this.stack[0].values.push(new StackFrameValue(StackFrameValueType.Float, value1.value + value2.value));
-            }
             else
             {
                 throw new TypeError("add (0x58) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
