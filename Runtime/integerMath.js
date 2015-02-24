@@ -1,4 +1,5 @@
-﻿Array.prototype.intAdd = function (other) {
+﻿Array.prototype.intAdd = function (other, overflowThrow) {
+    if (typeof overflowThrow === "undefined") { overflowThrow = false; }
     var persision = Math.max(this.length, other.length);
     var paddedThis = [];
     while (paddedThis.length < persision) {
@@ -17,7 +18,7 @@
             paddedOther.unshift(other[0]);
         }
     }
-
+    var lastOverflow = false;
     var overflow = false;
     var result = [];
 
@@ -41,6 +42,11 @@
         } else if (!paddedThis[i] && !paddedOther[i] && !overflow) {
             result.unshift(false);
         }
+        lastOverflow = overflow;
+    }
+
+    if (overflow !== lastOverflow && overflowThrow) {
+        throw new Error("OVERFLOW");
     }
 
     return result;

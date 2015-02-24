@@ -1,6 +1,6 @@
 ﻿interface Array<T>
 {
-    intAdd(other: boolean[]): boolean[];
+    intAdd(other: boolean[], overflowThrow?: boolean): boolean[];
     intSubtraction(other: boolean[]): boolean[];
     intMutiplication(other: boolean[]): boolean[];
     intDivition(other: boolean[]): {
@@ -8,7 +8,7 @@
     };
 }
 
-Array.prototype.intAdd = function (other: boolean[]): boolean[]
+Array.prototype.intAdd = function (other: boolean[], overflowThrow: boolean = false): boolean[]
 {
     var persision: number = Math.max(this.length, other.length);
     var paddedThis: boolean[] = [];
@@ -36,7 +36,7 @@ Array.prototype.intAdd = function (other: boolean[]): boolean[]
             paddedOther.unshift(other[0]);
         }
     }
-
+    var lastOverflow: boolean = false;
     var overflow: boolean = false;
     var result: boolean[] = [];
 
@@ -76,6 +76,12 @@ Array.prototype.intAdd = function (other: boolean[]): boolean[]
         {
             result.unshift(false);
         }
+        lastOverflow = overflow;
+    }
+
+    if (overflow !== lastOverflow && overflowThrow)
+    {
+        throw new Error("OVERFLOW");
     }
 
     return result;
