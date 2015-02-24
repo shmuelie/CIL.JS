@@ -6,23 +6,9 @@
         Array.prototype.intAdd = function (other, overflowThrow) {
             if (typeof overflowThrow === "undefined") { overflowThrow = false; }
             var persision = Math.max(this.length, other.length);
-            var paddedThis = [];
-            while (paddedThis.length < persision) {
-                if (paddedThis.length < this.length) {
-                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-                } else {
-                    paddedThis.unshift(this[0]);
-                }
-            }
+            var paddedThis = this.padInt(persision);
 
-            var paddedOther = [];
-            while (paddedOther.length < persision) {
-                if (paddedOther.length < other.length) {
-                    paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-                } else {
-                    paddedOther.unshift(other[0]);
-                }
-            }
+            var paddedOther = other.padInt(persision);
             var lastOverflow = false;
             var overflow = false;
             var result = [];
@@ -59,46 +45,18 @@
 
         Array.prototype.intSubtraction = function (other) {
             var persision = Math.max(this.length, other.length);
-            var paddedThis = [];
-            while (paddedThis.length < persision) {
-                if (paddedThis.length < this.length) {
-                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-                } else {
-                    paddedThis.unshift(this[0]);
-                }
-            }
+            var paddedThis = this.padInt(persision);
 
-            var paddedOther = [];
-            while (paddedOther.length < persision) {
-                if (paddedOther.length < other.length) {
-                    paddedOther.unshift(!other[other.length - paddedOther.length - 1]);
-                } else {
-                    paddedOther.unshift(!other[0]);
-                }
-            }
+            var paddedOther = other.padInverseInt(persision);
 
             return paddedThis.intAdd(paddedOther).intAdd([true]);
         };
 
         Array.prototype.intMutiplication = function (other) {
             var persision = Math.max(this.length, other.length);
-            var paddedThis = [];
-            while (paddedThis.length < persision) {
-                if (paddedThis.length < this.length) {
-                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-                } else {
-                    paddedThis.unshift(this[0]);
-                }
-            }
+            var paddedThis = this.padInt(persision);
 
-            var paddedOther = [];
-            while (paddedOther.length < persision) {
-                if (paddedOther.length < other.length) {
-                    paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-                } else {
-                    paddedOther.unshift(other[0]);
-                }
-            }
+            var paddedOther = other.padInt(persision);
 
             var A = [];
             var i;
@@ -152,23 +110,9 @@
 
         Array.prototype.intDivition = function (other) {
             var persision = Math.max(this.length, other.length);
-            var paddedThis = [];
-            while (paddedThis.length < persision * 2) {
-                if (paddedThis.length < this.length) {
-                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-                } else {
-                    paddedThis.unshift(this[0]);
-                }
-            }
+            var paddedThis = this.padInt(persision);
 
-            var paddedOther = [];
-            while (paddedOther.length < persision) {
-                if (paddedOther.length < other.length) {
-                    paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-                } else {
-                    paddedOther.unshift(other[0]);
-                }
-            }
+            var paddedOther = other.padInt(persision);
 
             var R = [];
             var Q = [];
@@ -196,6 +140,32 @@
             }
 
             return { q: Q, r: R };
+        };
+
+        Array.prototype.padInt = function (length) {
+            var paddedThis = [];
+            while (paddedThis.length < length) {
+                if (paddedThis.length < this.length) {
+                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
+                } else {
+                    paddedThis.unshift(this[0]);
+                }
+            }
+
+            return paddedThis;
+        };
+
+        Array.prototype.padInverseInt = function (length) {
+            var paddedThis = [];
+            while (paddedThis.length < length) {
+                if (paddedThis.length < this.length) {
+                    paddedThis.unshift(this[this.length - paddedThis.length - 1]);
+                } else {
+                    paddedThis.unshift(!this[0]);
+                }
+            }
+
+            return paddedThis;
         };
     })(CIL.Runtime || (CIL.Runtime = {}));
     var Runtime = CIL.Runtime;

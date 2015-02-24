@@ -6,6 +6,8 @@
     intDivition(other: boolean[]): {
         q: boolean[]; r: boolean[];
     };
+    padInt(length: number): boolean[];
+    padInverseInt(length: number): boolean[];
 }
 module CIL.Runtime
 {
@@ -15,31 +17,9 @@ module CIL.Runtime
     Array.prototype.intAdd = function (other: boolean[], overflowThrow: boolean = false): boolean[]
     {
         var persision: number = Math.max(this.length, other.length);
-        var paddedThis: boolean[] = [];
-        while (paddedThis.length < persision)
-        {
-            if (paddedThis.length < this.length)
-            {
-                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-            }
-            else
-            {
-                paddedThis.unshift(this[0]);
-            }
-        }
+        var paddedThis: boolean[] = this.padInt(persision);
 
-        var paddedOther: boolean[] = [];
-        while (paddedOther.length < persision)
-        {
-            if (paddedOther.length < other.length)
-            {
-                paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-            }
-            else
-            {
-                paddedOther.unshift(other[0]);
-            }
-        }
+        var paddedOther: boolean[] = other.padInt(persision);
         var lastOverflow: boolean = false;
         var overflow: boolean = false;
         var result: boolean[] = [];
@@ -94,31 +74,9 @@ module CIL.Runtime
     Array.prototype.intSubtraction = function (other: boolean[]): boolean[]
     {
         var persision: number = Math.max(this.length, other.length);
-        var paddedThis: boolean[] = [];
-        while (paddedThis.length < persision)
-        {
-            if (paddedThis.length < this.length)
-            {
-                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-            }
-            else
-            {
-                paddedThis.unshift(this[0]);
-            }
-        }
+        var paddedThis: boolean[] = this.padInt(persision);
 
-        var paddedOther: boolean[] = [];
-        while (paddedOther.length < persision)
-        {
-            if (paddedOther.length < other.length)
-            {
-                paddedOther.unshift(!other[other.length - paddedOther.length - 1]);
-            }
-            else
-            {
-                paddedOther.unshift(!other[0]);
-            }
-        }
+        var paddedOther: boolean[] = other.padInverseInt(persision);
 
         return paddedThis.intAdd(paddedOther).intAdd([true]);
     };
@@ -126,31 +84,9 @@ module CIL.Runtime
     Array.prototype.intMutiplication = function (other: boolean[]): boolean[]
     {
         var persision: number = Math.max(this.length, other.length);
-        var paddedThis: boolean[] = [];
-        while (paddedThis.length < persision)
-        {
-            if (paddedThis.length < this.length)
-            {
-                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-            }
-            else
-            {
-                paddedThis.unshift(this[0]);
-            }
-        }
+        var paddedThis: boolean[] = this.padInt(persision);
 
-        var paddedOther: boolean[] = [];
-        while (paddedOther.length < persision)
-        {
-            if (paddedOther.length < other.length)
-            {
-                paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-            }
-            else
-            {
-                paddedOther.unshift(other[0]);
-            }
-        }
+        var paddedOther: boolean[] = other.padInt(persision);
 
         var A: boolean[] = [];
         var i: number;
@@ -218,31 +154,9 @@ module CIL.Runtime
     Array.prototype.intDivition = function (other: boolean[]): { q: boolean[]; r: boolean[]; }
     {
         var persision: number = Math.max(this.length, other.length);
-        var paddedThis: boolean[] = [];
-        while (paddedThis.length < persision * 2)
-        {
-            if (paddedThis.length < this.length)
-            {
-                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
-            }
-            else
-            {
-                paddedThis.unshift(this[0]);
-            }
-        }
+        var paddedThis: boolean[] = this.padInt(persision);
 
-        var paddedOther: boolean[] = [];
-        while (paddedOther.length < persision)
-        {
-            if (paddedOther.length < other.length)
-            {
-                paddedOther.unshift(other[other.length - paddedOther.length - 1]);
-            }
-            else
-            {
-                paddedOther.unshift(other[0]);
-            }
-        }
+        var paddedOther: boolean[] = other.padInt(persision);
 
         var R: boolean[] = [];
         var Q: boolean[] = [];
@@ -275,5 +189,41 @@ module CIL.Runtime
         }
 
         return { q: Q, r: R };
+    };
+
+    Array.prototype.padInt = function (length: number): boolean[]
+    {
+        var paddedThis: boolean[] = [];
+        while (paddedThis.length < length)
+        {
+            if (paddedThis.length < this.length)
+            {
+                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
+            }
+            else
+            {
+                paddedThis.unshift(this[0]);
+            }
+        }
+
+        return paddedThis;
+    };
+
+    Array.prototype.padInverseInt = function (length: number): boolean[]
+    {
+        var paddedThis: boolean[] = [];
+        while (paddedThis.length < length)
+        {
+            if (paddedThis.length < this.length)
+            {
+                paddedThis.unshift(this[this.length - paddedThis.length - 1]);
+            }
+            else
+            {
+                paddedThis.unshift(!this[0]);
+            }
+        }
+
+        return paddedThis;
     };
 }
