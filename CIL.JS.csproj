@@ -20,6 +20,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="MemorySystem\Memory.ts" />
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
+    <TypeScriptCompile Include="Runtime\integerMath.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
