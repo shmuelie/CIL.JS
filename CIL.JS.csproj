@@ -23,6 +23,8 @@
     <TypeScriptCompile Include="Runtime\integerMath.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Add.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\AddOvf.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\AddOvfUn.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
