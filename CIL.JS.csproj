@@ -22,6 +22,7 @@
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
     <TypeScriptCompile Include="Runtime\integerMath.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Add.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
@@ -29,6 +30,8 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Unaligned.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Volitile.ts" />
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
+    <TypeScriptCompile Include="Runtime\StackFrameValue.ts" />
+    <TypeScriptCompile Include="Runtime\StackFrameValueType.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
