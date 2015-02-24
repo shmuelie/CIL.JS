@@ -8,6 +8,8 @@ var CIL;
 (function (CIL) {
     (function (Runtime) {
         (function (OpCodes) {
+            "use strict";
+
             var Volitile = (function (_super) {
                 __extends(Volitile, _super);
                 function Volitile(memory, stack) {
