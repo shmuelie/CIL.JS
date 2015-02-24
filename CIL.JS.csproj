@@ -31,6 +31,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Div.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Dup.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Ldarg.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
