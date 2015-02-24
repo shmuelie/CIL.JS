@@ -1,4 +1,4 @@
-﻿module CIL.Runtime
+﻿module CIL.Runtime.OpCodes
 {
     export class Tail extends OpCode
     {

@@ -7,23 +7,26 @@
 var CIL;
 (function (CIL) {
     (function (Runtime) {
-        var Tail = (function (_super) {
-            __extends(Tail, _super);
-            function Tail(memory, stack) {
-                _super.call(this, memory, stack);
-            }
-            Tail.prototype.number = function () {
-                return 65044;
-            };
+        (function (OpCodes) {
+            var Tail = (function (_super) {
+                __extends(Tail, _super);
+                function Tail(memory, stack) {
+                    _super.call(this, memory, stack);
+                }
+                Tail.prototype.number = function () {
+                    return 65044;
+                };
 
-            Tail.prototype.argumentCount = function () {
-                return [];
-            };
-            return Tail;
-        })(Runtime.OpCode);
-        Runtime.Tail = Tail;
+                Tail.prototype.argumentCount = function () {
+                    return [];
+                };
+                return Tail;
+            })(Runtime.OpCode);
+            OpCodes.Tail = Tail;
 
-        Runtime.OpCode.opCodes[Tail.prototype.number()] = Tail;
+            Runtime.OpCode.opCodes[Tail.prototype.number()] = Tail;
+        })(Runtime.OpCodes || (Runtime.OpCodes = {}));
+        var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));
     var Runtime = CIL.Runtime;
 })(CIL || (CIL = {}));

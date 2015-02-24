@@ -1,4 +1,4 @@
-﻿module CIL.Runtime
+﻿module CIL.Runtime.OpCodes
 {
     "use strict";
 

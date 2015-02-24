@@ -7,25 +7,28 @@
 var CIL;
 (function (CIL) {
     (function (Runtime) {
-        "use strict";
+        (function (OpCodes) {
+            "use strict";
 
-        var Unaligned = (function (_super) {
-            __extends(Unaligned, _super);
-            function Unaligned(memory, stack, alignment) {
-                _super.call(this, memory, stack);
-            }
-            Unaligned.prototype.number = function () {
-                return 65042;
-            };
+            var Unaligned = (function (_super) {
+                __extends(Unaligned, _super);
+                function Unaligned(memory, stack, alignment) {
+                    _super.call(this, memory, stack);
+                }
+                Unaligned.prototype.number = function () {
+                    return 65042;
+                };
 
-            Unaligned.prototype.argumentCount = function () {
-                return [1];
-            };
-            return Unaligned;
-        })(Runtime.OpCode);
-        Runtime.Unaligned = Unaligned;
+                Unaligned.prototype.argumentCount = function () {
+                    return [1];
+                };
+                return Unaligned;
+            })(Runtime.OpCode);
+            OpCodes.Unaligned = Unaligned;
 
-        Runtime.OpCode.opCodes[Unaligned.prototype.number()] = Unaligned;
+            Runtime.OpCode.opCodes[Unaligned.prototype.number()] = Unaligned;
+        })(Runtime.OpCodes || (Runtime.OpCodes = {}));
+        var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));
     var Runtime = CIL.Runtime;
 })(CIL || (CIL = {}));
