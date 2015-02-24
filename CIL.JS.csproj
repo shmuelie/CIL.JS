@@ -27,9 +27,11 @@
     <TypeScriptCompile Include="Runtime\OpCodes\AddOvfUn.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\And.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\ArgList.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Call.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Constrained.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Return.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Unaligned.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Volitile.ts" />
