@@ -50,7 +50,7 @@
             }
             else
             {
-                throw new TypeError("add (0x58) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
+                throw new TypeError("add.ovf (0xD6) or add.ovf.un (0xD7) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
             }
         }
 

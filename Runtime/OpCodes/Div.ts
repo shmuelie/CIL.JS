@@ -26,7 +26,7 @@
             }
             else
             {
-                throw new TypeError("add (0x58) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
+                throw new TypeError("add (0x5B) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
             }
         }
 

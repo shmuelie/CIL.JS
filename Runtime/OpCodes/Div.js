@@ -28,7 +28,7 @@ var CIL;
                     } else if (value1.type === 1 /* Float */ && value2.type === 1 /* Float */) {
                         this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(1 /* Float */, value1.float / value2.float));
                     } else {
-                        throw new TypeError("add (0x58) called on operands of type " + Runtime.StackFrameValueType[value1.type] + " and " + Runtime.StackFrameValueType[value2.type] + ".");
+                        throw new TypeError("add (0x5B) called on operands of type " + Runtime.StackFrameValueType[value1.type] + " and " + Runtime.StackFrameValueType[value2.type] + ".");
                     }
                 };
                 return Div;
