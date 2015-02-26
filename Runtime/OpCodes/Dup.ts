@@ -11,7 +11,7 @@
 
         execute(): void
         {
-            var values: StackFrameValue[] = this.stack[0].values;
+            var values: StackFrameValue[] = this.stack[0].evaluationStack;
             values.push(values[values.length - 1]);
         }
 

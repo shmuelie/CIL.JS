@@ -6,7 +6,7 @@
         var StackFrame = (function () {
             function StackFrame() {
                 this.arguments = [];
-                this.values = [];
+                this.evaluationStack = [];
                 this.nextOp = 0;
             }
             StackFrame.prototype.free = function (memory) {
@@ -16,9 +16,9 @@
                         memory.dereferenceObject(this.arguments[i].value);
                     }
                 }
-                for (i = 0; i < this.values.length; i++) {
-                    if (this.values[i].type === 0 /* Pointer */) {
-                        memory.dereferenceObject(this.values[i].value);
+                for (i = 0; i < this.evaluationStack.length; i++) {
+                    if (this.evaluationStack[i].type === 0 /* Pointer */) {
+                        memory.dereferenceObject(this.evaluationStack[i].value);
                     }
                 }
             };

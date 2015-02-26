@@ -11,8 +11,8 @@
 
         execute(): void
         {
-            var value2: StackFrameValue = this.stack[0].values.pop();
-            var value1: StackFrameValue = this.stack[0].values.pop();
+            var value2: StackFrameValue = this.stack[0].evaluationStack.pop();
+            var value1: StackFrameValue = this.stack[0].evaluationStack.pop();
 
             if ((value1.type === StackFrameValueType.SignedInt || value1.type === StackFrameValueType.UnsignedInt) && (value2.type === StackFrameValueType.SignedInt || value2.type === StackFrameValueType.UnsignedInt))
             {
@@ -20,7 +20,7 @@
                 var int2: boolean[] = value2.value;
                 try
                 {
-                    this.stack[0].values.push(new StackFrameValue(value1.type, int1.intAdd(int2, true)));
+                    this.stack[0].evaluationStack.push(new StackFrameValue(value1.type, int1.intAdd(int2, true)));
                 }
                 catch (ex)
                 {

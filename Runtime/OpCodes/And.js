@@ -20,8 +20,8 @@ var CIL;
                 };
 
                 And.prototype.execute = function () {
-                    var value2 = this.stack[0].values.pop();
-                    var value1 = this.stack[0].values.pop();
+                    var value2 = this.stack[0].evaluationStack.pop();
+                    var value1 = this.stack[0].evaluationStack.pop();
 
                     if ((value1.type === 2 /* SignedInt */ || value1.type === 3 /* UnsignedInt */) && (value2.type === 2 /* SignedInt */ || value2.type === 3 /* UnsignedInt */)) {
                         var int1 = value1.value;
@@ -34,7 +34,7 @@ var CIL;
                         for (var i = 0; i < persision; i++) {
                             result.push(int1[i] && int2[i]);
                         }
-                        this.stack[0].values.push(new Runtime.StackFrameValue(value1.type, result));
+                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(value1.type, result));
                     } else {
                         throw new TypeError("add (0x58) called on operands of type " + Runtime.StackFrameValueType[value1.type] + " and " + Runtime.StackFrameValueType[value2.type] + ".");
                     }

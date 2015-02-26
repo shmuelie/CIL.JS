@@ -5,7 +5,7 @@
     export class StackFrame
     {
         arguments: StackFrameValue[];
-        values: StackFrameValue[];
+        evaluationStack: StackFrameValue[];
         this: number;
         method: TypeSystem.TypeMethod;
         nextOp: number;
@@ -20,11 +20,11 @@
                     memory.dereferenceObject(this.arguments[i].value);
                 }
             }
-            for (i = 0; i < this.values.length; i++)
+            for (i = 0; i < this.evaluationStack.length; i++)
             {
-                if (this.values[i].type === StackFrameValueType.Pointer)
+                if (this.evaluationStack[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.values[i].value);
+                    memory.dereferenceObject(this.evaluationStack[i].value);
                 }
             }
         }
@@ -32,7 +32,7 @@
         constructor()
         {
             this.arguments = [];
-            this.values = [];
+            this.evaluationStack = [];
             this.nextOp = 0;
         }
     }

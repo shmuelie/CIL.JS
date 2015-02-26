@@ -20,14 +20,14 @@ var CIL;
                 };
 
                 AddOvf.prototype.execute = function () {
-                    var value2 = this.stack[0].values.pop();
-                    var value1 = this.stack[0].values.pop();
+                    var value2 = this.stack[0].evaluationStack.pop();
+                    var value1 = this.stack[0].evaluationStack.pop();
 
                     if ((value1.type === 2 /* SignedInt */ || value1.type === 3 /* UnsignedInt */) && (value2.type === 2 /* SignedInt */ || value2.type === 3 /* UnsignedInt */)) {
                         var int1 = value1.value;
                         var int2 = value2.value;
                         try  {
-                            this.stack[0].values.push(new Runtime.StackFrameValue(value1.type, int1.intAdd(int2, true)));
+                            this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(value1.type, int1.intAdd(int2, true)));
                         } catch (ex) {
                             if (ex.message === "OVERFLOW") {
                                 throw ex;

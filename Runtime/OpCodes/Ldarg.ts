@@ -18,7 +18,7 @@
 
         execute(): void
         {
-            this.stack[0].values.push(this.stack[0].arguments[this.argIndex]);
+            this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
         }
 
         constructor(memory: MemorySystem.Memory, stack: StackFrame[], argIndex: number)

@@ -25,7 +25,7 @@ var CIL;
                 };
 
                 Ldarg.prototype.execute = function () {
-                    this.stack[0].values.push(this.stack[0].arguments[this.argIndex]);
+                    this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
                 };
                 return Ldarg;
             })(Runtime.OpCode);

@@ -20,7 +20,7 @@ var CIL;
                 };
 
                 Dup.prototype.execute = function () {
-                    var values = this.stack[0].values;
+                    var values = this.stack[0].evaluationStack;
                     values.push(values[values.length - 1]);
                 };
                 return Dup;
