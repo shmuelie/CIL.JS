@@ -26,12 +26,19 @@ var CIL;
 
                 Call.prototype.execute = function () {
                     var nextFrame = new Runtime.StackFrame();
-                    nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
+                    while (nextFrame.arguments.length < this.method.arguments.length) {
+                        nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
+                    }
+                    if (this.method.static) {
+                        nextFrame.this = null;
+                    } else {
+                        nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
+                    }
                     nextFrame.method = this.method;
-                    nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
                     if (this.lastOp instanceof OpCodes.Tail) {
                         this.stack.shift().free(this.memory);
                     }
+                    this.stack.unshift(nextFrame);
                 };
                 return Call;
             })(Runtime.OpCode);
