@@ -17,14 +17,14 @@
             {
                 if (this.arguments[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.arguments[i].value);
+                    memory.dereferenceObject(this.arguments[i].pointer);
                 }
             }
             for (i = 0; i < this.evaluationStack.length; i++)
             {
                 if (this.evaluationStack[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.evaluationStack[i].value);
+                    memory.dereferenceObject(this.evaluationStack[i].pointer);
                 }
             }
         }

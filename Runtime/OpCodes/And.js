@@ -22,22 +22,31 @@ var CIL;
                 And.prototype.execute = function () {
                     var value2 = this.stack[0].evaluationStack.pop();
                     var value1 = this.stack[0].evaluationStack.pop();
+                    var int1;
+                    var int2;
+                    var type;
 
-                    if ((value1.type === 2 /* SignedInt */ || value1.type === 3 /* UnsignedInt */) && (value2.type === 2 /* SignedInt */ || value2.type === 3 /* UnsignedInt */)) {
-                        var int1 = value1.value;
-                        var int2 = value2.value;
-                        var persision = Math.max(int1.length, int2.length);
-                        int1 = int1.padInt(persision);
-                        int2 = int2.padInt(persision);
-
-                        var result = [];
-                        for (var i = 0; i < persision; i++) {
-                            result.push(int1[i] && int2[i]);
-                        }
-                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(value1.type, result));
+                    if (value1.type === 2 /* SignedInt */ && value2.type === 2 /* SignedInt */) {
+                        int1 = value1.signedInt;
+                        int2 = value2.signedInt;
+                        type = 2 /* SignedInt */;
+                    } else if (value1.type === 3 /* UnsignedInt */ && value2.type === 3 /* UnsignedInt */) {
+                        int1 = value1.unsignedInt;
+                        int2 = value2.unsignedInt;
+                        type = 3 /* UnsignedInt */;
                     } else {
                         throw new TypeError("add (0x58) called on operands of type " + Runtime.StackFrameValueType[value1.type] + " and " + Runtime.StackFrameValueType[value2.type] + ".");
                     }
+
+                    var persision = Math.max(int1.length, int2.length);
+                    int1 = int1.padInt(persision);
+                    int2 = int2.padInt(persision);
+
+                    var result = [];
+                    for (var i = 0; i < persision; i++) {
+                        result.push(int1[i] && int2[i]);
+                    }
+                    this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(value1.type, result));
                 };
                 return And;
             })(Runtime.OpCode);

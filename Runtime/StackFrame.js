@@ -13,12 +13,12 @@
                 var i;
                 for (i = 0; i < this.arguments.length; i++) {
                     if (this.arguments[i].type === 0 /* Pointer */) {
-                        memory.dereferenceObject(this.arguments[i].value);
+                        memory.dereferenceObject(this.arguments[i].pointer);
                     }
                 }
                 for (i = 0; i < this.evaluationStack.length; i++) {
                     if (this.evaluationStack[i].type === 0 /* Pointer */) {
-                        memory.dereferenceObject(this.evaluationStack[i].value);
+                        memory.dereferenceObject(this.evaluationStack[i].pointer);
                     }
                 }
             };

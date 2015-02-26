@@ -28,7 +28,7 @@ var CIL;
                     var nextFrame = new Runtime.StackFrame();
                     nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
                     nextFrame.method = this.method;
-                    nextFrame.this = this.stack[0].evaluationStack.pop().value;
+                    nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
                     if (this.lastOp instanceof OpCodes.Tail) {
                         this.stack.shift().free(this.memory);
                     }
