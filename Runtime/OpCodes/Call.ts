@@ -19,7 +19,7 @@
         execute(): void
         {
             var nextFrame: StackFrame = new StackFrame();
-            nextFrame.argPointers.unshift(this.stack[0].values.pop());
+            nextFrame.arguments.unshift(this.stack[0].values.pop());
             nextFrame.method = this.method;
             nextFrame.this = this.stack[0].values.pop().value;
             if (this.lastOp instanceof Tail)

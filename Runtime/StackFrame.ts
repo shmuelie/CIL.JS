@@ -4,7 +4,7 @@
 
     export class StackFrame
     {
-        argPointers: StackFrameValue[];
+        arguments: StackFrameValue[];
         values: StackFrameValue[];
         this: number;
         method: TypeSystem.TypeMethod;
@@ -13,11 +13,11 @@
         free(memory: MemorySystem.Memory): void
         {
             var i: number;
-            for (i = 0; i < this.argPointers.length; i++)
+            for (i = 0; i < this.arguments.length; i++)
             {
-                if (this.argPointers[i].type === StackFrameValueType.Pointer)
+                if (this.arguments[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.argPointers[i].value);
+                    memory.dereferenceObject(this.arguments[i].value);
                 }
             }
             for (i = 0; i < this.values.length; i++)
@@ -31,7 +31,7 @@
 
         constructor()
         {
-            this.argPointers = [];
+            this.arguments = [];
             this.values = [];
             this.nextOp = 0;
         }
