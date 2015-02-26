@@ -32,6 +32,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Div.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Dup.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Ldarg.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Ldarg0.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\LdargS.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
