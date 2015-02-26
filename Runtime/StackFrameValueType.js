@@ -8,6 +8,7 @@
             StackFrameValueType[StackFrameValueType["Float"] = 1] = "Float";
             StackFrameValueType[StackFrameValueType["SignedInt"] = 2] = "SignedInt";
             StackFrameValueType[StackFrameValueType["UnsignedInt"] = 3] = "UnsignedInt";
+            StackFrameValueType[StackFrameValueType["MethodPointer"] = 4] = "MethodPointer";
         })(Runtime.StackFrameValueType || (Runtime.StackFrameValueType = {}));
         var StackFrameValueType = Runtime.StackFrameValueType;
     })(CIL.Runtime || (CIL.Runtime = {}));

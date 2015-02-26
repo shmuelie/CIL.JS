@@ -7,6 +7,7 @@
         Pointer,
         Float,
         SignedInt,
-        UnsignedInt
+        UnsignedInt,
+        MethodPointer
     }
 } 
