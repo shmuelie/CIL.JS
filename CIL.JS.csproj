@@ -37,6 +37,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Ldarg2.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Ldarg3.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\LdargS.ts" />
+    <TypeScriptCompile Include="Runtime\OpCodes\Ldnull.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\No.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Readonly.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
