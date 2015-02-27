@@ -9,6 +9,7 @@
             StackFrameValueType[StackFrameValueType["SignedInt"] = 2] = "SignedInt";
             StackFrameValueType[StackFrameValueType["UnsignedInt"] = 3] = "UnsignedInt";
             StackFrameValueType[StackFrameValueType["MethodPointer"] = 4] = "MethodPointer";
+            StackFrameValueType[StackFrameValueType["FieldPointer"] = 5] = "FieldPointer";
         })(Runtime.StackFrameValueType || (Runtime.StackFrameValueType = {}));
         var StackFrameValueType = Runtime.StackFrameValueType;
     })(CIL.Runtime || (CIL.Runtime = {}));

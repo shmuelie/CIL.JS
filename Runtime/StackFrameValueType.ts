@@ -8,6 +8,7 @@
         Float,
         SignedInt,
         UnsignedInt,
-        MethodPointer
+        MethodPointer,
+        FieldPointer
     }
 } 

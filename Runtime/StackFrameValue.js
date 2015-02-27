@@ -4,7 +4,8 @@
         "use strict";
 
         var StackFrameValue = (function () {
-            function StackFrameValue(type, value) {
+            function StackFrameValue(type, value, pointer) {
+                if (typeof pointer === "undefined") { pointer = null; }
                 this.type = type;
                 switch (type) {
                     case 1 /* Float */:
@@ -12,6 +13,7 @@
                         break;
                     case 4 /* MethodPointer */:
                         this.methodPointer = value;
+                        this.pointer = pointer;
                         break;
                     case 0 /* Pointer */:
                         this.pointer = value;
@@ -21,6 +23,10 @@
                         break;
                     case 3 /* UnsignedInt */:
                         this.unsignedInt = value;
+                        break;
+                    case 5 /* FieldPointer */:
+                        this.fieldPointer = value;
+                        this.pointer = pointer;
                         break;
                 }
             }
