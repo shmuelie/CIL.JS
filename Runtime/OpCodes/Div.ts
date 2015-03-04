@@ -1,5 +1,7 @@
 ﻿module CIL.Runtime.OpCodes
 {
+    "use strict";
+
     export class Div extends OpCode
     {
         number(): number

@@ -8,6 +8,8 @@ var CIL;
 (function (CIL) {
     (function (Runtime) {
         (function (OpCodes) {
+            "use strict";
+
             var AddOvfUn = (function (_super) {
                 __extends(AddOvfUn, _super);
                 function AddOvfUn(memory, stack) {

@@ -8,6 +8,8 @@ var CIL;
 (function (CIL) {
     (function (Runtime) {
         (function (OpCodes) {
+            "use strict";
+
             var Div = (function (_super) {
                 __extends(Div, _super);
                 function Div(memory, stack) {

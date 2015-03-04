@@ -1,5 +1,7 @@
 ﻿module CIL.Runtime.OpCodes
 {
+    "use strict";
+
     export class Tail extends OpCode
     {
         number(): number
