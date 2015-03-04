@@ -14,7 +14,7 @@
             return [1];
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[], argIndex: number)
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], argIndex: number)
         {
             super(memory, stack, argIndex);
         }

@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    export class Memory
+    export class LocalMemoryManager implements IMemoryManger
     {
         static NULL: number = -1;
 
@@ -15,7 +15,7 @@
             this.freeList = [];
         }
 
-        addObject(obj: MemoryObject): number
+        addObject(obj: MemoryObject, callback: (id: number) => void): void
         {
             if (this.freeList.length === 0)
             {
@@ -26,21 +26,24 @@
                 obj.id = this.freeList.pop();
                 this.objects[obj.id] = obj;
             }
-            return obj.id;
+            callback(obj.id);
         }
 
-        assignField(pointer: number, name: string, value: number): void
+        assignField(pointer: number, name: string, value: number, callback: () => void): void
         {
             var oldPointer: number = this.objects[pointer].fields[name];
             this.objects[pointer].fields[name] = value;
-            this.dereferenceObject(oldPointer);
-            if (value !== Memory.NULL)
+            this.dereferenceObject(oldPointer, () =>
             {
-                this.objects[value].references++;
-            }
+                if (value !== LocalMemoryManager.NULL)
+                {
+                    this.objects[value].references++;
+                }
+                callback();
+            });
         }
 
-        dereferenceObject(pointer: number): void
+        dereferenceObject(pointer: number, callback: () => void): void
         {
             this.objects[pointer].references--;
             if (this.objects[pointer].references <= 0)
@@ -48,6 +51,7 @@
                 this.objects[pointer] = null;
                 this.freeList.push(pointer);
             }
+            callback();
         }
     }
 } 

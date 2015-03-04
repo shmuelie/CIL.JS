@@ -21,7 +21,7 @@
             this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, this.num));
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[], num: boolean[])
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], num: boolean[])
         {
             super(memory, stack);
             this.num = num;

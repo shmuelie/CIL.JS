@@ -18,7 +18,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="MemorySystem\Memory.ts" />
+    <TypeScriptCompile Include="MemorySystem\IMemoryManager.ts" />
+    <TypeScriptCompile Include="MemorySystem\LocalMemoryManager.ts" />
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
     <TypeScriptCompile Include="Runtime\integerMath.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />

@@ -46,7 +46,7 @@
             this.stack[0].evaluationStack.push(new StackFrameValue(value1.type, result));
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }

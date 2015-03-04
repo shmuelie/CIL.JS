@@ -30,7 +30,7 @@
             }
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }

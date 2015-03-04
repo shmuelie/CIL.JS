@@ -21,7 +21,7 @@
             this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[], argIndex: number)
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], argIndex: number)
         {
             super(memory, stack);
             this.argIndex = argIndex;

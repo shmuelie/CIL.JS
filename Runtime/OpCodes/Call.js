@@ -25,6 +25,7 @@ var CIL;
                 };
 
                 Call.prototype.execute = function () {
+                    var _this = this;
                     var nextFrame = new Runtime.StackFrame();
                     while (nextFrame.arguments.length < this.method.arguments.length) {
                         nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
@@ -36,7 +37,12 @@ var CIL;
                     }
                     nextFrame.method = this.method;
                     if (this.lastOp instanceof OpCodes.Tail) {
-                        this.stack.shift().free(this.memory);
+                        var lastFrame = this.stack.shift();
+                        this.stack.unshift(nextFrame);
+                        lastFrame.free(this.memory, function () {
+                            _this.stack[0].continue();
+                        });
+                        this.stack[0].wait();
                     }
                     this.stack.unshift(nextFrame);
                 };

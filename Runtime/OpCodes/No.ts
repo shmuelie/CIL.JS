@@ -50,7 +50,7 @@
             }
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[], code: number)
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], code: number)
         {
             super(memory, stack);
             this.code = code;

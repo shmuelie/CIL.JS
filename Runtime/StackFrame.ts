@@ -9,24 +9,69 @@
         this: number;
         method: TypeSystem.TypeMethod;
         nextOp: number;
+        private waitCount: number;
 
-        free(memory: MemorySystem.Memory): void
+        wait(): void
         {
-            var i: number;
-            for (i = 0; i < this.arguments.length; i++)
+            this.waitCount++;
+        }
+
+        continue(): void
+        {
+            this.waitCount--;
+        }
+
+        free(memory: MemorySystem.IMemoryManger, callback: () => void): void
+        {
+            var i: number = -1;
+            var firstLoopEnd: () => void = () =>
+            {
+                i++;
+                if (i < this.arguments.length)
+                {
+                    firstLoop();
+                }
+                else
+                {
+                    i = -1;
+                    secondLoopEnd();
+                }
+            };
+            var firstLoop: () => void = () =>
             {
                 if (this.arguments[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.arguments[i].pointer);
+                    memory.dereferenceObject(this.arguments[i].pointer, firstLoopEnd);
                 }
-            }
-            for (i = 0; i < this.evaluationStack.length; i++)
+                else
+                {
+                    firstLoopEnd();
+                }
+            };
+            var secondLoopEnd: () => void = () =>
+            {
+                i++;
+                if (i < this.evaluationStack.length)
+                {
+                    secondLoop();
+                }
+                else
+                {
+                    callback();
+                }
+            };
+            var secondLoop: () => void = () =>
             {
                 if (this.evaluationStack[i].type === StackFrameValueType.Pointer)
                 {
-                    memory.dereferenceObject(this.evaluationStack[i].pointer);
+                    memory.dereferenceObject(this.evaluationStack[i].pointer, secondLoopEnd);
                 }
-            }
+                else
+                {
+                    secondLoopEnd();
+                }
+            };
+            firstLoopEnd();
         }
 
         constructor()

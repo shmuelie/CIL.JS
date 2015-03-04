@@ -34,12 +34,18 @@
             nextFrame.method = this.method;
             if (this.lastOp instanceof Tail)
             {
-                this.stack.shift().free(this.memory);
+                var lastFrame: StackFrame = this.stack.shift();
+                this.stack.unshift(nextFrame);
+                lastFrame.free(this.memory, () =>
+                {
+                    this.stack[0].continue();
+                });
+                this.stack[0].wait();
             }
             this.stack.unshift(nextFrame);
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[], method: TypeSystem.TypeMethod)
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], method: TypeSystem.TypeMethod)
         {
             super(memory, stack);
             this.method = method;

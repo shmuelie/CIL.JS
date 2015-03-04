@@ -9,7 +9,7 @@
 
     export class OpCode
     {
-        memory: MemorySystem.Memory;
+        memory: MemorySystem.IMemoryManger;
         stack: StackFrame[];
         lastOp: OpCode;
 
@@ -30,7 +30,7 @@
             return;
         }
 
-        constructor(memory: MemorySystem.Memory, stack: StackFrame[])
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             this.memory = memory;
             this.stack = stack;
