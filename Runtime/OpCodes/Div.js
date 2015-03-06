@@ -24,9 +24,9 @@ var CIL;
                     var value1 = this.stack[0].evaluationStack.pop();
 
                     if (value1.type === 2 /* SignedInt */ && value2.type === 2 /* SignedInt */) {
-                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, value1.signedInt.intDivition(value2.signedInt).q));
+                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, value1.signedInt.division(value2.signedInt).q));
                     } else if (value1.type === 3 /* UnsignedInt */ && value2.type === 3 /* UnsignedInt */) {
-                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(3 /* UnsignedInt */, value1.unsignedInt.intDivition(value2.unsignedInt).q));
+                        this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(3 /* UnsignedInt */, value1.unsignedInt.division(value2.unsignedInt).q));
                     } else if (value1.type === 1 /* Float */ && value2.type === 1 /* Float */) {
                         this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(1 /* Float */, value1.float / value2.float));
                     } else {

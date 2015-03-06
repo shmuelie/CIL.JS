@@ -25,7 +25,7 @@ var CIL;
 
                     if (value1.type === 2 /* SignedInt */ && value2.type === 2 /* SignedInt */) {
                         try  {
-                            this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, value1.signedInt.intAdd(value2.signedInt, true)));
+                            this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, value1.signedInt.add(value2.signedInt, true)));
                         } catch (ex) {
                             if (ex.message === "OVERFLOW") {
                                 throw ex;
@@ -33,7 +33,7 @@ var CIL;
                         }
                     } else if (value1.type === 3 /* UnsignedInt */ && value2.type === 3 /* UnsignedInt */) {
                         try  {
-                            this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(3 /* UnsignedInt */, value1.unsignedInt.intAdd(value2.unsignedInt, true)));
+                            this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(3 /* UnsignedInt */, value1.unsignedInt.add(value2.unsignedInt, true)));
                         } catch (ex) {
                             if (ex.message === "OVERFLOW") {
                                 throw ex;

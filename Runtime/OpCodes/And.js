@@ -38,15 +38,15 @@ var CIL;
                         throw new TypeError("add (0x58) called on operands of type " + Runtime.StackFrameValueType[value1.type] + " and " + Runtime.StackFrameValueType[value2.type] + ".");
                     }
 
-                    var persision = Math.max(int1.length, int2.length);
-                    int1 = int1.padInt(persision);
-                    int2 = int2.padInt(persision);
+                    var persision = Math.max(int1.bits.length, int2.bits.length);
+                    var intBits1 = Runtime.ArrayHelpers.padInt(int1.bits, persision);
+                    var intBits2 = Runtime.ArrayHelpers.padInt(int2.bits, persision);
 
                     var result = [];
                     for (var i = 0; i < persision; i++) {
-                        result.push(int1[i] && int2[i]);
+                        result.push(intBits1[i] && intBits2[i]);
                     }
-                    this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(value1.type, result));
+                    this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(type, result));
                 };
                 return And;
             })(Runtime.OpCode);

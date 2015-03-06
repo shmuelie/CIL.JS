@@ -16,11 +16,11 @@
 
             if (value1.type === StackFrameValueType.SignedInt && value2.type === StackFrameValueType.SignedInt)
             {
-                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, value1.signedInt.intAdd(value2.signedInt)));
+                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, value1.signedInt.add(value2.signedInt)));
             }
             else if (value1.type === StackFrameValueType.UnsignedInt && value2.type === StackFrameValueType.UnsignedInt)
             {
-                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.UnsignedInt, value1.unsignedInt.intAdd(value2.unsignedInt)));
+                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.UnsignedInt, value1.unsignedInt.add(value2.unsignedInt)));
             }
             else if (value1.type === StackFrameValueType.Float && value2.type === StackFrameValueType.Float)
             {

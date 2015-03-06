@@ -13,8 +13,8 @@
         {
             var value2: StackFrameValue = this.stack[0].evaluationStack.pop();
             var value1: StackFrameValue = this.stack[0].evaluationStack.pop();
-            var int1: boolean[];
-            var int2: boolean[];
+            var int1: Integer;
+            var int2: Integer;
             var type: StackFrameValueType;
 
             if (value1.type === StackFrameValueType.SignedInt && value2.type === StackFrameValueType.SignedInt)
@@ -34,16 +34,16 @@
                 throw new TypeError("add (0x58) called on operands of type " + StackFrameValueType[value1.type] + " and " + StackFrameValueType[value2.type] + ".");
             }
 
-            var persision: number = Math.max(int1.length, int2.length);
-            int1 = int1.padInt(persision);
-            int2 = int2.padInt(persision);
+            var persision: number = Math.max(int1.bits.length, int2.bits.length);
+            var intBits1: boolean[] = ArrayHelpers.padInt(int1.bits, persision);
+            var intBits2: boolean[] = ArrayHelpers.padInt(int2.bits, persision);
 
             var result: boolean[] = [];
             for (var i = 0; i < persision; i++)
             {
-                result.push(int1[i] && int2[i]);
+                result.push(intBits1[i] && intBits2[i]);
             }
-            this.stack[0].evaluationStack.push(new StackFrameValue(value1.type, result));
+            this.stack[0].evaluationStack.push(new StackFrameValue(type, result));
         }
 
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])

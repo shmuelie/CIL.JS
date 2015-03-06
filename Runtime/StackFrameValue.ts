@@ -7,8 +7,8 @@
         type: StackFrameValueType;
         pointer: number;
         float: number;
-        signedInt: boolean[];
-        unsignedInt: boolean[];
+        signedInt: Integer;
+        unsignedInt: Integer;
         methodPointer: TypeSystem.TypeMethod;
         fieldPointer: TypeSystem.TypeField;
 

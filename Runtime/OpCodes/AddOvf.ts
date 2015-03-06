@@ -18,7 +18,7 @@
             {
                 try
                 {
-                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, value1.signedInt.intAdd(value2.signedInt, true)));
+                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, value1.signedInt.add(value2.signedInt, true)));
                 }
                 catch (ex)
                 {
@@ -33,7 +33,7 @@
             {
                 try
                 {
-                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.UnsignedInt, value1.unsignedInt.intAdd(value2.unsignedInt, true)));
+                this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.UnsignedInt, value1.unsignedInt.add(value2.unsignedInt, true)));
                 }
                 catch (ex)
                 {
