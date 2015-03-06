@@ -152,6 +152,48 @@
 
                 return { q: new Integer(Q), r: new Integer(R) };
             };
+
+            Integer.prototype.toBytes = function () {
+                var conv;
+                if (this.bits.length <= 32) {
+                    conv = Runtime.ArrayHelpers.padInt(this.bits, 32);
+                } else {
+                    conv = Runtime.ArrayHelpers.padInt(this.bits, 64);
+                }
+
+                var result = [];
+
+                var bytes = conv.length / 8;
+                for (var i = 0; i < bytes; i++) {
+                    var byte = 0;
+                    for (var j = 0; j < 8; i++) {
+                        if (conv[i * 8 + j]) {
+                            byte += Math.pow(2, 7 - j);
+                        }
+                    }
+                    result.push(byte);
+                }
+
+                return result;
+            };
+
+            Integer.fromBytes = function (bytes) {
+                var bits = [];
+                for (var i = 0; i < bytes.length; i++) {
+                    var byte = bytes[i];
+                    for (var j = 7; j >= 0; j--) {
+                        var temp = byte - Math.pow(2, j);
+                        if (temp >= 0) {
+                            byte = temp;
+                            bits.push(true);
+                        } else {
+                            bits.push(false);
+                        }
+                    }
+                }
+
+                return new Integer(bits);
+            };
             return Integer;
         })();
         Runtime.Integer = Integer;

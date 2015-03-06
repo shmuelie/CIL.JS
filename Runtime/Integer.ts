@@ -196,5 +196,60 @@
 
             return { q: new Integer(Q), r: new Integer(R) };
         }
+
+        toBytes(): number[]
+        {
+            var conv: boolean[];
+            if (this.bits.length <= 32)
+            {
+                conv = ArrayHelpers.padInt(this.bits, 32);
+            }
+            else
+            {
+                conv = ArrayHelpers.padInt(this.bits, 64);
+            }
+
+            var result: number[] = [];
+
+            var bytes: number = conv.length / 8;
+            for (var i: number = 0; i < bytes; i++)
+            {
+                var byte: number = 0;
+                for (var j: number = 0; j < 8; i++)
+                {
+                    if (conv[i * 8 + j])
+                    {
+                        byte += Math.pow(2, 7 - j);
+                    }
+                }
+                result.push(byte);
+            }
+
+            return result;
+        }
+
+        static fromBytes(bytes: number[]): Integer
+        {
+            var bits: boolean[] = [];
+            for (var i: number = 0; i < bytes.length; i++)
+            {
+                var byte: number = bytes[i];
+                for (var j: number = 7; j >= 0; j--)
+                {
+                    var temp: number = byte - Math.pow(2, j);
+                    if (temp >= 0)
+                    {
+                        byte = temp;
+                        bits.push(true);
+                    }
+                    else
+                    {
+                        bits.push(false);
+                    }
+                }
+            }
+
+            return new Integer(bits);
+        }
     }
 } 
