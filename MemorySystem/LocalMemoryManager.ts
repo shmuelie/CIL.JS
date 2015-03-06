@@ -6,8 +6,8 @@
     {
         static NULL: number = -1;
 
-        objects: MemoryObject[];
-        freeList: number[];
+        private objects: MemoryObject[];
+        private freeList: number[];
 
         constructor()
         {
@@ -27,6 +27,17 @@
                 this.objects[obj.id] = obj;
             }
             callback(obj.id);
+        }
+
+        getObject(pointer: number, callback: (obj: MemoryObject) => void): void
+        {
+            callback(this.objects[pointer]);
+        }
+
+        setObject(obj: MemoryObject, callback: () => void): void
+        {
+            this.objects[obj.id] = obj;
+            callback();
         }
 
         assignField(pointer: number, name: string, value: number, callback: () => void): void

@@ -18,6 +18,15 @@
                 callback(obj.id);
             };
 
+            LocalMemoryManager.prototype.getObject = function (pointer, callback) {
+                callback(this.objects[pointer]);
+            };
+
+            LocalMemoryManager.prototype.setObject = function (obj, callback) {
+                this.objects[obj.id] = obj;
+                callback();
+            };
+
             LocalMemoryManager.prototype.assignField = function (pointer, name, value, callback) {
                 var _this = this;
                 var oldPointer = this.objects[pointer].fields[name];
