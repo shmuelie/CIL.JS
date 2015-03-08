@@ -23,6 +23,7 @@
     <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
     <TypeScriptCompile Include="Runtime\Integer.ts" />
     <TypeScriptCompile Include="Runtime\ArrayHelpers.ts" />
+    <TypeScriptCompile Include="Runtime\NumberHelpers.ts" />
     <TypeScriptCompile Include="Runtime\OpCode.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Add.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\AddOvf.ts" />
@@ -49,6 +50,8 @@
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValue.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValueType.ts" />
+    <TypeScriptCompile Include="Tests\integerTests.ts" />
+    <TypeScriptCompile Include="Tests\qunit.d.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
@@ -57,6 +60,9 @@
     <TypeScriptCompile Include="TypeSystem\TypeMethodArgument.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeMethodBody.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeProperty.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\TestRunner.htm" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
