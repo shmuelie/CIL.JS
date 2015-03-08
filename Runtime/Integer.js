@@ -142,6 +142,9 @@
                     if (Q[0]) {
                         R.shift();
                         R.push(true);
+                    } else {
+                        R.shift();
+                        R.push(false);
                     }
                     Q.shift();
                     Q.push(false);
