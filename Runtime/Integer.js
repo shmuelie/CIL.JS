@@ -12,7 +12,7 @@
             var overflow = false;
             var result = [];
 
-            for (var i = persision; i >= 0; i--) {
+            for (var i = persision - 1; i >= 0; i--) {
                 if (paddedThis[i] && paddedOther[i] && overflow) {
                     result.unshift(true);
                 } else if (paddedThis[i] && paddedOther[i] && !overflow) {

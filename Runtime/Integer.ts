@@ -12,7 +12,7 @@
         var overflow: boolean = false;
         var result: boolean[] = [];
 
-        for (var i: number = persision; i >= 0; i--)
+        for (var i: number = persision - 1; i >= 0; i--)
         {
             if (paddedThis[i] && paddedOther[i] && overflow)
             {
