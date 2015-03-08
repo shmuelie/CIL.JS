@@ -58,6 +58,10 @@
             function Integer(bits) {
                 this.bits = bits;
             }
+            Integer.prototype.negate = function () {
+                return new Integer(negate(this.bits, this.bits.length));
+            };
+
             Integer.prototype.add = function (other, overflowThrow) {
                 if (typeof overflowThrow === "undefined") { overflowThrow = false; }
                 return new Integer(addBits(this.bits, other.bits, overflowThrow));

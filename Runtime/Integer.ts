@@ -82,6 +82,11 @@
             this.bits = bits;
         }
 
+        negate(): Integer
+        {
+            return new Integer(negate(this.bits, this.bits.length));
+        }
+
         add(other: Integer, overflowThrow: boolean = false): Integer
         {
             return new Integer(addBits(this.bits, other.bits, overflowThrow));
