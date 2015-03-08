@@ -166,7 +166,7 @@
                 var bytes = conv.length / 8;
                 for (var i = 0; i < bytes; i++) {
                     var byte = 0;
-                    for (var j = 0; j < 8; i++) {
+                    for (var j = 0; j < 8; j++) {
                         if (conv[i * 8 + j]) {
                             byte += Math.pow(2, 7 - j);
                         }

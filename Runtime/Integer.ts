@@ -215,7 +215,7 @@
             for (var i: number = 0; i < bytes; i++)
             {
                 var byte: number = 0;
-                for (var j: number = 0; j < 8; i++)
+                for (var j: number = 0; j < 8; j++)
                 {
                     if (conv[i * 8 + j])
                     {
