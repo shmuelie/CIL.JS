@@ -45,9 +45,9 @@
         function subtractBits(bits1, bits2) {
             var persision = Math.max(bits1.length, bits2.length);
             var paddedThis = Runtime.ArrayHelpers.padInt(bits1, persision);
-            var paddedOther = Runtime.ArrayHelpers.padInverseInt(bits2, persision);
+            var paddedOther = Runtime.ArrayHelpers.padInverseInt(addBits(bits2, [true], false), persision);
 
-            return addBits(addBits(paddedThis, paddedOther, false), [true], false);
+            return addBits(paddedThis, paddedOther, false);
         }
 
         var Integer = (function () {
