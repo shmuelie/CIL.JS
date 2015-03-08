@@ -63,9 +63,14 @@
     {
         var persision: number = Math.max(bits1.length, bits2.length);
         var paddedThis: boolean[] = ArrayHelpers.padInt(bits1, persision);
-        var paddedOther: boolean[] = ArrayHelpers.padInverseInt(addBits(bits2, [true], false), persision);
+        var paddedOther: boolean[] = negate(bits2, persision);
 
         return addBits(paddedThis, paddedOther, false);
+    }
+
+    function negate(bits: boolean[], length: number): boolean[]
+    {
+        return ArrayHelpers.padInverseInt(addBits(bits, [true], false), length);
     }
 
     export class Integer
@@ -100,17 +105,13 @@
             {
                 A.push(paddedThis[i]);
             }
-            while (A.length <= persision * 2 + 1)
+            while (A.length < persision * 2 + 1)
             {
                 A.push(false);
             }
 
-            var S: boolean[] = [];
-            for (i = 0; i < paddedThis.length; i++)
-            {
-                S.push(!paddedThis[i]);
-            }
-            while (A.length <= persision * 2 + 1)
+            var S: boolean[] = negate(paddedThis, persision);
+            while (S.length < persision * 2 + 1)
             {
                 S.push(false);
             }
@@ -120,6 +121,7 @@
             {
                 P.push(paddedOther[i]);
             }
+            P.push(false);
             while (P.length < persision * 2 + 1)
             {
                 P.unshift(false);
@@ -142,7 +144,7 @@
                 }
 
                 value.pop();
-                value.unshift(false);
+                value.unshift(value[0]);
 
                 P = value;
             }

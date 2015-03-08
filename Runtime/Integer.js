@@ -45,9 +45,13 @@
         function subtractBits(bits1, bits2) {
             var persision = Math.max(bits1.length, bits2.length);
             var paddedThis = Runtime.ArrayHelpers.padInt(bits1, persision);
-            var paddedOther = Runtime.ArrayHelpers.padInverseInt(addBits(bits2, [true], false), persision);
+            var paddedOther = negate(bits2, persision);
 
             return addBits(paddedThis, paddedOther, false);
+        }
+
+        function negate(bits, length) {
+            return Runtime.ArrayHelpers.padInverseInt(addBits(bits, [true], false), length);
         }
 
         var Integer = (function () {
@@ -74,15 +78,12 @@
                 for (i = 0; i < paddedThis.length; i++) {
                     A.push(paddedThis[i]);
                 }
-                while (A.length <= persision * 2 + 1) {
+                while (A.length < persision * 2 + 1) {
                     A.push(false);
                 }
 
-                var S = [];
-                for (i = 0; i < paddedThis.length; i++) {
-                    S.push(!paddedThis[i]);
-                }
-                while (A.length <= persision * 2 + 1) {
+                var S = negate(paddedThis, persision);
+                while (S.length < persision * 2 + 1) {
                     S.push(false);
                 }
 
@@ -90,6 +91,7 @@
                 for (i = 0; i < paddedOther.length; i++) {
                     P.push(paddedOther[i]);
                 }
+                P.push(false);
                 while (P.length < persision * 2 + 1) {
                     P.unshift(false);
                 }
@@ -105,7 +107,7 @@
                     }
 
                     value.pop();
-                    value.unshift(false);
+                    value.unshift(value[0]);
 
                     P = value;
                 }
