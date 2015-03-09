@@ -5,7 +5,7 @@ var CIL;
     (function (Tests) {
         "use strict";
 
-        QUnit.module("Integer Tests");
+        QUnit.module("Integer");
 
         QUnit.test("round trip", function (assert) {
             var value = [128, 55, 44, 55];

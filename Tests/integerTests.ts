@@ -4,7 +4,7 @@ module CIL.Tests
 {
     "use strict";
 
-    QUnit.module("Integer Tests");
+    QUnit.module("Integer");
 
     QUnit.test("round trip", function (assert: QUnitAssert)
     {
