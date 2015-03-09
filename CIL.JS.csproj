@@ -50,6 +50,7 @@
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValue.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValueType.ts" />
+    <TypeScriptCompile Include="Tests\floatingTest.ts" />
     <TypeScriptCompile Include="Tests\integerTests.ts" />
     <TypeScriptCompile Include="Tests\qunit.d.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
