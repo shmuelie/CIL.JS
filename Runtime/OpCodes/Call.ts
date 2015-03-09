@@ -45,10 +45,14 @@
             this.stack.unshift(nextFrame);
         }
 
-        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], method: TypeSystem.TypeMethod)
+        parseArguments(bytes: number[]): void
+        {
+            throw new Error("System.NotImplented");
+        }
+
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
-            this.method = method;
         }
     }
 

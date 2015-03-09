@@ -4,7 +4,7 @@
 
     export class LdcI4 extends OpCode
     {
-        private num: boolean[];
+        private num: Integer;
 
         number(): number
         {
@@ -21,10 +21,14 @@
             this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, this.num));
         }
 
-        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], num: boolean[])
+        parseArguments(bytes: number[]): void
+        {
+            this.num = Integer.fromBytes(bytes);
+        }
+
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
-            this.num = num;
         }
     }
 

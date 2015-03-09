@@ -50,10 +50,14 @@
             }
         }
 
-        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], code: number)
+        parseArguments(bytes: number[])
+        {
+            this.code = bytes[0];
+        }
+
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
-            this.code = code;
         }
     }
     OpCode.opCodes[No.prototype.number()] = <any>No;

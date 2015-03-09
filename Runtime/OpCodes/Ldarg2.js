@@ -13,7 +13,8 @@ var CIL;
             var Ldarg2 = (function (_super) {
                 __extends(Ldarg2, _super);
                 function Ldarg2(memory, stack) {
-                    _super.call(this, memory, stack, 2);
+                    _super.call(this, memory, stack);
+                    this.setArg(2);
                 }
                 Ldarg2.prototype.number = function () {
                     return 4;

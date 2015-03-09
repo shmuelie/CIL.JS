@@ -12,9 +12,8 @@ var CIL;
 
             var Ldarg = (function (_super) {
                 __extends(Ldarg, _super);
-                function Ldarg(memory, stack, argIndex) {
+                function Ldarg(memory, stack) {
                     _super.call(this, memory, stack);
-                    this.argIndex = argIndex;
                 }
                 Ldarg.prototype.number = function () {
                     return 65033;
@@ -26,6 +25,21 @@ var CIL;
 
                 Ldarg.prototype.execute = function () {
                     this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
+                };
+
+                Ldarg.prototype.parseArguments = function (bytes) {
+                    var int = Runtime.Integer.fromBytes(bytes);
+                    var value = 0;
+                    for (var i = 0; i < int.bits.length; i++) {
+                        if (int.bits[i]) {
+                            value += Math.pow(2, int.bits.length - 1 - i);
+                        }
+                    }
+                    this.argIndex = value;
+                };
+
+                Ldarg.prototype.setArg = function (argIndex) {
+                    this.argIndex = argIndex;
                 };
                 return Ldarg;
             })(Runtime.OpCode);

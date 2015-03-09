@@ -27,7 +27,12 @@
             return;
         }
 
-        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[], thisType: TypeSystem.Type)
+        parseArguments(bytes: number[]): void
+        {
+            return;
+        }
+
+        constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }

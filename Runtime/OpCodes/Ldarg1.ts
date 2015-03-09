@@ -16,7 +16,8 @@
 
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
-            super(memory, stack, 1);
+            super(memory, stack);
+            this.setArg(1);
         }
     }
 

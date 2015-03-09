@@ -19,6 +19,10 @@
             OpCode.prototype.execute = function () {
                 return;
             };
+
+            OpCode.prototype.parseArguments = function (bytes) {
+                return;
+            };
             OpCode.opCodes = {};
             return OpCode;
         })();

@@ -12,9 +12,8 @@ var CIL;
 
             var LdcI4 = (function (_super) {
                 __extends(LdcI4, _super);
-                function LdcI4(memory, stack, num) {
+                function LdcI4(memory, stack) {
                     _super.call(this, memory, stack);
-                    this.num = num;
                 }
                 LdcI4.prototype.number = function () {
                     return 32;
@@ -26,6 +25,10 @@ var CIL;
 
                 LdcI4.prototype.execute = function () {
                     this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, this.num));
+                };
+
+                LdcI4.prototype.parseArguments = function (bytes) {
+                    this.num = Runtime.Integer.fromBytes(bytes);
                 };
                 return LdcI4;
             })(Runtime.OpCode);

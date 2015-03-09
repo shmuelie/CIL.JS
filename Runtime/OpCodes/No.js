@@ -12,9 +12,8 @@ var CIL;
 
             var No = (function (_super) {
                 __extends(No, _super);
-                function No(memory, stack, code) {
+                function No(memory, stack) {
                     _super.call(this, memory, stack);
-                    this.code = code;
                 }
                 No.prototype.number = function () {
                     return 65049;
@@ -52,6 +51,10 @@ var CIL;
                         IndexOutOfRangeException can optionally still be thrown if the check would fail.
                         */
                     }
+                };
+
+                No.prototype.parseArguments = function (bytes) {
+                    this.code = bytes[0];
                 };
                 return No;
             })(Runtime.OpCode);

@@ -12,9 +12,8 @@ var CIL;
 
             var Call = (function (_super) {
                 __extends(Call, _super);
-                function Call(memory, stack, method) {
+                function Call(memory, stack) {
                     _super.call(this, memory, stack);
-                    this.method = method;
                 }
                 Call.prototype.number = function () {
                     return 40;
@@ -45,6 +44,10 @@ var CIL;
                         this.stack[0].wait();
                     }
                     this.stack.unshift(nextFrame);
+                };
+
+                Call.prototype.parseArguments = function (bytes) {
+                    throw new Error("System.NotImplented");
                 };
                 return Call;
             })(Runtime.OpCode);

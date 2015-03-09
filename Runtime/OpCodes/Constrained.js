@@ -12,7 +12,7 @@ var CIL;
 
             var Constrained = (function (_super) {
                 __extends(Constrained, _super);
-                function Constrained(memory, stack, thisType) {
+                function Constrained(memory, stack) {
                     _super.call(this, memory, stack);
                 }
                 Constrained.prototype.number = function () {
@@ -32,6 +32,10 @@ var CIL;
                     If thisType is a value type and thisType does not implement method then
                     ptr is dereferenced, boxed, and passed as the ‘this’ pointer to the callvirt of method
                     */
+                    return;
+                };
+
+                Constrained.prototype.parseArguments = function (bytes) {
                     return;
                 };
                 return Constrained;
