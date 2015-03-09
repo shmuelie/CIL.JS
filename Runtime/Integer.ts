@@ -240,6 +240,59 @@
             return result;
         }
 
+        toNumber(): number
+        {
+            var num: number = 0;
+            for (var i: number = 0; i < this.bits.length; i++)
+            {
+                if (this.bits[i])
+                {
+                    num += Math.pow(2, this.bits.length - 1 - i);
+                }
+            }
+            return num;
+        }
+
+        static fromNumber(num: number): Integer
+        {
+            if (num === 0)
+            {
+                return new Integer([false]);
+            }
+            var bits: boolean[] = [];
+            var maxPower: number = 0;
+            for (var i: number = 0; i < 64; i++)
+            {
+                if (num - Math.pow(2, i) >= 0)
+                {
+                    maxPower = i;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (var j: number = maxPower; j >= 0; j--)
+            {
+                var v: number = num - Math.pow(2, j);
+                if (v >= 0)
+                {
+                    bits.push(true);
+                    num = v;
+                }
+                else
+                {
+                    bits.push(false);
+                }
+            }
+            bits.unshift(false);
+            if (num > 0)
+            {
+                throw new RangeError("Overflow");
+            }
+            return new Integer(bits);
+        }
+
         static fromBytes(bytes: number[]): Integer
         {
             var bits: boolean[] = [];

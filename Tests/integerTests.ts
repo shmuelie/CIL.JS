@@ -22,6 +22,22 @@ module CIL.Tests
         assert.propEqual(i.bits, bits, "conversion to bit array should result in expected bit array");
     });
 
+    QUnit.test("to number", function (assert: QUnitAssert)
+    {
+        var bytes: number[] = [0x07, 0x5B, 0xCD, 0x15];
+        var int: Integer = Integer.fromBytes(bytes);
+        var num: number = int.toNumber();
+        assert.strictEqual(num, 123456789, "bytes should convert to expected number");
+    });
+
+    QUnit.test("from number", function (assert: QUnitAssert)
+    {
+        var int: Integer = Integer.fromNumber(123456789);
+        var bytes: number[] = int.toBytes();
+        var expected: number[] = [0x07, 0x5B, 0xCD, 0x15];
+        assert.propEqual(bytes, expected, "number should convert to expected integer");
+    });
+
     QUnit.test("addition", function (assert: QUnitAssert)
     {
         var bytes1: number[] = [0x07, 0x5B, 0xCD, 0x15];

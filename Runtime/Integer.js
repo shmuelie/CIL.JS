@@ -186,6 +186,45 @@
                 return result;
             };
 
+            Integer.prototype.toNumber = function () {
+                var num = 0;
+                for (var i = 0; i < this.bits.length; i++) {
+                    if (this.bits[i]) {
+                        num += Math.pow(2, this.bits.length - 1 - i);
+                    }
+                }
+                return num;
+            };
+
+            Integer.fromNumber = function (num) {
+                if (num === 0) {
+                    return new Integer([false]);
+                }
+                var bits = [];
+                var maxPower = 0;
+                for (var i = 0; i < 64; i++) {
+                    if (num - Math.pow(2, i) >= 0) {
+                        maxPower = i;
+                    } else {
+                        break;
+                    }
+                }
+                for (var j = maxPower; j >= 0; j--) {
+                    var v = num - Math.pow(2, j);
+                    if (v >= 0) {
+                        bits.push(true);
+                        num = v;
+                    } else {
+                        bits.push(false);
+                    }
+                }
+                bits.unshift(false);
+                if (num > 0) {
+                    throw new RangeError("Overflow");
+                }
+                return new Integer(bits);
+            };
+
             Integer.fromBytes = function (bytes) {
                 var bits = [];
                 for (var i = 0; i < bytes.length; i++) {

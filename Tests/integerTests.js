@@ -21,6 +21,20 @@ var CIL;
             assert.propEqual(i.bits, bits, "conversion to bit array should result in expected bit array");
         });
 
+        QUnit.test("to number", function (assert) {
+            var bytes = [0x07, 0x5B, 0xCD, 0x15];
+            var int = Integer.fromBytes(bytes);
+            var num = int.toNumber();
+            assert.strictEqual(num, 123456789, "bytes should convert to expected number");
+        });
+
+        QUnit.test("from number", function (assert) {
+            var int = Integer.fromNumber(123456789);
+            var bytes = int.toBytes();
+            var expected = [0x07, 0x5B, 0xCD, 0x15];
+            assert.propEqual(bytes, expected, "number should convert to expected integer");
+        });
+
         QUnit.test("addition", function (assert) {
             var bytes1 = [0x07, 0x5B, 0xCD, 0x15];
             var bytes2 = [0x07, 0x5B, 0xCD, 0x15];
