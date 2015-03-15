@@ -4,7 +4,7 @@
 
     export class ArrayHelpers
     {
-        static padInt(bits: boolean[], length: number): boolean[]
+        static padInt(bits: boolean[], length: number, extender?: boolean): boolean[]
         {
             var paddedThis: boolean[] = [];
             while (paddedThis.length < length)
@@ -15,14 +15,14 @@
                 }
                 else
                 {
-                    paddedThis.unshift(bits[0]);
+                    paddedThis.unshift(extender === undefined ? bits[0] : extender);
                 }
             }
 
             return paddedThis;
         }
 
-        static padInverseInt(bits: boolean[], length: number): boolean[]
+        static padInverseInt(bits: boolean[], length: number, extender?: boolean): boolean[]
         {
             var paddedThis: boolean[] = [];
             while (paddedThis.length < length)
@@ -33,7 +33,7 @@
                 }
                 else
                 {
-                    paddedThis.unshift(!bits[0]);
+                    paddedThis.unshift(extender === undefined ? !bits[0] : extender);
                 }
             }
 

@@ -6,26 +6,26 @@
         var ArrayHelpers = (function () {
             function ArrayHelpers() {
             }
-            ArrayHelpers.padInt = function (bits, length) {
+            ArrayHelpers.padInt = function (bits, length, extender) {
                 var paddedThis = [];
                 while (paddedThis.length < length) {
                     if (paddedThis.length < bits.length) {
                         paddedThis.unshift(bits[bits.length - paddedThis.length - 1]);
                     } else {
-                        paddedThis.unshift(bits[0]);
+                        paddedThis.unshift(extender === undefined ? bits[0] : extender);
                     }
                 }
 
                 return paddedThis;
             };
 
-            ArrayHelpers.padInverseInt = function (bits, length) {
+            ArrayHelpers.padInverseInt = function (bits, length, extender) {
                 var paddedThis = [];
                 while (paddedThis.length < length) {
                     if (paddedThis.length < bits.length) {
                         paddedThis.unshift(!bits[bits.length - paddedThis.length - 1]);
                     } else {
-                        paddedThis.unshift(!bits[0]);
+                        paddedThis.unshift(extender === undefined ? !bits[0] : extender);
                     }
                 }
 
