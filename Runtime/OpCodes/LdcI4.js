@@ -24,7 +24,7 @@ var CIL;
                 };
 
                 LdcI4.prototype.execute = function (bytes) {
-                    var num = Runtime.Integer.fromBytes(bytes);
+                    var num = Runtime.Integer.fromBytes(bytes, 32 /* bit32 */);
                     this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, num));
                 };
                 return LdcI4;

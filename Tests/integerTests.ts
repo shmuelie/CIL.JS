@@ -10,7 +10,7 @@ module CIL.Tests
     QUnit.test("round trip", function (assert: QUnitAssert)
     {
         var value: number[] = [128, 55, 44, 55];
-        var i: Integer = Integer.fromBytes(value);
+        var i: Integer = Integer.fromBytes(value, Bitness.bit32);
         var comp: number[] = i.toBytes();
         assert.propEqual(comp, value, "round trip should result in equal arrays");
     });
@@ -19,14 +19,14 @@ module CIL.Tests
     {
         var bytes: number[] = [0x07, 0x5B, 0xCD, 0x15];
         var bits: boolean[] = [false, false, false, false, false, true, true, true, false, true, false, true, true, false, true, true, true, true, false, false, true, true, false, true, false, false, false, true, false, true, false, true];
-        var i: Integer = Integer.fromBytes(bytes);
+        var i: Integer = Integer.fromBytes(bytes, Bitness.bit32);
         assert.propEqual(i.bits, bits, "conversion to bit array should result in expected bit array");
     });
 
     QUnit.test("to number", function (assert: QUnitAssert)
     {
         var bytes: number[] = [0x07, 0x5B, 0xCD, 0x15];
-        var int: Integer = Integer.fromBytes(bytes);
+        var int: Integer = Integer.fromBytes(bytes, Bitness.bit32);
         var num: number = int.toNumber();
         assert.strictEqual(num, 123456789, "bytes should convert to expected number");
     });
@@ -34,7 +34,7 @@ module CIL.Tests
     QUnit.test("to negative number", function (assert: QUnitAssert)
     {
         var bytes: number[] = [0xF8, 0xA4, 0x32, 0xEB];
-        var int: Integer = Integer.fromBytes(bytes);
+        var int: Integer = Integer.fromBytes(bytes, Bitness.bit32);
         var num: number = int.toNumber();
         assert.strictEqual(num, -123456789, "bytes should convert to expected number");
     });
@@ -59,8 +59,8 @@ module CIL.Tests
     {
         var bytes1: number[] = [0x07, 0x5B, 0xCD, 0x15];
         var bytes2: number[] = [0x07, 0x5B, 0xCD, 0x15];
-        var int1: Integer = Integer.fromBytes(bytes1);
-        var int2: Integer = Integer.fromBytes(bytes2);
+        var int1: Integer = Integer.fromBytes(bytes1, Bitness.bit32);
+        var int2: Integer = Integer.fromBytes(bytes2, Bitness.bit32);
         var int3: Integer = int1.add(int2);
         var result: number[] = int3.toBytes();
         var expected: number[] = [0x0E, 0xB7, 0x9A, 0x2A];
@@ -71,8 +71,8 @@ module CIL.Tests
     {
         var bytes1: number[] = [0x07, 0x5B, 0xCD, 0x15];
         var bytes2: number[] = [0x07, 0x5B, 0xCD, 0x16];
-        var int1: Integer = Integer.fromBytes(bytes1);
-        var int2: Integer = Integer.fromBytes(bytes2);
+        var int1: Integer = Integer.fromBytes(bytes1, Bitness.bit32);
+        var int2: Integer = Integer.fromBytes(bytes2, Bitness.bit32);
         var int3: Integer = int1.subtract(int2);
         var result: number[] = int3.toBytes();
         var expected: number[] = [0xFF, 0xFF, 0xFF, 0xFF];
@@ -83,8 +83,8 @@ module CIL.Tests
     {
         var bytes1: number[] = [0x07, 0x5B, 0xCD, 0x15];
         var bytes2: number[] = [0x00, 0x00, 0x00, 0x02];
-        var int1: Integer = Integer.fromBytes(bytes1);
-        var int2: Integer = Integer.fromBytes(bytes2);
+        var int1: Integer = Integer.fromBytes(bytes1, Bitness.bit32);
+        var int2: Integer = Integer.fromBytes(bytes2, Bitness.bit32);
         var int3: Integer = int1.mutliply(int2);
         var result: number[] = int3.toBytes();
         var expected: number[] = [0x0E, 0xB7, 0x9A, 0x2A];
@@ -95,8 +95,8 @@ module CIL.Tests
     {
         var bytes1: number[] = [0x0E, 0xB7, 0x9A, 0x2A];
         var bytes2: number[] = [0x00, 0x00, 0x00, 0x02];
-        var int1: Integer = Integer.fromBytes(bytes1);
-        var int2: Integer = Integer.fromBytes(bytes2);
+        var int1: Integer = Integer.fromBytes(bytes1, Bitness.bit32);
+        var int2: Integer = Integer.fromBytes(bytes2, Bitness.bit32);
         var int3: Integer = int1.division(int2).q;
         var result: number[] = int3.toBytes();
         var expected: number[] = [0x07, 0x5B, 0xCD, 0x15];
@@ -106,7 +106,7 @@ module CIL.Tests
     QUnit.test("negate", function (assert: QUnitAssert)
     {
         var bytes: number[] = [0x07, 0x5B, 0xCD, 0x15];
-        var int1: Integer = Integer.fromBytes(bytes);
+        var int1: Integer = Integer.fromBytes(bytes, Bitness.bit32);
         var int2: Integer = int1.negate();
         var result: number[] = int2.toBytes();
         var expected: number[] = [0xF8, 0xA4, 0x32, 0xEB];

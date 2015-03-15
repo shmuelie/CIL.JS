@@ -16,7 +16,7 @@
 
         execute(bytes: number[]): void
         {
-            this.do(Integer.fromBytes(bytes).toNumber());
+            this.do(Integer.fromBytes(bytes, Bitness.bit16).toNumber());
         }
 
         do(argIndex: number): void

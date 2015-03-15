@@ -24,7 +24,7 @@ var CIL;
                 };
 
                 Ldarg.prototype.execute = function (bytes) {
-                    this.do(Runtime.Integer.fromBytes(bytes).toNumber());
+                    this.do(Runtime.Integer.fromBytes(bytes, 16 /* bit16 */).toNumber());
                 };
 
                 Ldarg.prototype.do = function (argIndex) {

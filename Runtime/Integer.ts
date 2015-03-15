@@ -333,7 +333,7 @@
             return int;
         }
 
-        static fromBytes(bytes: number[]): Integer
+        static fromBytes(bytes: number[], bitness: Bitness): Integer
         {
             var bits: boolean[] = [];
             for (var i: number = 0; i < bytes.length && i < 8; i++)
@@ -354,7 +354,7 @@
                 }
             }
 
-            return new Integer(bits, bytes.length > 4 ? Bitness.bit64 : Bitness.bit32);
+            return new Integer(bits, bitness);
         }
     }
 } 

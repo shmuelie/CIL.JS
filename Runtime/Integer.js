@@ -257,7 +257,7 @@
                 return int;
             };
 
-            Integer.fromBytes = function (bytes) {
+            Integer.fromBytes = function (bytes, bitness) {
                 var bits = [];
                 for (var i = 0; i < bytes.length && i < 8; i++) {
                     var byte = bytes[i];
@@ -272,7 +272,7 @@
                     }
                 }
 
-                return new Integer(bits, bytes.length > 4 ? 64 /* bit64 */ : 32 /* bit32 */);
+                return new Integer(bits, bitness);
             };
             return Integer;
         })();

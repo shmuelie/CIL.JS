@@ -16,7 +16,7 @@
 
         execute(bytes: number[]): void
         {
-            var num = Integer.fromBytes(bytes);
+            var num = Integer.fromBytes(bytes, Bitness.bit32);
             this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, num));
         }
 
