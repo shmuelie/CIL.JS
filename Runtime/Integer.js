@@ -54,21 +54,42 @@
             return Runtime.ArrayHelpers.padInverseInt(addBits(bits, [true], false), length);
         }
 
+        (function (Bitness) {
+            Bitness[Bitness["bit8"] = 8] = "bit8";
+            Bitness[Bitness["ubit8"] = -8] = "ubit8";
+            Bitness[Bitness["bit16"] = 16] = "bit16";
+            Bitness[Bitness["ubit16"] = -16] = "ubit16";
+            Bitness[Bitness["bit32"] = 32] = "bit32";
+            Bitness[Bitness["ubit32"] = -32] = "ubit32";
+            Bitness[Bitness["bit64"] = 64] = "bit64";
+            Bitness[Bitness["ubit64"] = -64] = "ubit64";
+        })(Runtime.Bitness || (Runtime.Bitness = {}));
+        var Bitness = Runtime.Bitness;
+
         var Integer = (function () {
-            function Integer(bits) {
-                this.bits = bits;
+            function Integer(bits, bitness) {
+                this.signed = bitness > 0;
+                bitness = Math.abs(bitness);
+                if (bits.length === bitness) {
+                    this.bits = bits;
+                } else {
+                    this.bits = Runtime.ArrayHelpers.padInt(bits, bitness);
+                }
             }
             Integer.prototype.negate = function () {
-                return new Integer(negate(this.bits, this.bits.length));
+                if (!this.signed) {
+                    return new Integer(Runtime.ArrayHelpers.padInverseInt(this.bits, this.bits.length), -this.bits.length);
+                }
+                return new Integer(negate(this.bits, this.bits.length), this.bits.length);
             };
 
             Integer.prototype.add = function (other, overflowThrow) {
                 if (typeof overflowThrow === "undefined") { overflowThrow = false; }
-                return new Integer(addBits(this.bits, other.bits, overflowThrow));
+                return new Integer(addBits(this.bits, other.bits, overflowThrow), this.bits.length);
             };
 
             Integer.prototype.subtract = function (other) {
-                return new Integer(subtractBits(this.bits, other.bits));
+                return new Integer(subtractBits(this.bits, other.bits), this.bits.length);
             };
 
             Integer.prototype.mutliply = function (other) {
@@ -122,7 +143,7 @@
                 for (i = 0; i < persision; i++) {
                     result.unshift(P.pop());
                 }
-                return new Integer(result);
+                return new Integer(result, this.bits.length);
             };
 
             Integer.prototype.division = function (other) {
@@ -159,7 +180,7 @@
                     }
                 }
 
-                return { q: new Integer(Q), r: new Integer(R) };
+                return { q: new Integer(Q, this.bits.length), r: new Integer(R, this.bits.length) };
             };
 
             Integer.prototype.toBytes = function () {
@@ -193,13 +214,18 @@
                         num += Math.pow(2, this.bits.length - 1 - i);
                     }
                 }
+                if (this.signed && this.bits[0]) {
+                    return num - Math.pow(2, this.bits.length);
+                }
                 return num;
             };
 
-            Integer.fromNumber = function (num) {
+            Integer.fromNumber = function (num, bitness) {
                 if (num === 0) {
-                    return new Integer([false]);
+                    return new Integer([false], bitness);
                 }
+                var negative = num < 0;
+                num = Math.abs(num);
                 var bits = [];
                 var maxPower = 0;
                 for (var i = 0; i < 64; i++) {
@@ -218,16 +244,22 @@
                         bits.push(false);
                     }
                 }
-                bits.unshift(false);
                 if (num > 0) {
                     throw new RangeError("Overflow");
                 }
-                return new Integer(bits);
+                if (maxPower > 32) {
+                    bitness = 64 /* bit64 */;
+                }
+                var int = new Integer(Runtime.ArrayHelpers.padInt(bits, bitness, false), bitness);
+                if (negative && bitness > 0) {
+                    return int.negate();
+                }
+                return int;
             };
 
             Integer.fromBytes = function (bytes) {
                 var bits = [];
-                for (var i = 0; i < bytes.length; i++) {
+                for (var i = 0; i < bytes.length && i < 8; i++) {
                     var byte = bytes[i];
                     for (var j = 7; j >= 0; j--) {
                         var temp = byte - Math.pow(2, j);
@@ -240,7 +272,7 @@
                     }
                 }
 
-                return new Integer(bits);
+                return new Integer(bits, bytes.length > 4 ? 64 /* bit64 */ : 32 /* bit32 */);
             };
             return Integer;
         })();

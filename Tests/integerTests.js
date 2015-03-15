@@ -1,4 +1,5 @@
 ﻿var Integer = CIL.Runtime.Integer;
+var Bitness = CIL.Runtime.Bitness;
 
 var CIL;
 (function (CIL) {
@@ -28,10 +29,24 @@ var CIL;
             assert.strictEqual(num, 123456789, "bytes should convert to expected number");
         });
 
+        QUnit.test("to negative number", function (assert) {
+            var bytes = [0xF8, 0xA4, 0x32, 0xEB];
+            var int = Integer.fromBytes(bytes);
+            var num = int.toNumber();
+            assert.strictEqual(num, -123456789, "bytes should convert to expected number");
+        });
+
         QUnit.test("from number", function (assert) {
-            var int = Integer.fromNumber(123456789);
+            var int = Integer.fromNumber(123456789, 32 /* bit32 */);
             var bytes = int.toBytes();
             var expected = [0x07, 0x5B, 0xCD, 0x15];
+            assert.propEqual(bytes, expected, "number should convert to expected integer");
+        });
+
+        QUnit.test("from negative number", function (assert) {
+            var int = Integer.fromNumber(-123456789, 32 /* bit32 */);
+            var bytes = int.toBytes();
+            var expected = [0xF8, 0xA4, 0x32, 0xEB];
             assert.propEqual(bytes, expected, "number should convert to expected integer");
         });
 

@@ -73,28 +73,54 @@
         return ArrayHelpers.padInverseInt(addBits(bits, [true], false), length);
     }
 
+    export enum Bitness
+    {
+        bit8 = 8,
+        ubit8 = -8,
+        bit16 = 16,
+        ubit16 = -16,
+        bit32 = 32,
+        ubit32 = -32,
+        bit64 = 64,
+        ubit64 = -64
+    }
+
     export class Integer
     {
         bits: boolean[];
+        signed: boolean;
 
-        constructor(bits: boolean[])
+        constructor(bits: boolean[], bitness: Bitness)
         {
-            this.bits = bits;
+            this.signed = bitness > 0;
+            bitness = Math.abs(bitness);
+            if (bits.length === bitness)
+            {
+                this.bits = bits;
+            }
+            else
+            {
+                this.bits = ArrayHelpers.padInt(bits, bitness);
+            }
         }
 
         negate(): Integer
         {
-            return new Integer(negate(this.bits, this.bits.length));
+            if (!this.signed)
+            {
+                return new Integer(ArrayHelpers.padInverseInt(this.bits, this.bits.length), -this.bits.length);
+            }
+            return new Integer(negate(this.bits, this.bits.length), this.bits.length);
         }
 
         add(other: Integer, overflowThrow: boolean = false): Integer
         {
-            return new Integer(addBits(this.bits, other.bits, overflowThrow));
+            return new Integer(addBits(this.bits, other.bits, overflowThrow), this.bits.length);
         }
 
         subtract(other: Integer): Integer
         {
-            return new Integer(subtractBits(this.bits, other.bits));
+            return new Integer(subtractBits(this.bits, other.bits), this.bits.length);
         }
 
         mutliply(other: Integer): Integer
@@ -161,7 +187,7 @@
             {
                 result.unshift(P.pop());
             }
-            return new Integer(result);
+            return new Integer(result, this.bits.length);
         }
 
         division(other: Integer): { q: Integer; r: Integer }
@@ -206,7 +232,7 @@
                 }
             }
 
-            return { q: new Integer(Q), r: new Integer(R) };
+            return { q: new Integer(Q, this.bits.length), r: new Integer(R, this.bits.length) };
         }
 
         toBytes(): number[]
@@ -250,15 +276,21 @@
                     num += Math.pow(2, this.bits.length - 1 - i);
                 }
             }
+            if (this.signed && this.bits[0])
+            {
+                return num - Math.pow(2, this.bits.length);
+            }
             return num;
         }
 
-        static fromNumber(num: number): Integer
+        static fromNumber(num: number, bitness: Bitness): Integer
         {
             if (num === 0)
             {
-                return new Integer([false]);
+                return new Integer([false], bitness);
             }
+            var negative: boolean = num < 0;
+            num = Math.abs(num);
             var bits: boolean[] = [];
             var maxPower: number = 0;
             for (var i: number = 0; i < 64; i++)
@@ -285,18 +317,26 @@
                     bits.push(false);
                 }
             }
-            bits.unshift(false);
             if (num > 0)
             {
                 throw new RangeError("Overflow");
             }
-            return new Integer(bits);
+            if (maxPower > 32)
+            {
+                bitness = Bitness.bit64;
+            }
+            var int: Integer = new Integer(ArrayHelpers.padInt(bits, bitness, false), bitness);
+            if (negative && bitness > 0)
+            {
+                return int.negate();
+            }
+            return int;
         }
 
         static fromBytes(bytes: number[]): Integer
         {
             var bits: boolean[] = [];
-            for (var i: number = 0; i < bytes.length; i++)
+            for (var i: number = 0; i < bytes.length && i < 8; i++)
             {
                 var byte: number = bytes[i];
                 for (var j: number = 7; j >= 0; j--)
@@ -314,7 +354,7 @@
                 }
             }
 
-            return new Integer(bits);
+            return new Integer(bits, bytes.length > 4 ? Bitness.bit64 : Bitness.bit32);
         }
     }
 } 
