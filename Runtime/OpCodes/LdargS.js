@@ -12,8 +12,8 @@ var CIL;
 
             var LdargS = (function (_super) {
                 __extends(LdargS, _super);
-                function LdargS(memory, stack, argIndex) {
-                    _super.call(this, memory, stack, argIndex);
+                function LdargS(memory, stack) {
+                    _super.call(this, memory, stack);
                 }
                 LdargS.prototype.number = function () {
                     return 14;

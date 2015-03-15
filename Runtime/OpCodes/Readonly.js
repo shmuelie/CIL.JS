@@ -12,7 +12,7 @@ var CIL;
 
             var Readonly = (function (_super) {
                 __extends(Readonly, _super);
-                function Readonly(memory, stack, type) {
+                function Readonly(memory, stack) {
                     _super.call(this, memory, stack);
                 }
                 Readonly.prototype.number = function () {

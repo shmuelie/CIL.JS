@@ -12,7 +12,7 @@ var CIL;
 
             var Unaligned = (function (_super) {
                 __extends(Unaligned, _super);
-                function Unaligned(memory, stack, alignment) {
+                function Unaligned(memory, stack) {
                     _super.call(this, memory, stack);
                 }
                 Unaligned.prototype.number = function () {
