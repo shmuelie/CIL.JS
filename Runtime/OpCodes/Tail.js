@@ -22,7 +22,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.Tail = Tail;
 
-            Runtime.OpCode.opCodes[Tail.prototype.number()] = Tail;
+            Runtime.OpCode.opCodes[Tail.prototype.number()] = function (memory, stack) {
+                Tail.Instance = Tail.Instance || new Tail(memory, stack);
+                return Tail.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

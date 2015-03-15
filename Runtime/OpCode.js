@@ -16,11 +16,7 @@
                 return [];
             };
 
-            OpCode.prototype.execute = function () {
-                return;
-            };
-
-            OpCode.prototype.parseArguments = function (bytes) {
+            OpCode.prototype.execute = function (bytes) {
                 return;
             };
             OpCode.opCodes = {};

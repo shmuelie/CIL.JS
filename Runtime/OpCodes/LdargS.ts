@@ -18,7 +18,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: LdargS;
     }
 
-    OpCode.opCodes[LdargS.prototype.number()] = <any>LdargS;
+    OpCode.opCodes[LdargS.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): LdargS =>
+    {
+        LdargS.Instance = LdargS.Instance || new LdargS(memory, stack);
+        return LdargS.Instance;
+    };
 } 

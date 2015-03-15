@@ -23,18 +23,20 @@ var CIL;
                     return [4];
                 };
 
-                Call.prototype.execute = function () {
+                Call.prototype.execute = function (bytes) {
                     var _this = this;
+                    throw new Error("System.NotImplented");
+                    var method;
                     var nextFrame = new Runtime.StackFrame();
-                    while (nextFrame.arguments.length < this.method.arguments.length) {
+                    while (nextFrame.arguments.length < method.arguments.length) {
                         nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
                     }
-                    if (this.method.static) {
+                    if (method.static) {
                         nextFrame.this = null;
                     } else {
                         nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
                     }
-                    nextFrame.method = this.method;
+                    nextFrame.method = method;
                     if (this.lastOp instanceof OpCodes.Tail) {
                         var lastFrame = this.stack.shift();
                         this.stack.unshift(nextFrame);
@@ -45,15 +47,14 @@ var CIL;
                     }
                     this.stack.unshift(nextFrame);
                 };
-
-                Call.prototype.parseArguments = function (bytes) {
-                    throw new Error("System.NotImplented");
-                };
                 return Call;
             })(Runtime.OpCode);
             OpCodes.Call = Call;
 
-            Runtime.OpCode.opCodes[Call.prototype.number()] = Call;
+            Runtime.OpCode.opCodes[Call.prototype.number()] = function (memory, stack) {
+                Call.Instance = Call.Instance || new Call(memory, stack);
+                return Call.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

@@ -23,9 +23,10 @@ var CIL;
                     return [1];
                 };
 
-                No.prototype.execute = function () {
-                    if (this.code % 2 !== 0) {
-                        this.code -= 1;
+                No.prototype.execute = function (bytes) {
+                    var code = bytes[0];
+                    if (code % 2 !== 0) {
+                        code -= 1;
                         // 0x01
                         /*
                         The CLI can optionally skip
@@ -33,8 +34,8 @@ var CIL;
                         InvalidCastException can optionally still be thrown if the check would fail.
                         */
                     }
-                    if (this.code >= 4) {
-                        this.code -= 4;
+                    if (code >= 4) {
+                        code -= 4;
                         // 0x04
                         /*
                         The CLI can
@@ -43,7 +44,7 @@ var CIL;
                         would fail.
                         */
                     }
-                    if (this.code === 2) {
+                    if (code === 2) {
                         // 0x02
                         /*
                         The CLI can optionally skip any array range
@@ -52,14 +53,13 @@ var CIL;
                         */
                     }
                 };
-
-                No.prototype.parseArguments = function (bytes) {
-                    this.code = bytes[0];
-                };
                 return No;
             })(Runtime.OpCode);
             OpCodes.No = No;
-            Runtime.OpCode.opCodes[No.prototype.number()] = No;
+            Runtime.OpCode.opCodes[No.prototype.number()] = function (memory, stack) {
+                No.Instance = No.Instance || new No(memory, stack);
+                return No.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

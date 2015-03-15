@@ -26,7 +26,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.Unaligned = Unaligned;
 
-            Runtime.OpCode.opCodes[Unaligned.prototype.number()] = Unaligned;
+            Runtime.OpCode.opCodes[Unaligned.prototype.number()] = function (memory, stack) {
+                Unaligned.Instance = Unaligned.Instance || new Unaligned(memory, stack);
+                return Unaligned.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

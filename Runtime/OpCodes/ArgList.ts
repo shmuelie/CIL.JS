@@ -9,7 +9,7 @@
             return 65024;
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
             throw new Error("NotImplemented");
         }
@@ -18,7 +18,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: ArgList;
     }
 
-    OpCode.opCodes[ArgList.prototype.number()] = <any> ArgList;
+    OpCode.opCodes[ArgList.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): ArgList =>
+    {
+        ArgList.Instance = ArgList.Instance || new ArgList(memory, stack);
+        return ArgList.Instance;
+    };
 } 

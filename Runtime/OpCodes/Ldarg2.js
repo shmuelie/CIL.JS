@@ -14,7 +14,6 @@ var CIL;
                 __extends(Ldarg2, _super);
                 function Ldarg2(memory, stack) {
                     _super.call(this, memory, stack);
-                    this.setArg(2);
                 }
                 Ldarg2.prototype.number = function () {
                     return 4;
@@ -23,11 +22,18 @@ var CIL;
                 Ldarg2.prototype.argumentCount = function () {
                     return [];
                 };
+
+                Ldarg2.prototype.execute = function (bytes) {
+                    this.do(2);
+                };
                 return Ldarg2;
             })(OpCodes.Ldarg);
             OpCodes.Ldarg2 = Ldarg2;
 
-            Runtime.OpCode.opCodes[Ldarg2.prototype.number()] = Ldarg2;
+            Runtime.OpCode.opCodes[Ldarg2.prototype.number()] = function (memory, stack) {
+                Ldarg2.Instance = Ldarg2.Instance || new Ldarg2(memory, stack);
+                return Ldarg2.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

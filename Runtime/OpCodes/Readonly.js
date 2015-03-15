@@ -26,7 +26,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.Readonly = Readonly;
 
-            Runtime.OpCode.opCodes[Readonly.prototype.number()] = Readonly;
+            Runtime.OpCode.opCodes[Readonly.prototype.number()] = function (memory, stack) {
+                Readonly.Instance = Readonly.Instance || new Readonly(memory, stack);
+                return Readonly.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

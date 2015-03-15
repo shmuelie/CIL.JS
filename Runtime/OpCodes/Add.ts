@@ -9,7 +9,7 @@
             return 88;
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
             var value2: StackFrameValue = this.stack[0].evaluationStack.pop();
             var value1: StackFrameValue = this.stack[0].evaluationStack.pop();
@@ -36,7 +36,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Add;
     }
 
-    OpCode.opCodes[Add.prototype.number()] = <any>Add;
+    OpCode.opCodes[Add.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Add =>
+    {
+        Add.Instance = Add.Instance || new Add(memory, stack);
+        return Add.Instance;
+    };
 } 

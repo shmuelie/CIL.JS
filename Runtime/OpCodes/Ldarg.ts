@@ -4,8 +4,6 @@
 
     export class Ldarg extends OpCode
     {
-        private argIndex: number;
-
         number(): number
         {
             return 65033;
@@ -16,35 +14,27 @@
             return [2];
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
-            this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
+            this.do(Integer.fromBytes(bytes).toNumber());
         }
 
-        parseArguments(bytes: number[]): void
+        do(argIndex: number): void
         {
-            var int: Integer = Integer.fromBytes(bytes);
-            var value: number = 0;
-            for (var i: number = 0; i < int.bits.length; i++)
-            {
-                if (int.bits[i])
-                {
-                    value += Math.pow(2, int.bits.length - 1 - i);
-                }
-            }
-            this.argIndex = value;
-        }
-
-        setArg(argIndex: number): void
-        {
-            this.argIndex = argIndex;
+            this.stack[0].evaluationStack.push(this.stack[0].arguments[argIndex]);
         }
 
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }
+
+        static Instance: Ldarg;
     }
 
-    OpCode.opCodes[Ldarg.prototype.number()] = <any>Ldarg;
+    OpCode.opCodes[Ldarg.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Ldarg =>
+    {
+        Ldarg.Instance = Ldarg.Instance || new Ldarg(memory, stack);
+        return Ldarg.Instance;
+    };
 } 

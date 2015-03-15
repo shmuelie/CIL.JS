@@ -13,7 +13,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Tail;
     }
 
-    OpCode.opCodes[Tail.prototype.number()] = <any>Tail;
+    OpCode.opCodes[Tail.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Tail =>
+    {
+        Tail.Instance = Tail.Instance || new Tail(memory, stack);
+        return Tail.Instance;
+    };
 } 

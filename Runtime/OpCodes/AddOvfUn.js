@@ -22,7 +22,10 @@ var CIL;
             })(OpCodes.AddOvf);
             OpCodes.AddOvfUn = AddOvfUn;
 
-            Runtime.OpCode.opCodes[AddOvfUn.prototype.number()] = AddOvfUn;
+            Runtime.OpCode.opCodes[AddOvfUn.prototype.number()] = function (memory, stack) {
+                AddOvfUn.Instance = AddOvfUn.Instance || new AddOvfUn(memory, stack);
+                return AddOvfUn.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

@@ -23,7 +23,7 @@ var CIL;
                     return [4];
                 };
 
-                Constrained.prototype.execute = function () {
+                Constrained.prototype.execute = function (bytes) {
                     /*
                     If thisType is a reference type (as opposed to a value type) then
                     ptr is dereferenced and passed as the ‘this’ pointer to the callvirt of method
@@ -34,15 +34,14 @@ var CIL;
                     */
                     return;
                 };
-
-                Constrained.prototype.parseArguments = function (bytes) {
-                    return;
-                };
                 return Constrained;
             })(Runtime.OpCode);
             OpCodes.Constrained = Constrained;
 
-            Runtime.OpCode.opCodes[Constrained.prototype.number()] = Constrained;
+            Runtime.OpCode.opCodes[Constrained.prototype.number()] = function (memory, stack) {
+                Constrained.Instance = Constrained.Instance = new Constrained(memory, stack);
+                return Constrained.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

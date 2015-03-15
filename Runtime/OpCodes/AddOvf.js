@@ -19,7 +19,7 @@ var CIL;
                     return 214;
                 };
 
-                AddOvf.prototype.execute = function () {
+                AddOvf.prototype.execute = function (bytes) {
                     var value2 = this.stack[0].evaluationStack.pop();
                     var value1 = this.stack[0].evaluationStack.pop();
 
@@ -49,7 +49,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.AddOvf = AddOvf;
 
-            Runtime.OpCode.opCodes[AddOvf.prototype.number()] = AddOvf;
+            Runtime.OpCode.opCodes[AddOvf.prototype.number()] = function (memory, stack) {
+                AddOvf.Instance = AddOvf.Instance || new AddOvf(memory, stack);
+                return AddOvf.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

@@ -18,7 +18,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Unaligned;
     }
 
-    OpCode.opCodes[Unaligned.prototype.number()] = <any>Unaligned;
+    OpCode.opCodes[Unaligned.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Unaligned =>
+    {
+        Unaligned.Instance = Unaligned.Instance || new Unaligned(memory, stack);
+        return Unaligned.Instance;
+    };
 } 

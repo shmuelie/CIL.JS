@@ -14,7 +14,7 @@
             return [4];
         }
 
-        execute()
+        execute(bytes: number[])
         {
             /*
                 If thisType is a reference type (as opposed to a value type) then
@@ -27,16 +27,17 @@
             return;
         }
 
-        parseArguments(bytes: number[]): void
-        {
-            return;
-        }
-
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }
+
+        static Instance: Constrained;
     }
 
-    OpCode.opCodes[Constrained.prototype.number()] = <any>Constrained;
+    OpCode.opCodes[Constrained.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Constrained =>
+    {
+        Constrained.Instance = Constrained.Instance = new Constrained(memory, stack);
+        return Constrained.Instance;
+    };
 } 

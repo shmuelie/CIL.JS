@@ -19,7 +19,7 @@ var CIL;
                     return 95;
                 };
 
-                And.prototype.execute = function () {
+                And.prototype.execute = function (bytes) {
                     var value2 = this.stack[0].evaluationStack.pop();
                     var value1 = this.stack[0].evaluationStack.pop();
                     var int1;
@@ -52,7 +52,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.And = And;
 
-            Runtime.OpCode.opCodes[And.prototype.number()] = And;
+            Runtime.OpCode.opCodes[And.prototype.number()] = function (memory, stack) {
+                And.Instance = And.Instance || new And(memory, stack);
+                return And.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

@@ -13,7 +13,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Volitile;
     }
 
-    OpCode.opCodes[Volitile.prototype.number()] = <any>Volitile;
+    OpCode.opCodes[Volitile.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Volitile =>
+    {
+        Volitile.Instance = Volitile.Instance || new Volitile(memory, stack);
+        return Volitile.Instance;
+    };
 } 

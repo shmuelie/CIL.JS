@@ -14,12 +14,22 @@
             return [];
         }
 
+        execute(bytes: number[]): void
+        {
+            this.do(3);
+        }
+
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
-            this.setArg(3);
         }
+
+        static Instance: Ldarg3;
     }
 
-    OpCode.opCodes[Ldarg3.prototype.number()] = <any>Ldarg3;
+    OpCode.opCodes[Ldarg3.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Ldarg3 =>
+    {
+        Ldarg3.Instance = Ldarg3.Instance || new Ldarg3(memory, stack);
+        return Ldarg3.Instance;
+    };
 }  

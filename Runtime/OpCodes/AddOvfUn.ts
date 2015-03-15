@@ -13,7 +13,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: AddOvfUn;
     }
 
-    OpCode.opCodes[AddOvfUn.prototype.number()] = <any>AddOvfUn;
+    OpCode.opCodes[AddOvfUn.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): AddOvfUn =>
+    {
+        AddOvfUn.Instance = AddOvfUn.Instance || new AddOvfUn(memory, stack);
+        return AddOvfUn.Instance;
+    };
 } 

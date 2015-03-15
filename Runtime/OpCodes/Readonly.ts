@@ -18,7 +18,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Readonly;
     }
 
-    OpCode.opCodes[Readonly.prototype.number()] = <any>Readonly;
+    OpCode.opCodes[Readonly.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Readonly =>
+    {
+        Readonly.Instance = Readonly.Instance || new Readonly(memory, stack);
+        return Readonly.Instance;
+    };
 } 

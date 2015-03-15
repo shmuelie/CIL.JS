@@ -4,8 +4,6 @@
 
     export class Call extends OpCode
     {
-        private method: TypeSystem.TypeMethod;
-
         number(): number
         {
             return 40;
@@ -16,14 +14,16 @@
             return [4];
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
+            throw new Error("System.NotImplented"); // Need to convert bytes to method
+            var method: TypeSystem.TypeMethod;
             var nextFrame: StackFrame = new StackFrame();
-            while (nextFrame.arguments.length < this.method.arguments.length)
+            while (nextFrame.arguments.length < method.arguments.length)
             {
                 nextFrame.arguments.unshift(this.stack[0].evaluationStack.pop());
             }
-            if (this.method.static)
+            if (method.static)
             {
                 nextFrame.this = null;
             }
@@ -31,7 +31,7 @@
             {
                 nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
             }
-            nextFrame.method = this.method;
+            nextFrame.method = method;
             if (this.lastOp instanceof Tail)
             {
                 var lastFrame: StackFrame = this.stack.shift();
@@ -45,16 +45,17 @@
             this.stack.unshift(nextFrame);
         }
 
-        parseArguments(bytes: number[]): void
-        {
-            throw new Error("System.NotImplented");
-        }
-
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }
+
+        static Instance: Call;
     }
 
-    OpCode.opCodes[Call.prototype.number()] = <any> Call;
+    OpCode.opCodes[Call.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Call =>
+    {
+        Call.Instance = Call.Instance || new Call(memory, stack);
+        return Call.Instance;
+    };
 } 

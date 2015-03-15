@@ -4,7 +4,7 @@
 
     export interface IOpCodeDictionary
     {
-        [code: number]: OpCode;
+        [code: number]: (memory: MemorySystem.IMemoryManger, stack: StackFrame[]) => OpCode;
     }
 
     export class OpCode
@@ -25,12 +25,7 @@
             return [];
         }
 
-        execute(): void
-        {
-            return;
-        }
-
-        parseArguments(bytes: number[]): void
+        execute(bytes: number[]): void
         {
             return;
         }

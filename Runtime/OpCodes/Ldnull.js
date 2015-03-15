@@ -19,14 +19,17 @@ var CIL;
                     return 20;
                 };
 
-                Ldnull.prototype.execute = function () {
+                Ldnull.prototype.execute = function (bytes) {
                     this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(0 /* Pointer */, 0));
                 };
                 return Ldnull;
             })(Runtime.OpCode);
             OpCodes.Ldnull = Ldnull;
 
-            Runtime.OpCode.opCodes[Ldnull.prototype.number()] = Ldnull;
+            Runtime.OpCode.opCodes[Ldnull.prototype.number()] = function (memory, stack) {
+                Ldnull.Instance = Ldnull.Instance || new Ldnull(memory, stack);
+                return Ldnull.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

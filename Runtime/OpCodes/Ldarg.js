@@ -23,29 +23,21 @@ var CIL;
                     return [2];
                 };
 
-                Ldarg.prototype.execute = function () {
-                    this.stack[0].evaluationStack.push(this.stack[0].arguments[this.argIndex]);
+                Ldarg.prototype.execute = function (bytes) {
+                    this.do(Runtime.Integer.fromBytes(bytes).toNumber());
                 };
 
-                Ldarg.prototype.parseArguments = function (bytes) {
-                    var int = Runtime.Integer.fromBytes(bytes);
-                    var value = 0;
-                    for (var i = 0; i < int.bits.length; i++) {
-                        if (int.bits[i]) {
-                            value += Math.pow(2, int.bits.length - 1 - i);
-                        }
-                    }
-                    this.argIndex = value;
-                };
-
-                Ldarg.prototype.setArg = function (argIndex) {
-                    this.argIndex = argIndex;
+                Ldarg.prototype.do = function (argIndex) {
+                    this.stack[0].evaluationStack.push(this.stack[0].arguments[argIndex]);
                 };
                 return Ldarg;
             })(Runtime.OpCode);
             OpCodes.Ldarg = Ldarg;
 
-            Runtime.OpCode.opCodes[Ldarg.prototype.number()] = Ldarg;
+            Runtime.OpCode.opCodes[Ldarg.prototype.number()] = function (memory, stack) {
+                Ldarg.Instance = Ldarg.Instance || new Ldarg(memory, stack);
+                return Ldarg.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

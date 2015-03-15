@@ -19,7 +19,7 @@ var CIL;
                     return 37;
                 };
 
-                Dup.prototype.execute = function () {
+                Dup.prototype.execute = function (bytes) {
                     var values = this.stack[0].evaluationStack;
                     values.push(values[values.length - 1]);
                 };
@@ -27,7 +27,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.Dup = Dup;
 
-            Runtime.OpCode.opCodes[Dup.prototype.number()] = Dup;
+            Runtime.OpCode.opCodes[Dup.prototype.number()] = function (memory, stack) {
+                Dup.Instance = Dup.Instance || new Dup(memory, stack);
+                return Dup.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

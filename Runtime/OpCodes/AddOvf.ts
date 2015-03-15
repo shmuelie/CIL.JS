@@ -9,7 +9,7 @@
             return 214;
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
             var value2: StackFrameValue = this.stack[0].evaluationStack.pop();
             var value1: StackFrameValue = this.stack[0].evaluationStack.pop();
@@ -58,7 +58,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: AddOvf;
     }
 
-    OpCode.opCodes[AddOvf.prototype.number()] = <any> AddOvf;
+    OpCode.opCodes[AddOvf.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): AddOvf =>
+    {
+        AddOvf.Instance = AddOvf.Instance || new AddOvf(memory, stack);
+        return AddOvf.Instance;
+    };
 } 

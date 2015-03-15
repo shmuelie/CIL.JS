@@ -23,18 +23,18 @@ var CIL;
                     return [4];
                 };
 
-                LdcI4.prototype.execute = function () {
-                    this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, this.num));
-                };
-
-                LdcI4.prototype.parseArguments = function (bytes) {
-                    this.num = Runtime.Integer.fromBytes(bytes);
+                LdcI4.prototype.execute = function (bytes) {
+                    var num = Runtime.Integer.fromBytes(bytes);
+                    this.stack[0].evaluationStack.push(new Runtime.StackFrameValue(2 /* SignedInt */, num));
                 };
                 return LdcI4;
             })(Runtime.OpCode);
             OpCodes.LdcI4 = LdcI4;
 
-            Runtime.OpCode.opCodes[LdcI4.prototype.number()] = LdcI4;
+            Runtime.OpCode.opCodes[LdcI4.prototype.number()] = function (memory, stack) {
+                LdcI4.Instance = LdcI4.Instance || new LdcI4(memory, stack);
+                return LdcI4.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

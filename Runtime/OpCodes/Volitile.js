@@ -22,7 +22,10 @@ var CIL;
             })(Runtime.OpCode);
             OpCodes.Volitile = Volitile;
 
-            Runtime.OpCode.opCodes[Volitile.prototype.number()] = Volitile;
+            Runtime.OpCode.opCodes[Volitile.prototype.number()] = function (memory, stack) {
+                Volitile.Instance = Volitile.Instance || new Volitile(memory, stack);
+                return Volitile.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

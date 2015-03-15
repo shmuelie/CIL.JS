@@ -4,8 +4,6 @@
 
     export class LdcI4 extends OpCode
     {
-        private num: Integer;
-
         number(): number
         {
             return 32;
@@ -16,21 +14,23 @@
             return [4];
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
-            this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, this.num));
-        }
-
-        parseArguments(bytes: number[]): void
-        {
-            this.num = Integer.fromBytes(bytes);
+            var num = Integer.fromBytes(bytes);
+            this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.SignedInt, num));
         }
 
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }
+
+        static Instance: LdcI4;
     }
 
-    OpCode.opCodes[LdcI4.prototype.number()] = <any>LdcI4;
+    OpCode.opCodes[LdcI4.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): LdcI4 =>
+    {
+        LdcI4.Instance = LdcI4.Instance || new LdcI4(memory, stack);
+        return LdcI4.Instance;
+    };
 } 

@@ -9,7 +9,7 @@
             return 20;
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
             this.stack[0].evaluationStack.push(new StackFrameValue(StackFrameValueType.Pointer, 0));
         }
@@ -18,7 +18,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Ldnull;
     }
 
-    OpCode.opCodes[Ldnull.prototype.number()] = <any>Ldnull;
+    OpCode.opCodes[Ldnull.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Ldnull =>
+    {
+        Ldnull.Instance = Ldnull.Instance || new Ldnull(memory, stack);
+        return Ldnull.Instance;
+    };
 } 

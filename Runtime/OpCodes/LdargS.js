@@ -26,7 +26,10 @@ var CIL;
             })(OpCodes.Ldarg);
             OpCodes.LdargS = LdargS;
 
-            Runtime.OpCode.opCodes[LdargS.prototype.number()] = LdargS;
+            Runtime.OpCode.opCodes[LdargS.prototype.number()] = function (memory, stack) {
+                LdargS.Instance = LdargS.Instance || new LdargS(memory, stack);
+                return LdargS.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

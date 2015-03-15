@@ -4,8 +4,6 @@
 
     export class No extends OpCode
     {
-        private code: number;
-
         number(): number
         {
             return 65049;
@@ -16,11 +14,12 @@
             return [1];
         }
 
-        execute()
+        execute(bytes: number[]): void
         {
-            if (this.code % 2 !== 0)
+            var code: number = bytes[0];
+            if (code % 2 !== 0)
             {
-                this.code -= 1;
+                code -= 1;
                 // 0x01
                 /*
                     The CLI can optionally skip
@@ -28,9 +27,9 @@
                     InvalidCastException can optionally still be thrown if the check would fail.
                  */
             }
-            if (this.code >= 4)
+            if (code >= 4)
             {
-                this.code -= 4;
+                code -= 4;
                 // 0x04
                 /*
                     The CLI can
@@ -39,7 +38,7 @@
                     would fail.
                  */
             }
-            if (this.code === 2)
+            if (code === 2)
             {
                 // 0x02
                 /*
@@ -50,15 +49,16 @@
             }
         }
 
-        parseArguments(bytes: number[])
-        {
-            this.code = bytes[0];
-        }
-
         constructor(memory: MemorySystem.IMemoryManger, stack: StackFrame[])
         {
             super(memory, stack);
         }
+
+        static Instance: No;
     }
-    OpCode.opCodes[No.prototype.number()] = <any>No;
+    OpCode.opCodes[No.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): No =>
+    {
+        No.Instance = No.Instance || new No(memory, stack);
+        return No.Instance;
+    };
 } 

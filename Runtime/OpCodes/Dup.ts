@@ -9,7 +9,7 @@
             return 37;
         }
 
-        execute(): void
+        execute(bytes: number[]): void
         {
             var values: StackFrameValue[] = this.stack[0].evaluationStack;
             values.push(values[values.length - 1]);
@@ -19,7 +19,13 @@
         {
             super(memory, stack);
         }
+
+        static Instance: Dup;
     }
 
-    OpCode.opCodes[Dup.prototype.number()] = <any>Dup;
+    OpCode.opCodes[Dup.prototype.number()] = (memory: MemorySystem.IMemoryManger, stack: StackFrame[]): Dup =>
+    {
+        Dup.Instance = Dup.Instance || new Dup(memory, stack);
+        return Dup.Instance;
+    };
 }

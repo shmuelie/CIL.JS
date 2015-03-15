@@ -19,14 +19,17 @@ var CIL;
                     return 65024;
                 };
 
-                ArgList.prototype.execute = function () {
+                ArgList.prototype.execute = function (bytes) {
                     throw new Error("NotImplemented");
                 };
                 return ArgList;
             })(Runtime.OpCode);
             OpCodes.ArgList = ArgList;
 
-            Runtime.OpCode.opCodes[ArgList.prototype.number()] = ArgList;
+            Runtime.OpCode.opCodes[ArgList.prototype.number()] = function (memory, stack) {
+                ArgList.Instance = ArgList.Instance || new ArgList(memory, stack);
+                return ArgList.Instance;
+            };
         })(Runtime.OpCodes || (Runtime.OpCodes = {}));
         var OpCodes = Runtime.OpCodes;
     })(CIL.Runtime || (CIL.Runtime = {}));

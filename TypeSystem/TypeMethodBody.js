@@ -6,6 +6,7 @@
         var TypeMethodBody = (function () {
             function TypeMethodBody() {
                 this.opCodes = [];
+                this.arguments = [];
             }
             return TypeMethodBody;
         })();
