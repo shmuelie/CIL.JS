@@ -47,6 +47,7 @@
     <TypeScriptCompile Include="Runtime\OpCodes\Tail.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Unaligned.ts" />
     <TypeScriptCompile Include="Runtime\OpCodes\Volitile.ts" />
+    <TypeScriptCompile Include="Runtime\Reader.ts" />
     <TypeScriptCompile Include="Runtime\StackFrame.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValue.ts" />
     <TypeScriptCompile Include="Runtime\StackFrameValueType.ts" />
