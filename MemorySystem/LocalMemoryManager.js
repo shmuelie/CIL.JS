@@ -3,28 +3,27 @@
     (function (MemorySystem) {
         "use strict";
 
+        var MemoryObject = (function () {
+            function MemoryObject() {
+                this.references = 0;
+            }
+            return MemoryObject;
+        })();
+
         var LocalMemoryManager = (function () {
             function LocalMemoryManager() {
                 this.objects = [];
                 this.freeList = [];
             }
-            LocalMemoryManager.prototype.addObject = function (obj, callback) {
+            LocalMemoryManager.prototype.allocObject = function (type, callback) {
+                var obj = new MemoryObject();
                 if (this.freeList.length === 0) {
-                    obj.id = this.objects.push(obj) - 1;
+                    obj.selfPointer = this.objects.push(obj) - 1;
                 } else {
-                    obj.id = this.freeList.pop();
-                    this.objects[obj.id] = obj;
+                    obj.selfPointer = this.freeList.pop();
+                    this.objects[obj.selfPointer] = obj;
                 }
-                callback(obj.id);
-            };
-
-            LocalMemoryManager.prototype.getObject = function (pointer, callback) {
-                callback(this.objects[pointer]);
-            };
-
-            LocalMemoryManager.prototype.setObject = function (obj, callback) {
-                this.objects[obj.id] = obj;
-                callback();
+                callback(obj.selfPointer);
             };
 
             LocalMemoryManager.prototype.assignField = function (pointer, name, value, callback) {
@@ -39,6 +38,10 @@
                 });
             };
 
+            LocalMemoryManager.prototype.getField = function (pointer, name, callback) {
+                callback(this.objects[pointer].fields[name]);
+            };
+
             LocalMemoryManager.prototype.dereferenceObject = function (pointer, callback) {
                 this.objects[pointer].references--;
                 if (this.objects[pointer].references <= 0) {
@@ -46,6 +49,15 @@
                     this.freeList.push(pointer);
                 }
                 callback();
+            };
+
+            LocalMemoryManager.prototype.assignIntrinsicValue = function (pointer, value, callback) {
+                this.objects[pointer].rawValue = value;
+                callback();
+            };
+
+            LocalMemoryManager.prototype.getIntrinsicValue = function (pointer, callback) {
+                callback(this.objects[pointer].rawValue);
             };
             LocalMemoryManager.NULL = -1;
             return LocalMemoryManager;

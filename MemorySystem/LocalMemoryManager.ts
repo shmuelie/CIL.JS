@@ -2,6 +2,25 @@
 {
     "use strict";
 
+    interface IFieldData
+    {
+        [key: string]: number;
+    }
+
+    class MemoryObject
+    {
+        selfPointer: number;
+        rawValue: any;
+        fields: IFieldData;
+        type: TypeSystem.Type;
+        references: number;
+
+        constructor()
+        {
+            this.references = 0;
+        }
+    }
+
     export class LocalMemoryManager implements IMemoryManger
     {
         static NULL: number = -1;
@@ -15,29 +34,19 @@
             this.freeList = [];
         }
 
-        addObject(obj: MemoryObject, callback: (id: number) => void): void
+        allocObject(type: TypeSystem.Type, callback: (selfPointer: number) => void): void
         {
+            var obj: MemoryObject = new MemoryObject();
             if (this.freeList.length === 0)
             {
-                obj.id = this.objects.push(obj) - 1;
+                obj.selfPointer = this.objects.push(obj) - 1;
             }
             else
             {
-                obj.id = this.freeList.pop();
-                this.objects[obj.id] = obj;
+                obj.selfPointer = this.freeList.pop();
+                this.objects[obj.selfPointer] = obj;
             }
-            callback(obj.id);
-        }
-
-        getObject(pointer: number, callback: (obj: MemoryObject) => void): void
-        {
-            callback(this.objects[pointer]);
-        }
-
-        setObject(obj: MemoryObject, callback: () => void): void
-        {
-            this.objects[obj.id] = obj;
-            callback();
+            callback(obj.selfPointer);
         }
 
         assignField(pointer: number, name: string, value: number, callback: () => void): void
@@ -54,6 +63,13 @@
             });
         }
 
+        getField(pointer: number, name: string, callback: (value: number) => void): void
+        {
+            callback(this.objects[pointer].fields[name]);
+        }
+
+
+
         dereferenceObject(pointer: number, callback: () => void): void
         {
             this.objects[pointer].references--;
@@ -63,6 +79,17 @@
                 this.freeList.push(pointer);
             }
             callback();
+        }
+
+        assignIntrinsicValue(pointer: number, value: any, callback: () => void): void
+        {
+            this.objects[pointer].rawValue = value;
+            callback();
+        }
+
+        getIntrinsicValue(pointer: number, callback: (value: any) => void): void
+        {
+            callback(this.objects[pointer].rawValue);
         }
     }
 } 
