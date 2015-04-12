@@ -23,6 +23,9 @@ have to make asynchronous calls to the main thread requesting memory
 operations. This is flawed and would allow for easy deadlocking but is done 
 because of the limitations of JavaScript's threading model.
 
+And yes I know about circle referencing issues. Currently I honestly don’t have
+ a solution and I am just going with hoping it won’t cause problems.
+
 ## Threads
 
 JavaScript historically does not have threads and in fact ECMAScript does not 
