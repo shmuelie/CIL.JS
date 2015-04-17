@@ -36,7 +36,7 @@
         return a;
     }
 
-    var instrinsic: string[] = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
+    var intrinsic: string[] = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
 
     export class LocalMemoryManager implements IMemoryManger
     {
@@ -69,7 +69,7 @@
 
         private setupIntrinsic(type: Type, obj: MemoryObject): void
         {
-            switch (instrinsic.indexOf(type.fullName))
+            switch (intrinsic.indexOf(type.fullName))
             {
                 case 0:
                 case 9:
@@ -107,7 +107,7 @@
             for (var i: number = 0; i < type.fields.length; i++)
             {
                 var field: TypeField = type.fields[i];
-                if (instrinsic.indexOf(field.type.fullName) !== -1)
+                if (intrinsic.indexOf(field.type.fullName) !== -1)
                 {
                     if (field.type.fullName === "System.String")
                     {
@@ -134,7 +134,7 @@
         allocObject(type: Type, callback: (selfPointer: number) => void): void
         {
             var obj: MemoryObject = this.innerAlloc(type);
-            if (instrinsic.indexOf(type.fullName) === -1)
+            if (intrinsic.indexOf(type.fullName) === -1)
             {
                 this.innerAllocSetup(type, obj);
             }

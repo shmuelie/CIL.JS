@@ -21,7 +21,7 @@
             return a;
         }
 
-        var instrinsic = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
+        var intrinsic = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
 
         var LocalMemoryManager = (function () {
             function LocalMemoryManager() {
@@ -41,7 +41,7 @@
             };
 
             LocalMemoryManager.prototype.setupIntrinsic = function (type, obj) {
-                switch (instrinsic.indexOf(type.fullName)) {
+                switch (intrinsic.indexOf(type.fullName)) {
                     case 0:
                     case 9:
                         obj.rawValue = new Integer(arrayGenerator(16, false), 16 /* bit16 */);
@@ -75,7 +75,7 @@
             LocalMemoryManager.prototype.innerAllocSetup = function (type, obj) {
                 for (var i = 0; i < type.fields.length; i++) {
                     var field = type.fields[i];
-                    if (instrinsic.indexOf(field.type.fullName) !== -1) {
+                    if (intrinsic.indexOf(field.type.fullName) !== -1) {
                         if (field.type.fullName === "System.String") {
                             obj.fields[field.name] = LocalMemoryManager.NULL;
                         } else {
@@ -94,7 +94,7 @@
 
             LocalMemoryManager.prototype.allocObject = function (type, callback) {
                 var obj = this.innerAlloc(type);
-                if (instrinsic.indexOf(type.fullName) === -1) {
+                if (intrinsic.indexOf(type.fullName) === -1) {
                     this.innerAllocSetup(type, obj);
                 } else {
                     this.setupIntrinsic(type, obj);
