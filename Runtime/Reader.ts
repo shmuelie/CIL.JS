@@ -120,6 +120,22 @@
             return Integer.fromBytes(this.stream.slice(starting, this.index), Bitness.ubit64);
         }
 
+        readSimpleString(count: number): string
+        {
+            var s: string[] = [];
+            for (var i: number = 0; i < count; i++)
+            {
+                var c: number = this.readNumberByte();
+                if (c === 0)
+                {
+                    this.skip(count - i - 1);
+                    break;
+                }
+                s.push(String.fromCharCode(c));
+            }
+            return s.join("");
+        }
+
         //https://github.com/sergeyt/io.js/blob/master/src/stream.js
         readString(count: number = Number.POSITIVE_INFINITY): string
         {

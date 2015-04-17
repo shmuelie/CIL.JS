@@ -94,6 +94,19 @@
                 return Runtime.Integer.fromBytes(this.stream.slice(starting, this.index), -64 /* ubit64 */);
             };
 
+            Reader.prototype.readSimpleString = function (count) {
+                var s = [];
+                for (var i = 0; i < count; i++) {
+                    var c = this.readNumberByte();
+                    if (c === 0) {
+                        this.skip(count - i - 1);
+                        break;
+                    }
+                    s.push(String.fromCharCode(c));
+                }
+                return s.join("");
+            };
+
             //https://github.com/sergeyt/io.js/blob/master/src/stream.js
             Reader.prototype.readString = function (count) {
                 if (typeof count === "undefined") { count = Number.POSITIVE_INFINITY; }
