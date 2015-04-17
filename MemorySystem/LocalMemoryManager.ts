@@ -2,6 +2,11 @@
 {
     "use strict";
 
+    import Integer = Runtime.Integer;
+    import Bitness = Runtime.Bitness;
+    import Type = TypeSystem.Type;
+    import TypeField = TypeSystem.TypeField;
+
     interface IFieldData
     {
         [key: string]: number;
@@ -46,7 +51,7 @@
             this.freeList = [];
         }
 
-        private innerAlloc(type: TypeSystem.Type): MemoryObject
+        private innerAlloc(type: Type): MemoryObject
         {
             var obj: MemoryObject = new MemoryObject();
             obj.type = type;
@@ -62,33 +67,33 @@
             return obj;
         }
 
-        private setupIntrinsic(type: TypeSystem.Type, obj: MemoryObject): void
+        private setupIntrinsic(type: Type, obj: MemoryObject): void
         {
             switch (instrinsic.indexOf(type.fullName))
             {
                 case 0:
                 case 9:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(16, false), Runtime.Bitness.bit16);
+                    obj.rawValue = new Integer(arrayGenerator(16, false), Bitness.bit16);
                     break;
                 case 1:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(32, false), Runtime.Bitness.bit32);
+                    obj.rawValue = new Integer(arrayGenerator(32, false), Bitness.bit32);
                     break;
                 case 2:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(64, false), Runtime.Bitness.bit64);
+                    obj.rawValue = new Integer(arrayGenerator(64, false), Bitness.bit64);
                     break;
                 case 3:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(16, false), Runtime.Bitness.ubit16);
+                    obj.rawValue = new Integer(arrayGenerator(16, false), Bitness.ubit16);
                     break;
                 case 4:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(32, false), Runtime.Bitness.ubit32);
+                    obj.rawValue = new Integer(arrayGenerator(32, false), Bitness.ubit32);
                     break;
                 case 5:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(64, false), Runtime.Bitness.ubit64);
+                    obj.rawValue = new Integer(arrayGenerator(64, false), Bitness.ubit64);
                 case 6:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(8, false), Runtime.Bitness.ubit8);
+                    obj.rawValue = new Integer(arrayGenerator(8, false), Bitness.ubit8);
                     break;
                 case 7:
-                    obj.rawValue = new Runtime.Integer(arrayGenerator(8, false), Runtime.Bitness.bit8);
+                    obj.rawValue = new Integer(arrayGenerator(8, false), Bitness.bit8);
                     break;
                 default:
                     obj.rawValue = LocalMemoryManager.NULL;
@@ -97,11 +102,11 @@
             }
         }
 
-        private innerAllocSetup(type: TypeSystem.Type, obj: MemoryObject): void
+        private innerAllocSetup(type: Type, obj: MemoryObject): void
         {
             for (var i: number = 0; i < type.fields.length; i++)
             {
-                var field: TypeSystem.TypeField = type.fields[i];
+                var field: TypeField = type.fields[i];
                 if (instrinsic.indexOf(field.type.fullName) !== -1)
                 {
                     if (field.type.fullName === "System.String")
@@ -126,7 +131,7 @@
             }
         }
 
-        allocObject(type: TypeSystem.Type, callback: (selfPointer: number) => void): void
+        allocObject(type: Type, callback: (selfPointer: number) => void): void
         {
             var obj: MemoryObject = this.innerAlloc(type);
             if (instrinsic.indexOf(type.fullName) === -1)

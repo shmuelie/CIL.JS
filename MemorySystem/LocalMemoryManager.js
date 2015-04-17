@@ -3,6 +3,9 @@
     (function (MemorySystem) {
         "use strict";
 
+        var Integer = CIL.Runtime.Integer;
+        var Bitness = CIL.Runtime.Bitness;
+
         var MemoryObject = (function () {
             function MemoryObject() {
                 this.references = 0;
@@ -41,27 +44,27 @@
                 switch (instrinsic.indexOf(type.fullName)) {
                     case 0:
                     case 9:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(16, false), 16 /* bit16 */);
+                        obj.rawValue = new Integer(arrayGenerator(16, false), 16 /* bit16 */);
                         break;
                     case 1:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(32, false), 32 /* bit32 */);
+                        obj.rawValue = new Integer(arrayGenerator(32, false), 32 /* bit32 */);
                         break;
                     case 2:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(64, false), 64 /* bit64 */);
+                        obj.rawValue = new Integer(arrayGenerator(64, false), 64 /* bit64 */);
                         break;
                     case 3:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(16, false), -16 /* ubit16 */);
+                        obj.rawValue = new Integer(arrayGenerator(16, false), -16 /* ubit16 */);
                         break;
                     case 4:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(32, false), -32 /* ubit32 */);
+                        obj.rawValue = new Integer(arrayGenerator(32, false), -32 /* ubit32 */);
                         break;
                     case 5:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(64, false), -64 /* ubit64 */);
+                        obj.rawValue = new Integer(arrayGenerator(64, false), -64 /* ubit64 */);
                     case 6:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(8, false), -8 /* ubit8 */);
+                        obj.rawValue = new Integer(arrayGenerator(8, false), -8 /* ubit8 */);
                         break;
                     case 7:
-                        obj.rawValue = new CIL.Runtime.Integer(arrayGenerator(8, false), 8 /* bit8 */);
+                        obj.rawValue = new Integer(arrayGenerator(8, false), 8 /* bit8 */);
                         break;
                     default:
                         obj.rawValue = LocalMemoryManager.NULL;
