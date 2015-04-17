@@ -20,7 +20,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="MemorySystem\IMemoryManager.ts" />
     <TypeScriptCompile Include="MemorySystem\LocalMemoryManager.ts" />
-    <TypeScriptCompile Include="MemorySystem\MemoryObject.ts" />
     <TypeScriptCompile Include="Runtime\Integer.ts" />
     <TypeScriptCompile Include="Runtime\ArrayHelpers.ts" />
     <TypeScriptCompile Include="Runtime\NumberHelpers.ts" />
