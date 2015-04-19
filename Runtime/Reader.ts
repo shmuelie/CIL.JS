@@ -138,7 +138,7 @@
             return s.join("");
         }
 
-        //https://github.com/sergeyt/io.js/blob/master/src/stream.js
+        // https://github.com/sergeyt/io.js/blob/master/src/stream.js
         readString(count: number = Number.POSITIVE_INFINITY): string
         {
             var s: string[] = [];
@@ -199,7 +199,7 @@
                         ch32 = ((b0 & 0x07) << 0x18) // combine 6 bit parts 
                         | ((b1 & 0x3F) << 12)
                         | ((b2 & 0x3F) << 6)
-                        | (b3 & 0x3F); 
+                        | (b3 & 0x3F);
 
                     }
                     if ((ch32 & 0xFFFF0000) === 0)
@@ -208,7 +208,7 @@
                     }
                     else
                     {
-                        //break up into UTF16 surrogate pair
+                        // break up into UTF16 surrogate pair
                         s.push(String.fromCharCode((ch32 >> 10) | 0xD800));
                         ch = String.fromCharCode((ch32 & 0x3FF) | 0xDC00);
                     }

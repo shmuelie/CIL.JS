@@ -109,7 +109,7 @@
                 return s.join("");
             };
 
-            //https://github.com/sergeyt/io.js/blob/master/src/stream.js
+            // https://github.com/sergeyt/io.js/blob/master/src/stream.js
             Reader.prototype.readString = function (count) {
                 if (typeof count === "undefined") { count = Number.POSITIVE_INFINITY; }
                 var s = [];
@@ -160,7 +160,7 @@
                         if ((ch32 & 0xFFFF0000) === 0) {
                             ch = String.fromCharCode(ch32);
                         } else {
-                            //break up into UTF16 surrogate pair
+                            // break up into UTF16 surrogate pair
                             s.push(String.fromCharCode((ch32 >> 10) | 0xD800));
                             ch = String.fromCharCode((ch32 & 0x3FF) | 0xDC00);
                         }
