@@ -1,6 +1,8 @@
 ﻿var CIL;
 (function (CIL) {
     (function (Runtime) {
+        "use strict";
+
         var Reader = (function () {
             function Reader(bytes) {
                 this.stream = bytes;

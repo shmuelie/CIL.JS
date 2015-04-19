@@ -1,5 +1,7 @@
 ﻿module CIL.Runtime
 {
+    "use strict";
+
     export class Reader
     {
         private stream: number[];
