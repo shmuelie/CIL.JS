@@ -8,6 +8,10 @@
                 this.stream = bytes;
                 this.index = 0;
             }
+            Reader.prototype.length = function () {
+                return this.stream.length;
+            };
+
             Reader.prototype.isEnd = function () {
                 return this.index >= this.stream.length;
             };

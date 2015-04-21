@@ -13,6 +13,11 @@
             this.index = 0;
         }
 
+        length(): number
+        {
+            return this.stream.length;
+        }
+
         isEnd(): boolean
         {
             return this.index >= this.stream.length;
