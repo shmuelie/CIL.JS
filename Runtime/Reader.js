@@ -141,6 +141,19 @@
                 return s.join("");
             };
 
+            Reader.prototype.readSimpleStringAligned = function (maxLength) {
+                var s = [];
+                while (maxLength-- > 0) {
+                    var c = this.readNumberByte();
+                    if (c === 0) {
+                        this.align4();
+                        break;
+                    }
+                    s.push(String.fromCharCode(c));
+                }
+                return s.join("");
+            };
+
             // https://github.com/sergeyt/io.js/blob/master/src/stream.js
             Reader.prototype.readString = function (count) {
                 if (typeof count === "undefined") { count = Number.POSITIVE_INFINITY; }

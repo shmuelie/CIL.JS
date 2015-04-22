@@ -173,6 +173,22 @@
             return s.join("");
         }
 
+        readSimpleStringAligned(maxLength: number): string
+        {
+            var s: string[] = [];
+            while (maxLength-- > 0)
+            {
+                var c: number = this.readNumberByte();
+                if (c === 0)
+                {
+                    this.align4();
+                    break;
+                }
+                s.push(String.fromCharCode(c));
+            }
+            return s.join("");
+        }
+
         // https://github.com/sergeyt/io.js/blob/master/src/stream.js
         readString(count: number = Number.POSITIVE_INFINITY): string
         {
