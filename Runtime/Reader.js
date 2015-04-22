@@ -21,7 +21,7 @@
                 if (d === 0) {
                     return;
                 }
-                this.seek(4 - d);
+                this.skip(4 - d);
             };
 
             Reader.prototype.readNumberByte = function () {
