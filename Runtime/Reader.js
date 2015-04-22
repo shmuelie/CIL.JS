@@ -12,6 +12,10 @@
                 return this.stream.length;
             };
 
+            Reader.prototype.position = function () {
+                return this.index;
+            };
+
             Reader.prototype.isEnd = function () {
                 return this.index >= this.stream.length;
             };

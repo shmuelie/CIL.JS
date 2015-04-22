@@ -18,6 +18,11 @@
             return this.stream.length;
         }
 
+        position(): number
+        {
+            return this.index;
+        }
+
         isEnd(): boolean
         {
             return this.index >= this.stream.length;
