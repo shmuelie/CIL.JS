@@ -32,6 +32,26 @@
                 return num;
             };
 
+            Reader.prototype.readPackedInt = function () {
+                var b0 = this.readNumberByte();
+
+                // 1 byte
+                if ((b0 & 0x80) === 0) {
+                    return Runtime.Integer.fromBytes([b0], -8 /* ubit8 */);
+                }
+                var b1 = this.readNumberByte();
+
+                // 2 bytes
+                if ((b0 & 0xC0) === 0x80) {
+                    return Runtime.Integer.fromBytes([b0 & 0x3F, b1], -16 /* ubit16 */);
+                }
+
+                // 4 bytes
+                var b2 = this.readNumberByte();
+                var b3 = this.readNumberByte();
+                return Runtime.Integer.fromBytes([b0 & 0x3F, b1, b2, b3], -32 /* ubit32 */);
+            };
+
             Reader.prototype.readByte = function () {
                 if (this.index + 1 < this.stream.length) {
                     throw RangeError("Past End");

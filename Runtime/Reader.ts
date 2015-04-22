@@ -43,6 +43,26 @@
             return num;
         }
 
+        readPackedInt(): Integer
+        {
+            var b0: number = this.readNumberByte();
+            // 1 byte
+            if ((b0 & 0x80) === 0)
+            {
+                return Integer.fromBytes([b0], Bitness.ubit8);
+            }
+            var b1: number = this.readNumberByte();
+            // 2 bytes
+            if ((b0 & 0xC0) === 0x80)
+            {
+                return Integer.fromBytes([b0 & 0x3F, b1], Bitness.ubit16);
+            }
+            // 4 bytes
+            var b2: number = this.readNumberByte();
+            var b3: number = this.readNumberByte();
+            return Integer.fromBytes([b0 & 0x3F, b1, b2, b3], Bitness.ubit32);
+        }
+
         readByte(): Integer
         {
             if (this.index + 1 < this.stream.length)
