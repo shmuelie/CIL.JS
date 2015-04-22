@@ -16,6 +16,14 @@
                 return this.index >= this.stream.length;
             };
 
+            Reader.prototype.align4 = function () {
+                var d = this.index % 4;
+                if (d === 0) {
+                    return;
+                }
+                this.seek(4 - d);
+            };
+
             Reader.prototype.readNumberByte = function () {
                 if (this.isEnd()) {
                     throw RangeError("Past End");

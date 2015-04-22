@@ -23,6 +23,16 @@
             return this.index >= this.stream.length;
         }
 
+        align4()
+        {
+            var d: number = this.index % 4;
+            if (d === 0)
+            {
+                return;
+            }
+            this.seek(4 - d);
+        }
+
         readNumberByte(): number
         {
             if (this.isEnd())
