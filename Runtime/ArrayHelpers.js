@@ -31,6 +31,14 @@
 
                 return paddedThis;
             };
+
+            ArrayHelpers.range = function (arr, start, length) {
+                var subArray = [];
+                for (var i = start; i < start + length; i++) {
+                    subArray.push(arr[i]);
+                }
+                return subArray;
+            };
             return ArrayHelpers;
         })();
         Runtime.ArrayHelpers = ArrayHelpers;

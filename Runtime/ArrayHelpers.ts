@@ -39,5 +39,15 @@
 
             return paddedThis;
         }
+
+        static range<T>(arr: T[], start: number, length: number): T[]
+        {
+            var subArray: T[] = [];
+            for (var i: number = start; i < start + length; i++)
+            {
+                subArray.push(arr[i]);
+            }
+            return subArray;
+        }
     }
 }
