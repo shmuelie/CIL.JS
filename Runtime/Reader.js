@@ -35,6 +35,15 @@
                 return this.stream[this.index++];
             };
 
+            Reader.prototype.readNumberByteRange = function (length) {
+                if (this.isEnd() || this.index + length >= this.stream.length) {
+                    throw RangeError("Past End");
+                }
+                var start = this.index;
+                this.index += length;
+                return this.stream.slice(start, this.index);
+            };
+
             Reader.prototype.readNumber = function () {
                 if (this.index + 8 < this.stream.length) {
                     throw RangeError("Past End");
@@ -227,6 +236,10 @@
 
             Reader.prototype.seek = function (index) {
                 this.index = Math.max(0, Math.min(this.stream.length, index));
+            };
+
+            Reader.prototype.slice = function (start, length) {
+                return new Reader(this.stream.slice(start, start + length));
             };
             return Reader;
         })();

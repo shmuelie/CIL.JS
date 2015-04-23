@@ -47,6 +47,17 @@
             return this.stream[this.index++];
         }
 
+        readNumberByteRange(length: number): number[]
+        {
+            if (this.isEnd() || this.index + length >= this.stream.length)
+            {
+                throw RangeError("Past End");
+            }
+            var start = this.index;
+            this.index += length;
+            return this.stream.slice(start, this.index);
+        }
+
         readNumber(): number
         {
             if (this.index + 8 < this.stream.length)
@@ -284,6 +295,11 @@
         seek(index: number)
         {
             this.index = Math.max(0, Math.min(this.stream.length, index));
+        }
+
+        slice(start: number, length: number): Reader
+        {
+            return new Reader(this.stream.slice(start, start + length));
         }
     }
 } 
