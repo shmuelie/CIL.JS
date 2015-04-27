@@ -67,12 +67,16 @@
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\CodedIndex.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\GuidHeap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\Heap.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\MetadataToken.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\StringHeap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\Table.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\TableHeap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\TableInformation.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\TokenType.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\UserStringHeap.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\moduleEnums.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\PE\DataDirectory.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\PE\Image.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\PE\Section.ts" />
     <None Include="TypeSystem\Cecil\README.md" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
