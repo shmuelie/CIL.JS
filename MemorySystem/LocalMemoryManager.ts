@@ -26,15 +26,7 @@
         }
     }
 
-    function arrayGenerator<T>(length: number, value: T): T[]
-    {
-        var a: T[] = [];
-        for (var i: number = 0; i < length; i++)
-        {
-            a.push(value);
-        }
-        return a;
-    }
+    var arrayGenerator = Runtime.ArrayHelpers.arrayGenerator;
 
     var intrinsic: string[] = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
 

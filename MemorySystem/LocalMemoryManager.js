@@ -13,13 +13,7 @@
             return MemoryObject;
         })();
 
-        function arrayGenerator(length, value) {
-            var a = [];
-            for (var i = 0; i < length; i++) {
-                a.push(value);
-            }
-            return a;
-        }
+        var arrayGenerator = CIL.Runtime.ArrayHelpers.arrayGenerator;
 
         var intrinsic = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
 

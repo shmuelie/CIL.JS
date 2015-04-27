@@ -39,6 +39,14 @@
                 }
                 return subArray;
             };
+
+            ArrayHelpers.arrayGenerator = function (length, value) {
+                var a = [];
+                for (var i = 0; i < length; i++) {
+                    a.push(value);
+                }
+                return a;
+            };
             return ArrayHelpers;
         })();
         Runtime.ArrayHelpers = ArrayHelpers;

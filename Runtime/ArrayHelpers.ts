@@ -49,5 +49,15 @@
             }
             return subArray;
         }
+
+        static arrayGenerator<T>(length: number, value: T): T[]
+        {
+            var a: T[] = [];
+            for (var i: number = 0; i < length; i++)
+            {
+                a.push(value);
+            }
+            return a;
+        }
     }
 }
