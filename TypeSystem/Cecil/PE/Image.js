@@ -15,6 +15,10 @@
                     return this.tableHeap.tables[table].length;
                 };
 
+                Image.prototype.getTableIndexSize = function (table) {
+                    return this.getTableLength(table) < 65536 ? 2 : 4;
+                };
+
                 Image.prototype.getCodeIndexSize = function (codedIndex) {
                     var size = this.codedIndexSizes[codedIndex];
                     if (size !== null) {

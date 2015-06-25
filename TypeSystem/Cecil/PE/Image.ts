@@ -46,6 +46,11 @@
             return this.tableHeap.tables[table].length;
         }
 
+        getTableIndexSize(table: Table): number
+        {
+            return this.getTableLength(table) < 65536 ? 2 : 4;
+        }
+
         getCodeIndexSize(codedIndex: Metadata.CodedIndex): number
         {
             var size: number = this.codedIndexSizes[codedIndex];
