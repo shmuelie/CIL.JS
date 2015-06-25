@@ -282,7 +282,49 @@
                             bits = 1;
                             tables = [4 /* Field */, 8 /* Param */];
                             break;
+                        case 4 /* HasDeclSecurity */:
+                            bits = 2;
+                            tables = [2 /* TypeDef */, 6 /* Method */, 32 /* Assembly */];
+                            break;
+                        case 5 /* MemberRefParent */:
+                            bits = 3;
+                            tables = [2 /* TypeDef */, 1 /* TypeRef */, 26 /* ModuleRef */, 6 /* Method */, 27 /* TypeSpec */];
+                            break;
+                        case 6 /* HasSemantics */:
+                            bits = 1;
+                            tables = [20 /* Event */, 23 /* Property */];
+                            break;
+                        case 7 /* MethodDefOrRef */:
+                            bits = 1;
+                            tables = [6 /* Method */, 10 /* MemberRef */];
+                            break;
+                        case 8 /* MemberForwarded */:
+                            bits = 1;
+                            tables = [4 /* Field */, 6 /* Method */];
+                            break;
+                        case 9 /* Implementation */:
+                            bits = 2;
+                            tables = [38 /* File */, 35 /* AssemblyRef */, 39 /* ExportedType */];
+                            break;
+                        case 10 /* CustomAttributeType */:
+                            bits = 3;
+                            tables = [6 /* Method */, 10 /* MemberRef */];
+                            break;
+                        case 11 /* ResolutionScope */:
+                            bits = 2;
+                            tables = [0 /* Module */, 26 /* ModuleRef */, 35 /* AssemblyRef */, 1 /* TypeRef */];
+                            break;
+                        case 12 /* TypeOrMethodDef */:
+                            bits = 1;
+                            tables = [2 /* TypeDef */, 6 /* Method */];
+                            break;
                     }
+
+                    var max = 0;
+                    for (var i = 0; i < tables.length; i++) {
+                        max = Math.max(counter(tables[i]), max);
+                    }
+                    return max < (1 << (16 - bits)) ? 2 : 4;
                 }
                 CodedIndex.getSize = getSize;
             })(Metadata.CodedIndex || (Metadata.CodedIndex = {}));

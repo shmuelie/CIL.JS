@@ -297,7 +297,50 @@
                     bits = 1;
                     tables = [Table.Field, Table.Param];
                     break;
+                case CodedIndex.HasDeclSecurity:
+                    bits = 2;
+                    tables = [Table.TypeDef, Table.Method, Table.Assembly];
+                    break;
+                case CodedIndex.MemberRefParent:
+                    bits = 3;
+                    tables = [Table.TypeDef, Table.TypeRef, Table.ModuleRef, Table.Method, Table.TypeSpec];
+                    break;
+                case CodedIndex.HasSemantics:
+                    bits = 1;
+                    tables = [Table.Event, Table.Property];
+                    break;
+                case CodedIndex.MethodDefOrRef:
+                    bits = 1;
+                    tables = [Table.Method, Table.MemberRef];
+                    break;
+                case CodedIndex.MemberForwarded:
+                    bits = 1;
+                    tables = [Table.Field, Table.Method];
+                    break;
+                case CodedIndex.Implementation:
+                    bits = 2;
+                    tables = [Table.File, Table.AssemblyRef, Table.ExportedType];
+                    break;
+                case CodedIndex.CustomAttributeType:
+                    bits = 3;
+                    tables = [Table.Method, Table.MemberRef];
+                    break;
+                case CodedIndex.ResolutionScope:
+                    bits = 2;
+                    tables = [Table.Module, Table.ModuleRef, Table.AssemblyRef, Table.TypeRef];
+                    break;
+                case CodedIndex.TypeOrMethodDef:
+                    bits = 1;
+                    tables = [Table.TypeDef, Table.Method];
+                    break;
             }
+
+            var max: number = 0;
+            for (var i: number = 0; i < tables.length; i++)
+            {
+                max = Math.max(counter(tables[i]), max);
+            }
+            return max < (1 << (16 - bits)) ? 2 : 4;
         }
     }
 } 
