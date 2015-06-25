@@ -11,13 +11,13 @@
         })(Cecil.ModuleKind || (Cecil.ModuleKind = {}));
         var ModuleKind = Cecil.ModuleKind;
 
-        (function (TargetArchitechture) {
-            TargetArchitechture[TargetArchitechture["I386"] = 0] = "I386";
-            TargetArchitechture[TargetArchitechture["AMD64"] = 1] = "AMD64";
-            TargetArchitechture[TargetArchitechture["IA64"] = 2] = "IA64";
-            TargetArchitechture[TargetArchitechture["ARMv7"] = 3] = "ARMv7";
-        })(Cecil.TargetArchitechture || (Cecil.TargetArchitechture = {}));
-        var TargetArchitechture = Cecil.TargetArchitechture;
+        (function (TargetArchitecture) {
+            TargetArchitecture[TargetArchitecture["I386"] = 0] = "I386";
+            TargetArchitecture[TargetArchitecture["AMD64"] = 1] = "AMD64";
+            TargetArchitecture[TargetArchitecture["IA64"] = 2] = "IA64";
+            TargetArchitecture[TargetArchitecture["ARMv7"] = 3] = "ARMv7";
+        })(Cecil.TargetArchitecture || (Cecil.TargetArchitecture = {}));
+        var TargetArchitecture = Cecil.TargetArchitecture;
 
         (function (ModuleAttributes) {
             ModuleAttributes[ModuleAttributes["ILOnly"] = 1] = "ILOnly";

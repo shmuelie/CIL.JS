@@ -6,7 +6,7 @@
     {
         kind: ModuleKind;
         runtimeVersion: string;
-        architechture: TargetArchitechture;
+        architechture: TargetArchitecture;
         characteristics: ModuleCharacteristics;
         fileName: string;
 

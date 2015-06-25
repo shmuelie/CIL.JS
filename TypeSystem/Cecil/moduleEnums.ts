@@ -10,7 +10,7 @@
         NetModule
     }
 
-    export enum TargetArchitechture
+    export enum TargetArchitecture
     {
         I386,
         AMD64,
