@@ -1,5 +1,16 @@
 ﻿module CIL.Cecil.PE
 {
+	"use strict";
+
+	function setIndexSize(heap: Metadata.Heap, sizes: number, flag: number): void
+	{
+		if (heap === null)
+		{
+			return;
+		}
+		heap.indexSize = (sizes & flag) > 0 ? 4 : 2;
+	}
+
 	export class ImageReader extends Runtime.Reader
 	{
 		private image: Image;
@@ -43,7 +54,7 @@
 			// Lfanew				4
 			// End					64
 
-			if (this.readUInt16().toNumber() != 0x5a4d)
+			if (this.readUInt16().toNumber() !== 0x5a4d)
 			{
 				throw new Error("BadImageFormatException");
 			}
@@ -76,6 +87,7 @@
 
 			var optionalHeaders = this.readOptionalHeaders();
 			this.readSections(sections);
+			this.readCliHeader();
 
 		}
 
@@ -258,7 +270,163 @@
 
 		private readCliHeader(): void
 		{
+			this.moveTo(this.cli);
 
+			// - CLIHeader
+
+			// Cb						4
+			// MajorRuntimeVersion		2
+			// MinorRuntimeVersion		2
+			this.skip(8);
+
+			// Metadata					8
+			this.metadata = this.readDataDirectory();
+			// Flags					4
+			this.image.attributes = <ModuleAttributes>this.readUInt16().toNumber();
+			// EntryPointToken			4
+			this.image.entryPointToken = this.readUInt32().toNumber();
+			// Resources				8
+			this.image.resources = this.readDataDirectory();
+			// StrongNameSignature		8
+			this.image.strongName = this.readDataDirectory();
+			// CodeManagerTable			8
+			// VTableFixups				8
+			// ExportAddressTableJumps	8
+			// ManagedNativeHeader		8
+		}
+
+		private readMetadata(): void
+		{
+			this.moveTo(this.metadata);
+
+			if (this.readUInt32().toNumber() !== 0x424a5342)
+			{
+				throw new Error("BadImageFormatException");
+			}
+
+			// MajorVersion			2
+			// MinorVersion			2
+			// Reserved				4
+			this.skip(8);
+
+			this.image.runtimeVersion = this.readSimpleString(this.readInt32().toNumber());
+
+			// Flags		2
+			this.skip(2);
+
+			var streams: number = this.readUInt16().toNumber();
+
+			var section: Section = this.image.getSectionAtVirtualAddress(this.metadata.virtulAddress);
+			if (section === null)
+			{
+				throw new Error("BadImageFormatException");
+			}
+
+			this.image.metadataSection = section;
+
+			for (var i: number = 0; i < streams; i++)
+			{
+				this.readMetadataStream(section);
+			}
+
+			if (this.image.tableHeap !== null)
+			{
+				this.readTableHeap();
+			}
+		}
+
+		private readMetadataStream(section: Section): void
+		{
+			// Offset		4
+			var start: number = this.metadata.virtulAddress - section.virtualAddress + this.readUInt32().toNumber();  // relative to the section start
+
+			// Size			4
+			var size: number = this.readUInt32().toNumber();
+
+			var name: string = this.readSimpleStringAligned(16);
+			switch (name)
+			{
+				case "~":
+				case "-":
+					this.image.tableHeap = new Metadata.TableHeap(section, start, size);
+					break;
+				case "#Strings":
+					this.image.stringHeap = new Metadata.StringHeap(section, start, size);
+					break;
+				case "#Blob":
+					this.image.blobHeap = new Metadata.BlobHeap(section, start, size);
+					break;
+				case "#GUID":
+					this.image.guidHeap = new Metadata.GuidHeap(section, start, size);
+					break;
+				case "#US":
+					this.image.userStringHeap = new Metadata.UserStringHeap(section, start, size);
+					break;
+			}
+		}
+
+		private readTableHeap(): void
+		{
+		}
+
+		private getTableIndexSize(table: Metadata.Table): number
+		{
+			return this.image.getTableIndexSize(table);
+		}
+
+		private getCodedIndexSize(index: Metadata.CodedIndex): number
+		{
+			return this.image.getCodeIndexSize(index);
+		}
+
+		private computeTableInformations(): void
+		{
+			var offset: number = this.position() - this.image.metadataSection.pointerToRawData; // header;
+
+			var stridx_size: number = this.image.stringHeap.indexSize;
+			var blobidx_size: number = this.image.blobHeap !== undefined ? this.image.blobHeap.indexSize : 2;
+
+			var heap = this.image.tableHeap;
+			var tables = heap.tables;
+
+			for (var i: number = 0; i < Metadata.TableHeap.tableCount; i++)
+			{
+				var table: Metadata.Table = <Metadata.Table>i;
+				if (!heap.hasTable(table))
+				{
+					continue;
+				}
+
+				var size: number;
+				switch (table)
+				{
+					case Metadata.Table.Module:
+						size = 2 + stridx_size + (this.image.guidHeap.indexSize * 3);
+						break;
+					case Metadata.Table.TypeRef:
+						size = this.getCodedIndexSize(Metadata.CodedIndex.ResolutionScope) + (stridx_size * 2);
+						break;
+					case Metadata.Table.TypeDef:
+						size = 4 + (stridx_size * 2) + this.getCodedIndexSize(Metadata.CodedIndex.TypeDefOrRef) + this.getTableIndexSize(Metadata.Table.Field) + this.getTableIndexSize(Metadata.Table.Method);
+						break;
+					case Metadata.Table.FieldPtr:
+						size = this.getTableIndexSize(Metadata.Table.Field);
+						break;
+					case Metadata.Table.Field:
+						size = 2 + stridx_size + blobidx_size;
+						break;
+					case Metadata.Table.MethodPtr:
+						size = this.getTableIndexSize(Metadata.Table.Method);
+						break;
+					case Metadata.Table.Method:
+						size = 8 + stridx_size + blobidx_size + this.getTableIndexSize(Metadata.Table.Param);
+						break;
+					case Metadata.Table.ParamPtr:
+						size = this.getTableIndexSize(Metadata.Table.Param);
+						break;
+
+				}
+			}
 		}
 	}
 }

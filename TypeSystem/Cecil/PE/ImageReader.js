@@ -8,6 +8,15 @@ var CIL;
 (function (CIL) {
     (function (Cecil) {
         (function (PE) {
+            "use strict";
+
+            function setIndexSize(heap, sizes, flag) {
+                if (heap === null) {
+                    return;
+                }
+                heap.indexSize = (sizes & flag) > 0 ? 4 : 2;
+            }
+
             var ImageReader = (function (_super) {
                 __extends(ImageReader, _super);
                 function ImageReader(bytes, fileName) {
@@ -35,7 +44,7 @@ var CIL;
                     // Start				58
                     // Lfanew				4
                     // End					64
-                    if (this.readUInt16().toNumber() != 0x5a4d) {
+                    if (this.readUInt16().toNumber() !== 0x5a4d) {
                         throw new Error("BadImageFormatException");
                     }
 
@@ -65,6 +74,7 @@ var CIL;
 
                     var optionalHeaders = this.readOptionalHeaders();
                     this.readSections(sections);
+                    this.readCliHeader();
                 };
 
                 ImageReader.prototype.readArchitecture = function () {
@@ -231,6 +241,151 @@ var CIL;
                 };
 
                 ImageReader.prototype.readCliHeader = function () {
+                    this.moveTo(this.cli);
+
+                    // - CLIHeader
+                    // Cb						4
+                    // MajorRuntimeVersion		2
+                    // MinorRuntimeVersion		2
+                    this.skip(8);
+
+                    // Metadata					8
+                    this.metadata = this.readDataDirectory();
+
+                    // Flags					4
+                    this.image.attributes = this.readUInt16().toNumber();
+
+                    // EntryPointToken			4
+                    this.image.entryPointToken = this.readUInt32().toNumber();
+
+                    // Resources				8
+                    this.image.resources = this.readDataDirectory();
+
+                    // StrongNameSignature		8
+                    this.image.strongName = this.readDataDirectory();
+                    // CodeManagerTable			8
+                    // VTableFixups				8
+                    // ExportAddressTableJumps	8
+                    // ManagedNativeHeader		8
+                };
+
+                ImageReader.prototype.readMetadata = function () {
+                    this.moveTo(this.metadata);
+
+                    if (this.readUInt32().toNumber() !== 0x424a5342) {
+                        throw new Error("BadImageFormatException");
+                    }
+
+                    // MajorVersion			2
+                    // MinorVersion			2
+                    // Reserved				4
+                    this.skip(8);
+
+                    this.image.runtimeVersion = this.readSimpleString(this.readInt32().toNumber());
+
+                    // Flags		2
+                    this.skip(2);
+
+                    var streams = this.readUInt16().toNumber();
+
+                    var section = this.image.getSectionAtVirtualAddress(this.metadata.virtulAddress);
+                    if (section === null) {
+                        throw new Error("BadImageFormatException");
+                    }
+
+                    this.image.metadataSection = section;
+
+                    for (var i = 0; i < streams; i++) {
+                        this.readMetadataStream(section);
+                    }
+
+                    if (this.image.tableHeap !== null) {
+                        this.readTableHeap();
+                    }
+                };
+
+                ImageReader.prototype.readMetadataStream = function (section) {
+                    // Offset		4
+                    var start = this.metadata.virtulAddress - section.virtualAddress + this.readUInt32().toNumber();
+
+                    // Size			4
+                    var size = this.readUInt32().toNumber();
+
+                    var name = this.readSimpleStringAligned(16);
+                    switch (name) {
+                        case "~":
+                        case "-":
+                            this.image.tableHeap = new Cecil.Metadata.TableHeap(section, start, size);
+                            break;
+                        case "#Strings":
+                            this.image.stringHeap = new Cecil.Metadata.StringHeap(section, start, size);
+                            break;
+                        case "#Blob":
+                            this.image.blobHeap = new Cecil.Metadata.BlobHeap(section, start, size);
+                            break;
+                        case "#GUID":
+                            this.image.guidHeap = new Cecil.Metadata.GuidHeap(section, start, size);
+                            break;
+                        case "#US":
+                            this.image.userStringHeap = new Cecil.Metadata.UserStringHeap(section, start, size);
+                            break;
+                    }
+                };
+
+                ImageReader.prototype.readTableHeap = function () {
+                };
+
+                ImageReader.prototype.getTableIndexSize = function (table) {
+                    return this.image.getTableIndexSize(table);
+                };
+
+                ImageReader.prototype.getCodedIndexSize = function (index) {
+                    return this.image.getCodeIndexSize(index);
+                };
+
+                ImageReader.prototype.computeTableInformations = function () {
+                    var offset = this.position() - this.image.metadataSection.pointerToRawData;
+
+                    var stridx_size = this.image.stringHeap.indexSize;
+                    var blobidx_size = this.image.blobHeap !== undefined ? this.image.blobHeap.indexSize : 2;
+
+                    var heap = this.image.tableHeap;
+                    var tables = heap.tables;
+
+                    for (var i = 0; i < Cecil.Metadata.TableHeap.tableCount; i++) {
+                        var table = i;
+                        if (!heap.hasTable(table)) {
+                            continue;
+                        }
+
+                        var size;
+                        switch (table) {
+                            case 0 /* Module */:
+                                size = 2 + stridx_size + (this.image.guidHeap.indexSize * 3);
+                                break;
+                            case 1 /* TypeRef */:
+                                size = this.getCodedIndexSize(11 /* ResolutionScope */) + (stridx_size * 2);
+                                break;
+                            case 2 /* TypeDef */:
+                                size = 4 + (stridx_size * 2) + this.getCodedIndexSize(0 /* TypeDefOrRef */) + this.getTableIndexSize(4 /* Field */) + this.getTableIndexSize(6 /* Method */);
+                                break;
+                            case 3 /* FieldPtr */:
+                                size = this.getTableIndexSize(4 /* Field */);
+                                break;
+                            case 4 /* Field */:
+                                size = 2 + stridx_size + blobidx_size;
+                                break;
+                            case 5 /* MethodPtr */:
+                                size = this.getTableIndexSize(6 /* Method */);
+                                break;
+                            case 6 /* Method */:
+                                size = 8 + stridx_size + blobidx_size + this.getTableIndexSize(8 /* Param */);
+                                break;
+                            case 7 /* ParamPtr */:
+                                size = this.getTableIndexSize(8 /* Param */);
+                                break;
+                        }
+                    }
                 };
                 return ImageReader;
             })(CIL.Runtime.Reader);
