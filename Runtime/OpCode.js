@@ -1,8 +1,8 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
         "use strict";
-
         var OpCode = (function () {
             function OpCode(memory, stack) {
                 this.memory = memory;
@@ -11,11 +11,9 @@
             OpCode.prototype.number = function () {
                 return 0;
             };
-
             OpCode.prototype.argumentCount = function () {
                 return [];
             };
-
             OpCode.prototype.execute = function (bytes) {
                 return;
             };
@@ -23,7 +21,6 @@
             return OpCode;
         })();
         Runtime.OpCode = OpCode;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=OpCode.js.map

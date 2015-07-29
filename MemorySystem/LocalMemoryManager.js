@@ -1,22 +1,18 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var MemorySystem;
     (function (MemorySystem) {
         "use strict";
-
         var Integer = CIL.Runtime.Integer;
         var Bitness = CIL.Runtime.Bitness;
-
         var MemoryObject = (function () {
             function MemoryObject() {
                 this.references = 0;
             }
             return MemoryObject;
         })();
-
         var arrayGenerator = CIL.Runtime.ArrayHelpers.arrayGenerator;
-
         var intrinsic = ["System.Int16", "System.Int32", "System.Int64", "System.UInt16", "System.UInt32", "System.UInt64", "System.Byte", "System.SByte", "System.String", "System.Char"];
-
         var LocalMemoryManager = (function () {
             function LocalMemoryManager() {
                 this.objects = [];
@@ -27,57 +23,58 @@
                 obj.type = type;
                 if (this.freeList.length === 0) {
                     obj.selfPointer = this.objects.push(obj) - 1;
-                } else {
+                }
+                else {
                     obj.selfPointer = this.freeList.pop();
                     this.objects[obj.selfPointer] = obj;
                 }
                 return obj;
             };
-
             LocalMemoryManager.prototype.setupIntrinsic = function (type, obj) {
                 switch (intrinsic.indexOf(type.fullName)) {
                     case 0:
                     case 9:
-                        obj.rawValue = new Integer(arrayGenerator(16, false), 16 /* bit16 */);
+                        obj.rawValue = new Integer(arrayGenerator(16, false), Bitness.bit16);
                         break;
                     case 1:
-                        obj.rawValue = new Integer(arrayGenerator(32, false), 32 /* bit32 */);
+                        obj.rawValue = new Integer(arrayGenerator(32, false), Bitness.bit32);
                         break;
                     case 2:
-                        obj.rawValue = new Integer(arrayGenerator(64, false), 64 /* bit64 */);
+                        obj.rawValue = new Integer(arrayGenerator(64, false), Bitness.bit64);
                         break;
                     case 3:
-                        obj.rawValue = new Integer(arrayGenerator(16, false), -16 /* ubit16 */);
+                        obj.rawValue = new Integer(arrayGenerator(16, false), Bitness.ubit16);
                         break;
                     case 4:
-                        obj.rawValue = new Integer(arrayGenerator(32, false), -32 /* ubit32 */);
+                        obj.rawValue = new Integer(arrayGenerator(32, false), Bitness.ubit32);
                         break;
                     case 5:
-                        obj.rawValue = new Integer(arrayGenerator(64, false), -64 /* ubit64 */);
+                        obj.rawValue = new Integer(arrayGenerator(64, false), Bitness.ubit64);
                     case 6:
-                        obj.rawValue = new Integer(arrayGenerator(8, false), -8 /* ubit8 */);
+                        obj.rawValue = new Integer(arrayGenerator(8, false), Bitness.ubit8);
                         break;
                     case 7:
-                        obj.rawValue = new Integer(arrayGenerator(8, false), 8 /* bit8 */);
+                        obj.rawValue = new Integer(arrayGenerator(8, false), Bitness.bit8);
                         break;
                     default:
                         obj.rawValue = LocalMemoryManager.NULL;
                         break;
                 }
             };
-
             LocalMemoryManager.prototype.innerAllocSetup = function (type, obj) {
                 for (var i = 0; i < type.fields.length; i++) {
                     var field = type.fields[i];
                     if (intrinsic.indexOf(field.type.fullName) !== -1) {
                         if (field.type.fullName === "System.String") {
                             obj.fields[field.name] = LocalMemoryManager.NULL;
-                        } else {
+                        }
+                        else {
                             var fieldObj = this.innerAlloc(field.type);
                             obj.fields[field.name] = fieldObj.selfPointer;
                             this.setupIntrinsic(field.type, fieldObj);
                         }
-                    } else {
+                    }
+                    else {
                         obj.fields[field.name] = LocalMemoryManager.NULL;
                     }
                 }
@@ -85,17 +82,16 @@
                     this.innerAllocSetup(type.inheritsFrom, obj);
                 }
             };
-
             LocalMemoryManager.prototype.allocObject = function (type, callback) {
                 var obj = this.innerAlloc(type);
                 if (intrinsic.indexOf(type.fullName) === -1) {
                     this.innerAllocSetup(type, obj);
-                } else {
+                }
+                else {
                     this.setupIntrinsic(type, obj);
                     callback(obj.selfPointer);
                 }
             };
-
             LocalMemoryManager.prototype.assignField = function (pointer, name, value, callback) {
                 var _this = this;
                 var oldPointer = this.objects[pointer].fields[name];
@@ -107,11 +103,9 @@
                     callback();
                 });
             };
-
             LocalMemoryManager.prototype.getField = function (pointer, name, callback) {
                 callback(this.objects[pointer].fields[name]);
             };
-
             LocalMemoryManager.prototype.dereferenceObject = function (pointer, callback) {
                 this.objects[pointer].references--;
                 if (this.objects[pointer].references <= 0) {
@@ -120,12 +114,10 @@
                 }
                 callback();
             };
-
             LocalMemoryManager.prototype.assignIntrinsicValue = function (pointer, value, callback) {
                 this.objects[pointer].rawValue = value;
                 callback();
             };
-
             LocalMemoryManager.prototype.getIntrinsicValue = function (pointer, callback) {
                 callback(this.objects[pointer].rawValue);
             };
@@ -133,7 +125,6 @@
             return LocalMemoryManager;
         })();
         MemorySystem.LocalMemoryManager = LocalMemoryManager;
-    })(CIL.MemorySystem || (CIL.MemorySystem = {}));
-    var MemorySystem = CIL.MemorySystem;
+    })(MemorySystem = CIL.MemorySystem || (CIL.MemorySystem = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=LocalMemoryManager.js.map

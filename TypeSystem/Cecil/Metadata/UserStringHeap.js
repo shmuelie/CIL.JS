@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -6,10 +6,11 @@
 };
 var CIL;
 (function (CIL) {
+    var Cecil;
     (function (Cecil) {
+        var Metadata;
         (function (Metadata) {
             "use strict";
-
             var UserStringHeap = (function (_super) {
                 __extends(UserStringHeap, _super);
                 function UserStringHeap(section, start, size) {
@@ -18,12 +19,10 @@ var CIL;
                 UserStringHeap.prototype.readStringAt = function (index) {
                     var data = this.section.data;
                     data.seek(index + this.offset);
-
                     var length = data.readPackedInt().toNumber() & ~1;
                     if (length < 1) {
                         return "";
                     }
-
                     var chars = [];
                     for (var i = 0; i < length; i++) {
                         var b0 = data.readNumberByte();
@@ -35,9 +34,7 @@ var CIL;
                 return UserStringHeap;
             })(Metadata.StringHeap);
             Metadata.UserStringHeap = UserStringHeap;
-        })(Cecil.Metadata || (Cecil.Metadata = {}));
-        var Metadata = Cecil.Metadata;
-    })(CIL.Cecil || (CIL.Cecil = {}));
-    var Cecil = CIL.Cecil;
+        })(Metadata = Cecil.Metadata || (Cecil.Metadata = {}));
+    })(Cecil = CIL.Cecil || (CIL.Cecil = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=UserStringHeap.js.map

@@ -1,8 +1,8 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var TypeSystem;
     (function (TypeSystem) {
         "use strict";
-
         var TypeMethodBody = (function () {
             function TypeMethodBody() {
                 this.opCodes = [];
@@ -11,7 +11,6 @@
             return TypeMethodBody;
         })();
         TypeSystem.TypeMethodBody = TypeMethodBody;
-    })(CIL.TypeSystem || (CIL.TypeSystem = {}));
-    var TypeSystem = CIL.TypeSystem;
+    })(TypeSystem = CIL.TypeSystem || (CIL.TypeSystem = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=TypeMethodBody.js.map

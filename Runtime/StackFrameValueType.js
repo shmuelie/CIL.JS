@@ -1,8 +1,8 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
         "use strict";
-
         (function (StackFrameValueType) {
             StackFrameValueType[StackFrameValueType["Pointer"] = 0] = "Pointer";
             StackFrameValueType[StackFrameValueType["Float"] = 1] = "Float";
@@ -12,7 +12,6 @@
             StackFrameValueType[StackFrameValueType["FieldPointer"] = 5] = "FieldPointer";
         })(Runtime.StackFrameValueType || (Runtime.StackFrameValueType = {}));
         var StackFrameValueType = Runtime.StackFrameValueType;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=StackFrameValueType.js.map

@@ -63,7 +63,7 @@
 
 			this.moveTo(this.readUInt32().toNumber());
 
-			if (this.readUInt32().toNumber() != 0x00004550)
+			if (this.readUInt32().toNumber() !== 0x00004550)
 			{
 				throw new Error("BadImageFormatException");
 			}
@@ -88,7 +88,10 @@
 			var optionalHeaders = this.readOptionalHeaders();
 			this.readSections(sections);
 			this.readCliHeader();
+			this.readMetadata();
 
+			this.image.kind = this.getModuleKind(characteristics, optionalHeaders.subsystem);
+			this.image.characteristics = <ModuleCharacteristics>optionalHeaders.dll_characteristics;
 		}
 
 		private readArchitecture(): TargetArchitecture
@@ -367,6 +370,43 @@
 
 		private readTableHeap(): void
 		{
+			var heap: Metadata.TableHeap = this.image.tableHeap;
+
+			var start: number = heap.section.pointerToRawData;
+
+			this.moveTo(heap.offset + start);
+
+			// Reserved			4
+			// MajorVersion		1
+			// MinorVersion		1
+			this.skip(6);
+
+			// HeapSizes		1
+			var sizes = this.readNumberByte();
+
+			// Reserved2		1
+			this.skip(1);
+
+			// Valid			8
+			heap.valid = this.readInt64();
+
+			// Sorted			8
+			heap.sorted = this.readInt64();
+
+			for (var i: number = 0; i < Metadata.TableHeap.tableCount; i++)
+			{
+				if (!heap.hasTable(<Metadata.Table>i))
+				{
+					continue;
+				}
+				heap.tables[i].length = this.readUInt32().toNumber();
+			}
+
+			setIndexSize(this.image.stringHeap, sizes, 0x1);
+			setIndexSize(this.image.guidHeap, sizes, 0x2);
+			setIndexSize(this.image.blobHeap, sizes, 0x4);
+
+			this.computeTableInformations();
 		}
 
 		private getTableIndexSize(table: Metadata.Table): number
@@ -424,9 +464,146 @@
 					case Metadata.Table.ParamPtr:
 						size = this.getTableIndexSize(Metadata.Table.Param);
 						break;
-
+					case Metadata.Table.Param:
+						size = 4 + stridx_size;
+						break;
+					case Metadata.Table.InterfaceImpl:
+						size = this.getTableIndexSize(Metadata.Table.TypeDef) + this.getCodedIndexSize(Metadata.CodedIndex.TypeDefOrRef);
+						break;
+					case Metadata.Table.MemberRef:
+						size = this.getCodedIndexSize(Metadata.CodedIndex.MemberRefParent) + stridx_size + blobidx_size;
+						break;
+					case Metadata.Table.Constant:
+						size = 2 + this.getCodedIndexSize(Metadata.CodedIndex.HasConstant) + blobidx_size;
+						break;
+					case Metadata.Table.CustomAttribute:
+						size = this.getCodedIndexSize(Metadata.CodedIndex.HasCustomAttribute) + this.getCodedIndexSize(Metadata.CodedIndex.HasCustomAttribute) + blobidx_size;
+						break;
+					case Metadata.Table.FieldMarshal:
+						size = this.getCodedIndexSize(Metadata.CodedIndex.HasFieldMarshal) + blobidx_size;
+						break;
+					case Metadata.Table.DeclSecurity:
+						size = 2 + this.getCodedIndexSize(Metadata.CodedIndex.HasDeclSecurity) + blobidx_size;
+						break;
+					case Metadata.Table.ClassLayout:
+						size = 6 + this.getTableIndexSize(Metadata.Table.TypeDef);
+						break;
+					case Metadata.Table.FieldLayout:
+						size = 4 + this.getTableIndexSize(Metadata.Table.Field);
+						break;
+					case Metadata.Table.StandAloneSig:
+						size = blobidx_size;
+						break;
+					case Metadata.Table.EventMap:
+						size = this.getTableIndexSize(Metadata.Table.TypeDef) + this.getTableIndexSize(Metadata.Table.Event);
+						break;
+					case Metadata.Table.EventPtr:
+						size = this.getTableIndexSize(Metadata.Table.Event);
+						break;
+					case Metadata.Table.Event:
+						size = 2 + stridx_size + this.getCodedIndexSize(Metadata.CodedIndex.TypeDefOrRef);
+						break;
+					case Metadata.Table.PropertyMap:
+						size = this.getTableIndexSize(Metadata.Table.TypeDef) + this.getTableIndexSize(Metadata.Table.Property);
+						break;
+					case Metadata.Table.PropertyPtr:
+						size = this.getTableIndexSize(Metadata.Table.Property);
+						break;
+					case Metadata.Table.Property:
+						size = 2 + stridx_size + blobidx_size;
+						break;
+					case Metadata.Table.MethodSemantics:
+						size = 2 + this.getTableIndexSize(Metadata.Table.Method) + this.getCodedIndexSize(Metadata.CodedIndex.HasSemantics);
+						break;
+					case Metadata.Table.MethodImpl:
+						size = this.getTableIndexSize(Metadata.Table.TypeDef) + this.getCodedIndexSize(Metadata.CodedIndex.MethodDefOrRef) + this.getCodedIndexSize(Metadata.CodedIndex.MethodDefOrRef);
+						break;
+					case Metadata.Table.ModuleRef:
+						size = stridx_size;
+						break;
+					case Metadata.Table.TypeSpec:
+						size = blobidx_size;
+						break;
+					case Metadata.Table.ImplMap:
+						size = 2 + this.getCodedIndexSize(Metadata.CodedIndex.MemberForwarded) + stridx_size + this.getTableIndexSize(Metadata.Table.ModuleRef);
+						break;
+					case Metadata.Table.FieldRVA:
+						size = 4 + this.getTableIndexSize(Metadata.Table.Field);
+						break;
+					case Metadata.Table.EncLog:
+						size = 8;
+						break;
+					case Metadata.Table.EncMap:
+						size = 4;
+						break;
+					case Metadata.Table.Assembly:
+						size = 16 + blobidx_size + (stridx_size * 2);
+						break;
+					case Metadata.Table.AssemblyProcessor:
+						size = 4;
+						break;
+					case Metadata.Table.AssemblyOS:
+						size = 12;
+						break;
+					case Metadata.Table.AssemblyRef:
+						size = 12 + (blobidx_size * 2) + (stridx_size * 2);
+						break;
+					case Metadata.Table.AssemblyRefProcessor:
+						size = 4 + this.getTableIndexSize(Metadata.Table.AssemblyRef);
+						break;
+					case Metadata.Table.AssemblyRefOS:
+						size = 12 + this.getTableIndexSize(Metadata.Table.AssemblyRef);
+						break;
+					case Metadata.Table.File:
+						size = 4 + stridx_size + blobidx_size;
+						break;
+					case Metadata.Table.ExportedType:
+						size = 8 + (stridx_size * 2) + this.getCodedIndexSize(Metadata.CodedIndex.Implementation);
+						break;
+					case Metadata.Table.ManifestResource:
+						size = 8 + stridx_size + this.getCodedIndexSize(Metadata.CodedIndex.Implementation);
+						break;
+					case Metadata.Table.NestedClass:
+						size = this.getTableIndexSize(Metadata.Table.TypeDef) + this.getTableIndexSize(Metadata.Table.TypeDef);
+						break;
+					case Metadata.Table.GenericParam:
+						size = 4 + this.getCodedIndexSize(Metadata.CodedIndex.TypeOrMethodDef) + blobidx_size;
+						break;
+					case Metadata.Table.MethodSpec:
+						size = this.getCodedIndexSize(Metadata.CodedIndex.MethodDefOrRef) + blobidx_size;
+						break;
+					case Metadata.Table.GenericParamConstraint:
+						size = this.getTableIndexSize(Metadata.Table.GenericParam) + this.getCodedIndexSize(Metadata.CodedIndex.TypeDefOrRef);
+						break;
+					default:
+						throw new Error("NotSupportException");
 				}
+
+				tables[i].rowSize = size;
+				tables[i].offset = offset;
+
+				offset += size * tables[i].length;
 			}
+		}
+
+		private getModuleKind(characteristics: number, subsystem: number): ModuleKind
+		{
+			if ((characteristics & 0x2000) !== 0)
+			{
+				return ModuleKind.Dll;
+			}
+			if (subsystem === 0x2 || subsystem === 0x9)
+			{
+				return ModuleKind.Windows;
+			}
+			return ModuleKind.Console;
+		}
+
+		static readImageFrom(bytes: number[], fileName: string): Image
+		{
+			var reader: ImageReader = new ImageReader(bytes, fileName);
+			reader.readImage();
+			return reader.image;
 		}
 	}
 }

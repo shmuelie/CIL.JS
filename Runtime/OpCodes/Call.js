@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -6,10 +6,11 @@
 };
 var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
+        var OpCodes;
         (function (OpCodes) {
             "use strict";
-
             var Call = (function (_super) {
                 __extends(Call, _super);
                 function Call(memory, stack) {
@@ -18,14 +19,12 @@ var CIL;
                 Call.prototype.number = function () {
                     return 40;
                 };
-
                 Call.prototype.argumentCount = function () {
                     return [4];
                 };
-
                 Call.prototype.execute = function (bytes) {
                     var _this = this;
-                    throw new Error("System.NotImplented");
+                    throw new Error("System.NotImplented"); // Need to convert bytes to method
                     var method;
                     var nextFrame = new Runtime.StackFrame();
                     while (nextFrame.arguments.length < method.arguments.length) {
@@ -33,7 +32,8 @@ var CIL;
                     }
                     if (method.static) {
                         nextFrame.this = null;
-                    } else {
+                    }
+                    else {
                         nextFrame.this = this.stack[0].evaluationStack.pop().pointer;
                     }
                     nextFrame.method = method;
@@ -50,14 +50,11 @@ var CIL;
                 return Call;
             })(Runtime.OpCode);
             OpCodes.Call = Call;
-
             Runtime.OpCode.opCodes[Call.prototype.number()] = function (memory, stack) {
                 Call.Instance = Call.Instance || new Call(memory, stack);
                 return Call.Instance;
             };
-        })(Runtime.OpCodes || (Runtime.OpCodes = {}));
-        var OpCodes = Runtime.OpCodes;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+        })(OpCodes = Runtime.OpCodes || (Runtime.OpCodes = {}));
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=Call.js.map

@@ -1,18 +1,17 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
+        var MemoryAssembly;
         (function (MemoryAssembly) {
             "use strict";
-
             var Module = (function () {
                 function Module() {
                 }
                 return Module;
             })();
             MemoryAssembly.Module = Module;
-        })(Runtime.MemoryAssembly || (Runtime.MemoryAssembly = {}));
-        var MemoryAssembly = Runtime.MemoryAssembly;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+        })(MemoryAssembly = Runtime.MemoryAssembly || (Runtime.MemoryAssembly = {}));
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=Module.js.map

@@ -2,12 +2,6 @@
 {
 	"use strict";
 
-	function BadImage()
-	{
-		Error.call(this, "Bad Image");
-	}
-	BadImage.prototype = Error.prototype;
-
 	function readDataDirectory(reader: Reader): Section
 	{
 		var section = new Section();
@@ -30,13 +24,13 @@
 		{
 			if (reader.length() < 128)
 			{
-				throw new BadImage();
+				throw new Error("Bad Image");
 			}
 
 			// DOSHeader: { PE: 2, Start: 58, Lfanew: 4, End: 64 }
 			if (reader.readUInt16().toNumber() !== 0x5a4d)
 			{
-				throw new BadImage();
+				throw new Error("Bad Image");
 			}
 
 			reader.skip(58);
@@ -45,7 +39,7 @@
 			// PE NT signature
 			if (reader.readUInt32().toNumber() !== 0x00004550)
 			{
-				throw new BadImage();
+				throw new Error("Bad Image");
 			}
 
 			this.module = new Module();
@@ -148,7 +142,7 @@
 
 			if (cliHeader.rva === 0 && cliHeader.size === 0)
 			{
-				throw new BadImage();
+				throw new Error("Bad Image");
 			}
 
 			// Reserved				8
@@ -283,4 +277,4 @@
 			return this.usHeap.readString(length);
 		}
 	}
-} 
+}

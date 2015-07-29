@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -6,9 +6,9 @@
 };
 var CIL;
 (function (CIL) {
+    var TypeSystem;
     (function (TypeSystem) {
         "use strict";
-
         var TypeField = (function (_super) {
             __extends(TypeField, _super);
             function TypeField() {
@@ -17,7 +17,6 @@ var CIL;
             return TypeField;
         })(TypeSystem.TypeMember);
         TypeSystem.TypeField = TypeField;
-    })(CIL.TypeSystem || (CIL.TypeSystem = {}));
-    var TypeSystem = CIL.TypeSystem;
+    })(TypeSystem = CIL.TypeSystem || (CIL.TypeSystem = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=TypeField.js.map

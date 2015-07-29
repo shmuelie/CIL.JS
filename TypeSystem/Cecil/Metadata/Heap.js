@@ -1,9 +1,10 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Cecil;
     (function (Cecil) {
+        var Metadata;
         (function (Metadata) {
             "use strict";
-
             var Heap = (function () {
                 function Heap(section, offset, size) {
                     this.indexSize = 0;
@@ -14,9 +15,7 @@
                 return Heap;
             })();
             Metadata.Heap = Heap;
-        })(Cecil.Metadata || (Cecil.Metadata = {}));
-        var Metadata = Cecil.Metadata;
-    })(CIL.Cecil || (CIL.Cecil = {}));
-    var Cecil = CIL.Cecil;
+        })(Metadata = Cecil.Metadata || (Cecil.Metadata = {}));
+    })(Cecil = CIL.Cecil || (CIL.Cecil = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=Heap.js.map

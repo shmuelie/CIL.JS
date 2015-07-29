@@ -1,18 +1,17 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
+        var MemoryAssembly;
         (function (MemoryAssembly) {
             "use strict";
-
             var MetaTable = (function () {
                 function MetaTable() {
                 }
                 return MetaTable;
             })();
             MemoryAssembly.MetaTable = MetaTable;
-        })(Runtime.MemoryAssembly || (Runtime.MemoryAssembly = {}));
-        var MemoryAssembly = Runtime.MemoryAssembly;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+        })(MemoryAssembly = Runtime.MemoryAssembly || (Runtime.MemoryAssembly = {}));
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=MetaTable.js.map

@@ -1,8 +1,8 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
         "use strict";
-
         var StackFrame = (function () {
             function StackFrame() {
                 this.arguments = [];
@@ -12,11 +12,9 @@
             StackFrame.prototype.wait = function () {
                 this.waitCount++;
             };
-
             StackFrame.prototype.continue = function () {
                 this.waitCount--;
             };
-
             StackFrame.prototype.free = function (memory, callback) {
                 var _this = this;
                 var i = -1;
@@ -24,15 +22,17 @@
                     i++;
                     if (i < _this.arguments.length) {
                         firstLoop();
-                    } else {
+                    }
+                    else {
                         i = -1;
                         secondLoopEnd();
                     }
                 };
                 var firstLoop = function () {
-                    if (_this.arguments[i].type === 0 /* Pointer */) {
+                    if (_this.arguments[i].type === Runtime.StackFrameValueType.Pointer) {
                         memory.dereferenceObject(_this.arguments[i].pointer, firstLoopEnd);
-                    } else {
+                    }
+                    else {
                         firstLoopEnd();
                     }
                 };
@@ -40,14 +40,16 @@
                     i++;
                     if (i < _this.evaluationStack.length) {
                         secondLoop();
-                    } else {
+                    }
+                    else {
                         callback();
                     }
                 };
                 var secondLoop = function () {
-                    if (_this.evaluationStack[i].type === 0 /* Pointer */) {
+                    if (_this.evaluationStack[i].type === Runtime.StackFrameValueType.Pointer) {
                         memory.dereferenceObject(_this.evaluationStack[i].pointer, secondLoopEnd);
-                    } else {
+                    }
+                    else {
                         secondLoopEnd();
                     }
                 };
@@ -56,7 +58,6 @@
             return StackFrame;
         })();
         Runtime.StackFrame = StackFrame;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=StackFrame.js.map

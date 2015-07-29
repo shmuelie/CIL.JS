@@ -1,8 +1,8 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var TypeSystem;
     (function (TypeSystem) {
         "use strict";
-
         (function (Access) {
             Access[Access["Private"] = 0] = "Private";
             Access[Access["Public"] = 1] = "Public";
@@ -18,7 +18,6 @@
             Access[Access["NestedAsssembly"] = 11] = "NestedAsssembly";
         })(TypeSystem.Access || (TypeSystem.Access = {}));
         var Access = TypeSystem.Access;
-    })(CIL.TypeSystem || (CIL.TypeSystem = {}));
-    var TypeSystem = CIL.TypeSystem;
+    })(TypeSystem = CIL.TypeSystem || (CIL.TypeSystem = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=Access.js.map

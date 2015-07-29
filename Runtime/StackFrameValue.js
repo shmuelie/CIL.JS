@@ -1,30 +1,30 @@
-﻿var CIL;
+var CIL;
 (function (CIL) {
+    var Runtime;
     (function (Runtime) {
         "use strict";
-
         var StackFrameValue = (function () {
             function StackFrameValue(type, value, pointer) {
-                if (typeof pointer === "undefined") { pointer = null; }
+                if (pointer === void 0) { pointer = null; }
                 this.type = type;
                 switch (type) {
-                    case 1 /* Float */:
+                    case Runtime.StackFrameValueType.Float:
                         this.float = value;
                         break;
-                    case 4 /* MethodPointer */:
+                    case Runtime.StackFrameValueType.MethodPointer:
                         this.methodPointer = value;
                         this.pointer = pointer;
                         break;
-                    case 0 /* Pointer */:
+                    case Runtime.StackFrameValueType.Pointer:
                         this.pointer = value;
                         break;
-                    case 2 /* SignedInt */:
+                    case Runtime.StackFrameValueType.SignedInt:
                         this.signedInt = value;
                         break;
-                    case 3 /* UnsignedInt */:
+                    case Runtime.StackFrameValueType.UnsignedInt:
                         this.unsignedInt = value;
                         break;
-                    case 5 /* FieldPointer */:
+                    case Runtime.StackFrameValueType.FieldPointer:
                         this.fieldPointer = value;
                         this.pointer = pointer;
                         break;
@@ -33,7 +33,6 @@
             return StackFrameValue;
         })();
         Runtime.StackFrameValue = StackFrameValue;
-    })(CIL.Runtime || (CIL.Runtime = {}));
-    var Runtime = CIL.Runtime;
+    })(Runtime = CIL.Runtime || (CIL.Runtime = {}));
 })(CIL || (CIL = {}));
 //# sourceMappingURL=StackFrameValue.js.map
