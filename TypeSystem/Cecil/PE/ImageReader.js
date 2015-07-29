@@ -73,13 +73,13 @@ var CIL;
                     var machine = this.readUInt16().toNumber();
                     switch (machine) {
                         case 0x014c:
-                            return Cecil.TargetArchitecture.I386;
+                            return 0 /* I386 */;
                         case 0x8664:
-                            return Cecil.TargetArchitecture.AMD64;
+                            return 1 /* AMD64 */;
                         case 0x0200:
-                            return Cecil.TargetArchitecture.IA64;
+                            return 2 /* IA64 */;
                         case 0x01c4:
-                            return Cecil.TargetArchitecture.ARMv7;
+                            return 3 /* ARMv7 */;
                     }
                     throw new Error("NotSupportedException");
                 };
@@ -470,12 +470,12 @@ var CIL;
                 };
                 ImageReader.prototype.getModuleKind = function (characteristics, subsystem) {
                     if ((characteristics & 0x2000) !== 0) {
-                        return Cecil.ModuleKind.Dll;
+                        return 0 /* Dll */;
                     }
                     if (subsystem === 0x2 || subsystem === 0x9) {
-                        return Cecil.ModuleKind.Windows;
+                        return 2 /* Windows */;
                     }
-                    return Cecil.ModuleKind.Console;
+                    return 1 /* Console */;
                 };
                 ImageReader.readImageFrom = function (bytes, fileName) {
                     var reader = new ImageReader(bytes, fileName);

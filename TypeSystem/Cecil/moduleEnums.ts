@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    export enum ModuleKind
+    export const enum ModuleKind
     {
         Dll,
         Console,
@@ -10,7 +10,7 @@
         NetModule
     }
 
-    export enum TargetArchitecture
+    export const enum TargetArchitecture
     {
         I386,
         AMD64,
@@ -18,7 +18,7 @@
         ARMv7
     }
 
-    export enum ModuleAttributes
+    export const enum ModuleAttributes
     {
         ILOnly = 1,
         Require32Bit = 2,
@@ -26,7 +26,7 @@
         Preferred32Bit = 0x00020000
     }
 
-    export enum ModuleCharacteristics
+    export const enum ModuleCharacteristics
     {
         HighEntropyVA = 0x0020,
         DynamicBase = 0x0040,
@@ -35,4 +35,4 @@
         AppContainer = 0x1000,
         TerminalServerAware = 0x8000,
     }
-} 
+}
