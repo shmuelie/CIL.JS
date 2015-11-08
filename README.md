@@ -11,6 +11,10 @@ hence an interpreter).
 The project is to be in ES3 unless there is no other choice (see threading 
 below). This is to allow the broadest usage cases.
 
+## Reading Assemblies
+
+To read assemblies the Mono.Cecil project is being converted to TypeScript.
+
 ## Memory Model
 
 While ECMA-335 does not give a memory manager type generally a Garbage 
