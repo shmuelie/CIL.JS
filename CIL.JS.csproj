@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -64,8 +64,21 @@
     <TypeScriptCompile Include="Tests\integerTests.ts" />
     <TypeScriptCompile Include="Tests\qunit.d.ts" />
     <TypeScriptCompile Include="TypeSystem\Access.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\ArrayType.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\AssemblyFlags.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\AssemblyNameReference.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\AssemblyReader.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\CustomAttribute.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\GenericParameter.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\IConstantProvider.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\ICustomAttributeProvider.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\IGenericParameterProvider.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\IMetadataScope.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\IMetadataTokenProvider.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\MemberReference.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\BlobHeap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\CodedIndex.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\ElementType.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\GuidHeap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\Heap.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\MetadataToken.ts" />
@@ -75,12 +88,17 @@
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\TableInformation.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\TokenType.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Metadata\UserStringHeap.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\MethodReference.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\ModuleDefinition.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\moduleEnums.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\ModuleReference.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\PE\DataDirectory.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\PE\Image.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\PE\ImageReader.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\PE\Section.ts" />
     <None Include="TypeSystem\Cecil\README.md" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\TypeReference.ts" />
+    <TypeScriptCompile Include="TypeSystem\Cecil\Version.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeMember.ts" />
@@ -125,7 +143,7 @@
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptTarget>ES3</TypeScriptTarget>
-    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
     <TypeScriptOutFile />
@@ -134,6 +152,7 @@
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
