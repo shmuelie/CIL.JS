@@ -21,5 +21,15 @@
         {
             //TODO: !
         }
+
+        hasGenericConstraints(genericParameter: GenericParameter): boolean
+        {
+            //TODO: !
+        }
+
+        readGenericConstraints(genericParameter: GenericParameter): TypeReference[]
+        {
+            //TODO: !
+        }
     }
 }
