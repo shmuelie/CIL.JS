@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -99,6 +99,7 @@
     <None Include="TypeSystem\Cecil\README.md" />
     <TypeScriptCompile Include="TypeSystem\Cecil\TypeReference.ts" />
     <TypeScriptCompile Include="TypeSystem\Cecil\Version.ts" />
+    <TypeScriptCompile Include="TypeSystem\TextIL\ILReader.ts" />
     <TypeScriptCompile Include="TypeSystem\Type.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeField.ts" />
     <TypeScriptCompile Include="TypeSystem\TypeMember.ts" />
@@ -145,7 +146,8 @@
     <TypeScriptTarget>ES3</TypeScriptTarget>
     <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptModuleKind>
+    </TypeScriptModuleKind>
     <TypeScriptOutFile />
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
