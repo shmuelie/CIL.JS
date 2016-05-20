@@ -15,6 +15,11 @@ below). This is to allow the broadest usage cases.
 
 To read assemblies the Mono.Cecil project is being converted to TypeScript.
 
+### Temporary Hack
+
+To speed up development (a.k.a converting Cecil is hard) I'm going to implement
+a text IL reader to start with.
+
 ## Memory Model
 
 While ECMA-335 does not give a memory manager type generally a Garbage 
