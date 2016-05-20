@@ -11,6 +11,7 @@
     {
         static types: ITypesDictionary = {};
 
+        assembly: string;
         className: string;
         fullName: string;
         access: Access;
@@ -31,4 +32,4 @@
             this.properties = [];
         }
     }
-} 
+}

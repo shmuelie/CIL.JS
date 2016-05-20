@@ -13,8 +13,7 @@ var CIL;
             }
             Type.types = {};
             return Type;
-        })();
+        }());
         TypeSystem.Type = Type;
     })(TypeSystem = CIL.TypeSystem || (CIL.TypeSystem = {}));
 })(CIL || (CIL = {}));
-//# sourceMappingURL=Type.js.map
